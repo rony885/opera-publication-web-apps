@@ -1,0 +1,19 @@
+/* 🇧🇩 Bangla Font */
+@font-face {
+    font-family: "Chayalipi";
+    src: url("../public/assets/fonts/Chayalipi.ttf") format("truetype");
+    unicode-range: U+0980-09FF;
+}
+
+/* 🇺🇸 English Font (Berlin Sans FB Demi) */
+/* @font-face {
+    font-family: "HARLOWSI_1";
+    src: url("/public/assets/fonts/HARLOWSI_1.TTF") format("truetype");
+    unicode-range: U+0000-007F;
+} */
+
+/* Global Apply */
+body {
+    font-family: "HARLOWSI_1", "Chayalipi", sans-serif;
+
+}
