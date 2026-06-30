@@ -402,7 +402,7 @@ const BlogDetails = () => {
                                 type="checkbox"
                                 defaultValue="yes"
                               />
-                              <label for="wp-comment-cookies-consent">
+                              <label htmlFor="wp-comment-cookies-consent">
                                 Save my name, email, and website in this browser
                                 for the next time I comment.
                               </label>

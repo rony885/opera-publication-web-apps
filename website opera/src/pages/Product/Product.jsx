@@ -184,8 +184,8 @@ const Product = () => {
                         style={{ backgroundColor: "#FF3333" }}
                       >
                         <option
-                          value="recent_product"
-                          selected="selected"
+                          defaultValue="recent_product"
+                          // selected="selected"
                           className=" fw-normal"
                         >
                           Short By Latest

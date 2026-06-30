@@ -79,7 +79,7 @@ const Testimonial = () => {
 
   return (
     // <section className="vs-testi__layout3 space-top">
-    <section class="vs-testi__layout1 space">
+    <section className="vs-testi__layout1 space">
       <div className="container">
         <div className="title-area2 text-center mb-4">
           <h2 className="sec-title fw-normal">পাঠকের চিরকুট</h2>

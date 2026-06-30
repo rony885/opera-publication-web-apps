@@ -54,14 +54,20 @@ const Authors = () => {
                     className="orderby"
                     aria-label="Shop order"
                   >
-                    <option value="recent_product" selected="selected">
+                    <option defaultValue="recent_product">
                       Short By Latest
                     </option>
-                    <option value="popularity">Sort by popularity</option>
-                    <option value="rating">Sort by average rating</option>
-                    <option value="date">Sort by latest</option>
-                    <option value="price">Sort by price: low to high</option>
-                    <option value="price-desc">
+                    <option defaultValue="popularity">
+                      Sort by popularity
+                    </option>
+                    <option defaultValue="rating">
+                      Sort by average rating
+                    </option>
+                    <option defaultValue="date">Sort by latest</option>
+                    <option defaultValue="price">
+                      Sort by price: low to high
+                    </option>
+                    <option defaultValue="price-desc">
                       Sort by price: high to low
                     </option>
                   </select>

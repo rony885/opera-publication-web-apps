@@ -54,7 +54,7 @@ const Blog = () => {
                     name="orderby"
                     aria-label="Shop order"
                   >
-                    <option value="recent_product" selected="selected">
+                    <option defaultValue="recent_product" >
                       Short By Latest
                     </option>
                     <option defaultValue="popularity">
