@@ -434,8 +434,6 @@ const Header = ({ toggleMenu, closeMenu }) => {
                         </div>
                       </div>
                     </div>
-
-                    
                   </div>
                 </div>
               </div>

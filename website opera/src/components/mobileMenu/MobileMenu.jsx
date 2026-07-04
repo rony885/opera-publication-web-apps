@@ -19,7 +19,7 @@ const MobileMenu = ({ menuOpen, closeMenu }) => {
                 src="/assets/img/Opera logo 195 x 60.png"
                 alt="Opera Publication"
                 className="logo"
-                style={{height: "70px"}}
+                style={{ height: "70px" }}
               />
             </Link>
             <button className="vs-menu-toggle" onClick={closeMenu}>
