@@ -244,8 +244,8 @@ const Wishlist = () => {
                             </p>
                           )}
                         </td>
-
-                        {/* <td className="product-action">
+                        {/* 
+                        <td className="product-action">
                           <button
                             className="button vs-btn alt fw-normal"
                             onClick={() => {

@@ -204,6 +204,7 @@ const Header = ({ toggleMenu, closeMenu }) => {
                       placeholder="এখানে অনুসন্ধান করুন....."
                     />
                   </form>
+
                   <div className="header-buttons">
                     <Link to="/wishlist" className="vs-icon wishlist">
                       <i className="fal fa-heart"></i>
@@ -435,6 +436,8 @@ const Header = ({ toggleMenu, closeMenu }) => {
                       </div>
                     </div>
                   </div>
+
+                  
                 </div>
               </div>
             </div>

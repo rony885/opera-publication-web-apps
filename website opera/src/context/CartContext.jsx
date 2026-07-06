@@ -97,6 +97,19 @@ const CartProvider = ({ children }) => {
     });
   };
 
+  // const Order = () => {
+  //   dispatch({
+  //     type: "ORDER",
+  //   });
+  // };
+
+  const Order = (orderData) => {
+    dispatch({
+      type: "ORDER",
+      payload: orderData,
+    });
+  };
+  
   const clearOrder = () => {
     dispatch({ type: "CLEAR_ORDER" });
   };
@@ -184,8 +197,10 @@ const CartProvider = ({ children }) => {
         setIncrement,
 
         // order
+
         addToOrder,
         clearOrder,
+        Order,
 
         // ❤️ wishlist
         addToWishlist,

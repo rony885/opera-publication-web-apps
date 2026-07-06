@@ -6,7 +6,7 @@ import convertToBanglaNumber from "../../components/banglaConvert/convertToBangl
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { cart } = useCartContext();
+  const { cart, Order } = useCartContext();
   console.log("CART:", cart);
 
   const subtotal = cart.reduce(
@@ -14,40 +14,34 @@ const Checkout = () => {
     0,
   );
 
-  // const totalItems = cart.reduce((acc, item) => acc + item.amount, 0);
+  const shipping = cart.length === 0 ? 0 : subtotal > 1000 ? 0 : 60;
 
-  const shipping = subtotal > 1000 ? 0 : 60;
   const total = subtotal + shipping;
 
-  const handlePlaceOrder = () => {
-    if (cart.length === 0) return alert("Cart is empty");
+  const handlePlaceOrder = (e) => {
+    e.preventDefault();
+
+    if (cart.length === 0) {
+      alert("Cart is empty!");
+      return;
+    }
 
     const orderData = {
       id: Date.now(),
-      items: cart,
+      items: [...cart], // copy of cart
       subtotal,
       shipping,
       total,
       date: new Date().toISOString(),
     };
 
-    // 👇 THIS IS WHAT YOU WANTED
-    console.log("🛒 PLACE ORDER DATA:", orderData);
+    console.log("🛒 ORDER DATA:", orderData);
 
-    // existing orders
-    const oldOrders = JSON.parse(localStorage.getItem("ecomOrder")) || [];
-
-    const updatedOrders = [...oldOrders, orderData];
-
-    localStorage.setItem("ecomOrder", JSON.stringify(updatedOrders));
-
-    // clear cart after order
-    localStorage.setItem("ecomCart", JSON.stringify([]));
+    Order(orderData);
 
     alert("Order placed successfully!");
 
-    // window.location.href = "/";
-    navigate("/"); // ✅ Correct
+    navigate("/");
   };
 
   return (

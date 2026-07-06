@@ -157,6 +157,15 @@ const CartReducer = (state, action) => {
     };
   }
 
+  // ===== ORDER =====
+  if (action.type === "ORDER") {
+    return {
+      ...state,
+      order: [...state.order, action.payload],
+      cart: [],
+    };
+  }
+
   return state;
 };
 

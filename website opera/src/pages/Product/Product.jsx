@@ -185,7 +185,6 @@ const Product = () => {
                       >
                         <option
                           defaultValue="recent_product"
-                          // selected="selected"
                           className=" fw-normal"
                         >
                           Short By Latest

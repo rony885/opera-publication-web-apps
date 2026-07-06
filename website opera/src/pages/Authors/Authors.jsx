@@ -97,6 +97,279 @@ const Authors = () => {
                   </div>
                 );
               })}
+
+              {/* <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.30s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-2.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Rodja Heartmann</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.40s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-3.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Ema Watson</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.50s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-4.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Rivanur R. Rafi</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.60s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-5.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Mrthina Kaiko</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.70s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-6.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Alison Baker</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.20s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-7.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Branden Mc Calam </Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.30s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-8.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Fahim Al Bashar</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.40s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-9.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Ema Watson</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.50s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-10.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Allaudin Alim</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.60s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-11.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Gonza Hatun</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.70s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-12.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Dua Lipa</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.20s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-13.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Eva Green</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.30s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-14.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Josher Martha</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.40s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-15.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Jenifer Lopez</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.50s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-16.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Snow White</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.60s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-17.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Kauppila Bevan</Link>
+                  </h2>
+                </div>
+              </div>
+              <div
+                className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                data-wow-delay="0.70s"
+              >
+                <div className="feature-style2">
+                  <span className="feature-img">
+                    <img
+                      src="assets/img/feature/feature-author-1-8.jpg"
+                      alt="feature imagee"
+                    />
+                  </span>
+                  <h2 className="feature-title">
+                    <Link to="/author-details">Tony Stark</Link>
+                  </h2>
+                </div>
+              </div> */}
             </div>
           </div>
 

@@ -233,6 +233,30 @@ const Contact = () => {
                     <i className="fas fa-location-dot"></i>
                   </div>
 
+                  {/* <div className="col-md-6 form-group">
+                    <select
+                      name="orderby"
+                      className="orderby"
+                      aria-label="Shop order"
+                    >
+                      <option defaultValue="recent_product" selected="selected">
+                        Select Service
+                      </option>
+                      <option defaultValue="popularity">
+                        Sort by popularity
+                      </option>
+                      <option defaultValue="rating">
+                        Sort by average rating
+                      </option>
+                      <option defaultValue="date">Sort by latest</option>
+                      <option defaultValue="price">
+                        Sort by price: low to high
+                      </option>
+                      <option defaultValue="price-desc">
+                        Sort by price: high to low
+                      </option>
+                    </select>
+                  </div> */}
                   <div className="col-md-12 form-group">
                     <textarea
                       name="message"
