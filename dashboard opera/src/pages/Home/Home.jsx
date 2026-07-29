@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import "@iconify-icon/react";
 import Tooltip from "@mui/material/Tooltip";
 
+import axios from "axios";
+import { useApiContext } from "../../context/ApiContext";
+import { useState } from "react";
+
 const Home = () => {
+  const {
+    home,
+    fetchHome,
+    // handleApiPageChange,
+    // handleApiItemPerPageChange,
+    // handleApiSearchItemChange,
+    // resetPagination,
+  } = useApiContext();
+
+  useEffect(() => {
+    fetchHome();
+  }, [fetchHome]);
+
+  const [receivedId, setReceivedId] = useState(null);
+
+  // delete
+  const getId = (id) => {
+    setReceivedId(id);
+  };
+
+  const deleteSlider = async (id) => {
+    await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/home_api/home/${id}/`,
+    );
+    window.location.reload(false);
+  };
+
   return (
     <div className="page-content">
       <div className="container-fluid">
@@ -19,14 +50,14 @@ const Home = () => {
                   <Link to="/" data-discover="true">
                     ড্যাশবোর্ড
                   </Link>{" "}
-                  | হোম
+                  | হোম স্লাইডার
                 </h4>
                 <Link
-                  to="/create-home"
+                  to="/create-slider"
                   className="btn btn-sm btn-primary fs-5"
                   style={{ fontFamily: "Chayalipi" }}
                 >
-                  অ্যাড হোম
+                  অ্যাড হোম স্লাইডার
                 </Link>
               </div>
 
@@ -48,7 +79,6 @@ const Home = () => {
 
                       <th className="text-center">Image</th>
                       <th className="text-center">Title</th>
-                      <th className="text-center">Highlight Text</th>
                       <th className="text-center">Description</th>
                       <th className="text-center">Status</th>
                       <th className="text-end">Action</th>
@@ -56,53 +86,61 @@ const Home = () => {
                   </thead>
 
                   <tbody>
-                    <tr>
-                      <td className="text-start">1</td>
+                    {home.map((slider, index) => {
+                      return (
+                        <tr key={index}>
+                          <td className="text-start">{index + 1}</td>
 
-                      <td>
-                        <div className="d-flex align-items-center justify-content-center gap-2">
-                          <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                            <img
-                              src="/assets/images/product/p-1.png"
-                              alt=""
-                              className="avatar-md"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                      <td className="text-center">Titleee</td>
-                      <td className="text-center">Highlight Textttt</td>
-                      <td className="text-center">Descriptions...</td>
-                      <th className="text-center">Active</th>
-                      <td>
-                        <div className="d-flex gap-2 justify-content-end align-items-center">
-                          <Tooltip title="Edit" arrow>
-                            <Link
-                              to="/update-home"
-                              className="btn btn-soft-primary btn-sm"
-                            >
-                              <iconify-icon
-                                icon="solar:pen-2-broken"
-                                className="align-middle fs-18"
-                              ></iconify-icon>
-                            </Link>
-                          </Tooltip>
+                          <td>
+                            <div className="d-flex align-items-center justify-content-center gap-2">
+                              <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                <img
+                                  // src="/assets/images/product/p-1.png"
+                                  src={slider.slider_image}
+                                  alt=""
+                                  className="avatar-md"
+                                />
+                              </div>
+                            </div>
+                          </td>
+                          <td className="text-center">{slider.slider_title}</td>
+                          <td className="text-center">
+                            {slider.slider_description}
+                          </td>
+                          <th className="text-center">
+                            {slider.status === true ? "Active" : "Inactive"}
+                          </th>
+                          <td>
+                            <div className="d-flex gap-2 justify-content-end align-items-center">
+                              <Tooltip title="Edit" arrow>
+                                <Link
+                                  to={`/update-slider/${slider.id}`}
+                                  className="btn btn-soft-primary btn-sm"
+                                >
+                                  <iconify-icon
+                                    icon="solar:pen-2-broken"
+                                    className="align-middle fs-18"
+                                  ></iconify-icon>
+                                </Link>
+                              </Tooltip>
 
-                          <Tooltip title="Delete" arrow>
-                            <button className="btn btn-soft-danger btn-sm">
-                              <iconify-icon
-                                icon="solar:trash-bin-minimalistic-2-broken"
-                                className="align-middle fs-18"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteModal"
-                                type="button"
-                                // onClick={() => getId(item.id)}
-                              ></iconify-icon>
-                            </button>
-                          </Tooltip>
-                        </div>
-                      </td>
-                    </tr>
+                              <Tooltip title="Delete" arrow>
+                                <button className="btn btn-soft-danger btn-sm">
+                                  <iconify-icon
+                                    icon="solar:trash-bin-minimalistic-2-broken"
+                                    className="align-middle fs-18"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    type="button"
+                                    onClick={() => getId(slider.id)}
+                                  ></iconify-icon>
+                                </button>
+                              </Tooltip>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -183,7 +221,7 @@ const Home = () => {
                     <button
                       type="button"
                       className="btn btn-danger"
-                      // onClick={() => deleteProduct(receivedId)}
+                      onClick={() => deleteSlider(receivedId)}
                     >
                       Delete
                     </button>

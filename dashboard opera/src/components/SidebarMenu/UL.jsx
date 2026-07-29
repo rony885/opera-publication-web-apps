@@ -31,7 +31,10 @@ const UL = ({ handleTogglle }) => {
 
       //Home
       "/home-list": "home",
-      "/create-home": "home",
+      "/create-slider": "home",
+      "/create-banner": "home",
+      "/create-feature": "home",
+      "/update-feature": "home",
 
       // Products
       "/book-list": "books",
@@ -86,7 +89,10 @@ const UL = ({ handleTogglle }) => {
 
       //Home
       "/home-list": "home-list",
-      "/create-home": "create-home",
+      "/create-slider": "create-slider",
+      "/create-banner": "create-banner",
+      "/create-feature": "create-feature",
+      "/update-feature": "update-feature",
 
       // Products
       "/book-list": "book-list",
@@ -226,13 +232,39 @@ const UL = ({ handleTogglle }) => {
               <li className="sub-nav-item">
                 <Link
                   className={`sub-nav-link ${
-                    activeSubMenu === "create-home" ? "active" : ""
+                    activeSubMenu === "create-slider" ? "active" : ""
                   }`}
-                  to="/create-home"
+                  to="/create-slider"
                   onClick={handleTogglle}
                   // style={{ fontSize: "12px" }}
                 >
-                  অ্যাড হোম
+                  অ্যাড স্লাইডার
+                </Link>
+              </li>
+
+              <li className="sub-nav-item">
+                <Link
+                  className={`sub-nav-link ${
+                    activeSubMenu === "create-banner" ? "active" : ""
+                  }`}
+                  to="/banner"
+                  onClick={handleTogglle}
+                  // style={{ fontSize: "12px" }}
+                >
+                  ব্যানার
+                </Link>
+              </li>
+
+              <li className="sub-nav-item">
+                <Link
+                  className={`sub-nav-link ${
+                    activeSubMenu === "create-feature" ? "active" : ""
+                  }`}
+                  to="/feature"
+                  onClick={handleTogglle}
+                  // style={{ fontSize: "12px" }}
+                >
+                  অ্যাড ফিচারস
                 </Link>
               </li>
             </ul>

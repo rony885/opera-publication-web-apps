@@ -49,6 +49,12 @@ import OperaClients from "./pages/Opera/OperaClients";
 import WriterChirkut from "./pages/Opera/WriterChirkut";
 import AddWriterChirkut from "./pages/Opera/AddWriterChirkut";
 import UpdateWriterChirkut from "./pages/Opera/UpdateWriterChirkut";
+import AddBanner from "./pages/Home/AddBanner";
+import AddFeature from "./pages/Home/AddFeature";
+import Banner from "./pages/Home/Banner";
+import UpdateBanner from "./pages/Home/UpdateBanner";
+import Feature from "./pages/Home/Feature";
+import UpdateFeature from "./pages/Home/UpdateFeature";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -124,8 +130,14 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />}></Route>
               <Route path="/home-list" element={<Home />}></Route>
-              <Route path="/create-home" element={<AddHome />}></Route>
-              <Route path="/update-home" element={<UpdateHome />}></Route>
+              <Route path="/create-slider" element={<AddHome />}></Route>
+              <Route path="/update-slider/:id" element={<UpdateHome />}></Route>
+              <Route path="/banner" element={<Banner />}></Route>
+              <Route path="/create-banner" element={<AddBanner />}></Route>
+              <Route path="/update-banner/:id" element={<UpdateBanner />}></Route>
+              <Route path="/feature" element={<Feature />}></Route>
+              <Route path="/create-feature" element={<AddFeature />}></Route>
+              <Route path="/update-feature/:id" element={<UpdateFeature />}></Route>
 
               <Route path="/book-list" element={<ProductsList />}></Route>
               <Route path="/add-book" element={<AddProduct />}></Route>

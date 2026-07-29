@@ -37,7 +37,7 @@ const SignIn = () => {
                   <div className="mb-5">
                     <form className="authentication-form">
                       <div className="mb-3">
-                        <label className="form-label" for="example-email">
+                        <label className="form-label" htmlFor="example-email">
                           Email
                         </label>
                         <input
@@ -54,11 +54,11 @@ const SignIn = () => {
                         >
                           Forgot password
                         </Link>
-                        <label className="form-label" for="example-password">
+                        <label className="form-label" htmlFor="example-password">
                           Password
                         </label>
                         <input
-                          type="text"
+                          type="password"
                           id="example-password"
                           className="form-control"
                         />
@@ -72,7 +72,7 @@ const SignIn = () => {
                           />
                           <label
                             className="form-check-label"
-                            for="checkbox-signin"
+                            htmlFor="checkbox-signin"
                           >
                             Remember me
                           </label>

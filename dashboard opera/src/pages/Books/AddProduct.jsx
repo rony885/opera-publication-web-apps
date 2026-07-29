@@ -35,7 +35,7 @@ const AddProduct = () => {
                       <form>
                         <div className="mb-3">
                           <label htmlFor="layout" className="form-label">
-                            Title
+                            Name
                           </label>
                           <input
                             type="text"
@@ -160,7 +160,7 @@ const AddProduct = () => {
                       <form>
                         <div className="mb-3">
                           <label htmlFor="meta-tag" className="form-label">
-                            Stock
+                            Discount (%)
                           </label>
                           <input
                             type="text"
@@ -193,18 +193,89 @@ const AddProduct = () => {
                       <form>
                         <div className="mb-3">
                           <label htmlFor="meta-tag" className="form-label">
-                            Discount (%)
+                            Stock
                           </label>
-                          <input
-                            type="text"
-                            id="meta-tag"
+                          <select
                             className="form-control"
-                          />
+                            id="layout"
+                            data-choices
+                            data-choices-groups
+                            data-placeholder="Select Layout"
+                          >
+                            <option defaultValue="">Select</option>
+                            <option defaultValue="Fashion">Active</option>
+                            <option defaultValue="Dining">Inactive</option>
+                          </select>
                         </div>
                       </form>
                     </div>
 
-                    <div className="col-lg-6">
+                    <div className="col-lg-3">
+                      <form>
+                        <div className="mb-3">
+                          <label htmlFor="meta-tag" className="form-label">
+                            New Book
+                          </label>
+                          <select
+                            className="form-control"
+                            id="layout"
+                            data-choices
+                            data-choices-groups
+                            data-placeholder="Select Layout"
+                          >
+                            <option defaultValue="">Select</option>
+                            <option defaultValue="Fashion">Active</option>
+                            <option defaultValue="Dining">Inactive</option>
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div className="col-lg-3">
+                      <form>
+                        <div className="mb-3">
+                          <label htmlFor="meta-tag" className="form-label">
+                            Upcoming Book
+                          </label>
+                          <select
+                            className="form-control"
+                            id="layout"
+                            data-choices
+                            data-choices-groups
+                            data-placeholder="Select Layout"
+                          >
+                            <option defaultValue="">Select</option>
+                            <option defaultValue="Fashion">Active</option>
+                            <option defaultValue="Dining">Inactive</option>
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-3">
+                      <form>
+                        <div className="mb-3">
+                          <label htmlFor="meta-tag" className="form-label">
+                            Best Seller Book
+                          </label>
+                          <select
+                            className="form-control"
+                            id="layout"
+                            data-choices
+                            data-choices-groups
+                            data-placeholder="Select Layout"
+                          >
+                            <option defaultValue="">Select</option>
+                            <option defaultValue="Fashion">Active</option>
+                            <option defaultValue="Dining">Inactive</option>
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div className="col-lg-9">
                       <form>
                         <div className="mb-3">
                           <label htmlFor="layout" className="form-label">
@@ -218,42 +289,6 @@ const AddProduct = () => {
                         </div>
                       </form>
                     </div>
-
-                    {/* <div className="col-lg-3">
-                      <form>
-                        <div className="mb-3">
-                          <label htmlFor="meta-tag" className="form-label">
-                            Due Amount
-                          </label>
-                          <input
-                            type="text"
-                            id="meta-tag"
-                            className="form-control"
-                          />
-                        </div>
-                      </form>
-                    </div> */}
-
-                    {/* <div className="col-lg-3">
-                      <form>
-                        <div className="mb-3">
-                          <label htmlFor="meta-tag" className="form-label">
-                            Payment Method
-                          </label>
-                          <select
-                            className="form-control"
-                            id="layout"
-                            data-choices
-                            data-choices-groups
-                            data-placeholder="Select Layout"
-                          >
-                            <option defaultValue="">Select</option>
-                            <option defaultValue="Fashion">Abc</option>
-                            <option defaultValue="Dining">Xyz</option>
-                          </select>
-                        </div>
-                      </form>
-                    </div> */}
                   </div>
 
                   {/* <div className="row">

@@ -43,16 +43,15 @@ const ProductsList = () => {
                       </th>
 
                       <th className="text-center">Image</th>
-                      <th className="text-center">Title</th>
+                      <th className="text-center">Name</th>
                       <th className="text-center">Subtitle</th>
                       <th className="text-center">Author</th>
                       <th className="text-center">Category</th>
-                      <th className="text-center">Sub Category</th>
                       <th className="text-center">Old Price</th>
                       <th className="text-center">Price</th>
+                      <th className="text-center">Discount (%)</th>
                       <th className="text-center">Stock</th>
                       <th className="text-center">Book Total Page</th>
-                      <th className="text-center">Discount (%)</th>
                       <th className="text-center">Status</th>
                       <th className="text-end">Action</th>
                     </tr>
@@ -72,16 +71,15 @@ const ProductsList = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="text-center">Title eee</td>
+                      <td className="text-center">প্রম্পট ইঞ্জিনিয়ারিং</td>
                       <td className="text-center">Subtitle eee</td>
                       <td className="text-center">Rafi</td>
                       <td className="text-center">Category yyy</td>
-                      <td className="text-center">Sub Category yyy</td>
                       <td className="text-center">0.00</td>
                       <td className="text-center">0.00</td>
+                      <td className="text-center">0.00%</td>
                       <td className="text-center">00</td>
                       <td className="text-center">000</td>
-                      <td className="text-center">0.00%</td>
                       <td className="text-center">Active</td>
                       <td>
                         <div className="d-flex gap-2 justify-content-end align-items-center">

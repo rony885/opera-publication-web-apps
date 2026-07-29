@@ -34,7 +34,7 @@ const ProductEdit = () => {
                       <form>
                         <div className="mb-3">
                           <label htmlFor="layout" className="form-label">
-                            Title
+                            Name
                           </label>
                           <input
                             type="text"

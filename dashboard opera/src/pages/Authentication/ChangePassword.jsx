@@ -44,12 +44,12 @@ const ChangePassword = () => {
                                 <div className="mb-3">
                                   <label
                                     className="form-label"
-                                    for="example-email"
+                                    htmlFor="example-email"
                                   >
-                                    Old Pasword
+                                    Old Password
                                   </label>
                                   <input
-                                    type="email"
+                                    type="password"
                                     id="example-email"
                                     name="example-email"
                                     className="form-control"
@@ -60,12 +60,12 @@ const ChangePassword = () => {
                                 <div className="mb-3">
                                   <label
                                     className="form-label"
-                                    for="example-email"
+                                    htmlFor="example-email"
                                   >
-                                    New Pasword
+                                    New Password
                                   </label>
                                   <input
-                                    type="email"
+                                    type="password"
                                     id="example-email"
                                     name="example-email"
                                     className="form-control"
@@ -76,12 +76,12 @@ const ChangePassword = () => {
                                 <div className="mb-3">
                                   <label
                                     className="form-label"
-                                    for="example-email"
+                                    htmlFor="example-email"
                                   >
-                                    Confirm Pasword
+                                    Confirm Password
                                   </label>
                                   <input
-                                    type="email"
+                                    type="password"
                                     id="example-email"
                                     name="example-email"
                                     className="form-control"

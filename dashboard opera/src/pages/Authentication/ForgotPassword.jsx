@@ -80,6 +80,7 @@ const ForgotPassword = () => {
                 />
               </div>
             </div>
+            {/* <!-- end card --> */}
           </div>
         </div>
       </div>

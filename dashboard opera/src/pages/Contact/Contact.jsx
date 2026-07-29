@@ -4,10 +4,35 @@ import "@iconify-icon/react";
 import { PiCaretLineLeftBold, PiCaretLineRightBold } from "react-icons/pi";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Footer from "../../components/Footer";
-// import { useApiContext } from "../../context/ApiContext";
-// import axios from "axios";
+import { useApiContext } from "../../context/ApiContext";
+import axios from "axios";
 
 const Contact = () => {
+  const [item, setItem] = useState({});
+
+  const {
+    contact,
+    fetchContact,
+    // handleApiPageChange,
+    // handleApiItemPerPageChange,
+    // handleApiSearchItemChange,
+    // resetPagination,
+  } = useApiContext();
+
+  // console.log("contact", contact);
+  useEffect(() => {
+    fetchContact();
+  }, [fetchContact]);
+
+  console.log(contact);
+
+  const getContact = async (id) => {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/contact_api/unpaginate_contact/${id}/`,
+    );
+    setItem(data);
+  };
+
   return (
     <div className="page-content">
       <div className="container-fluid">
