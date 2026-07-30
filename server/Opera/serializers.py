@@ -37,63 +37,32 @@
 from rest_framework import serializers
 from .models import OperaSection, OperaStatistic, WritterChirkut, OperaClient
 
-
-class OperaStatisticSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OperaStatistic
-        exclude = ["opera"]
-        # or fields = ["id", "count", "label", "suffix", "created_at", "updated_at"]
-
-
 class OperaSerializer(serializers.ModelSerializer):
-    statistics = OperaStatisticSerializer(
-        many=True,
-        read_only=True
-    )
+    status = serializers.BooleanField(default=True)
 
     class Meta:
         model = OperaSection
-        fields = [
-            "id",
-            "status",
-            "title",
-            "description",
-            "image",
-            "features_one",
-            "features_two",
-            "features_three",
-            "features_four",
-            "opera_video",
-            "statistics",      # ← Statistics will appear here
-            "created_at",
-            "updated_at",
-        ]
+        fields = "__all__"
 
 
 class UnpaginateOperaSerializer(serializers.ModelSerializer):
-    statistics = OperaStatisticSerializer(
-        many=True,
-        read_only=True
-    )
+    status = serializers.BooleanField(default=True)
 
     class Meta:
         model = OperaSection
-        fields = [
-            "id",
-            "status",
-            "title",
-            "description",
-            "image",
-            "features_one",
-            "features_two",
-            "features_three",
-            "features_four",
-            "opera_video",
-            "statistics",      # ← Statistics will appear here
-            "created_at",
-            "updated_at",
-        ]
-        
+        fields = "__all__"
+    
+  
+class OperaStatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OperaStatistic
+        fields = "__all__"
+
+
+class UnpaginateOperaStatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OperaStatistic
+        fields = "__all__"
         
 class WritterChirkutSerializer(serializers.ModelSerializer):
     status = serializers.BooleanField(default=True)

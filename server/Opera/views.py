@@ -9,12 +9,15 @@
 
 from rest_framework import viewsets
 from .models import (
-    OperaSection, WritterChirkut, OperaClient, 
+    OperaSection, OperaStatistic, WritterChirkut, OperaClient, 
 )
 
 from .serializers import (
     OperaSerializer,
     UnpaginateOperaSerializer,
+    
+    OperaStatisticSerializer,
+    UnpaginateOperaStatisticSerializer,
     
     WritterChirkutSerializer,
     UnpaginateWritterChirkutSerializer,
@@ -35,7 +38,15 @@ class OperaSectionView(viewsets.ModelViewSet):
 class OperaSectionUnpaginateView(viewsets.ModelViewSet):
     queryset = OperaSection.objects.all().order_by("-created_at")
     serializer_class = UnpaginateOperaSerializer
-    
+
+class OperaStatisticView(viewsets.ModelViewSet):
+    queryset = OperaStatistic.objects.all().order_by("-created_at")
+    serializer_class = OperaStatisticSerializer
+
+class UnpaginateOperaStatisticView(viewsets.ModelViewSet):
+    queryset = OperaStatistic.objects.all().order_by("-created_at")
+    serializer_class = UnpaginateOperaStatisticSerializer
+        
     
 class WritterChirkutView(viewsets.ModelViewSet):
     queryset = WritterChirkut.objects.all().order_by("-created_at")

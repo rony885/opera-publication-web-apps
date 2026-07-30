@@ -1,10 +1,5 @@
 from django.contrib import admin
-from .models import OperaSection, OperaStatistic, WritterChirkut, OperaClient
-
-
-class OperaStatisticInline(admin.TabularInline):
-    model = OperaStatistic
-    extra = 1
+from .models import OperaSection,     OperaStatistic, WritterChirkut, OperaClient
 
 
 @admin.register(OperaSection)
@@ -19,9 +14,6 @@ class OperaSectionAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = ("Image",)
-
-    inlines = [OperaStatisticInline]
-
 
 @admin.register(OperaStatistic)
 class OperaStatisticAdmin(admin.ModelAdmin):

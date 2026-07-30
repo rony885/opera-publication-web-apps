@@ -8,6 +8,9 @@ from .views import (
     OperaSectionView,
     OperaSectionUnpaginateView,
     
+    OperaStatisticView,
+    UnpaginateOperaStatisticView,
+    
     WritterChirkutView,
     UnpaginateWritterChirkutView,
     
@@ -27,6 +30,18 @@ route.register(
     "unpaginate_opera_section",
     OperaSectionUnpaginateView,
     basename="unpaginate_opera_section",
+)
+
+route.register(
+    "count_opera",
+    OperaStatisticView,
+    basename="count_opera",
+)
+
+route.register(
+    "unpaginate_count_opera",
+    UnpaginateOperaStatisticView,
+    basename="unpaginate_count_opera",
 )
 
 route.register(
