@@ -560,7 +560,7 @@ const Profile = () => {
               <div className="card-body">
                 <div className="d-flex align-items-center gap-2">
                   <img
-                    src="assets/images/users/avatar-1.jpg"
+                    src="/assets/images/users/avatar-1.jpg"
                     alt=""
                     className="avatar-md rounded-circle border border-light border-3"
                   />

@@ -16,13 +16,13 @@ const CompanySettings = () => {
                   <h4 className="card-title flex-grow-1 fs-4">
                     <Link to="/">Dashboard</Link> | Company Info
                   </h4>
-                  
+
                   <button
                     className="btn btn-sm btn-primary fs-5 d-none"
                     data-bs-toggle="modal"
                     data-bs-target="#createModalCenteredScrollable"
                   >
-                    Create Category
+                    Create xyz
                   </button>
                 </div>
 
