@@ -108,7 +108,7 @@ const Profile = ({ c_user }) => {
                       Email:
                       <Link to="#!" className="text-primary fw-semibold">
                         {" "}
-                        rakib@gmail.com
+                        rony@gmail.com
                       </Link>
                     </p>
                   </div>
