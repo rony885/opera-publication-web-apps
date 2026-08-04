@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 
+import JoditEditor from "jodit-react";
 import { Formik, Form as FormikForm } from "formik";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -11,8 +12,8 @@ import axios from "axios";
 
 const initialValues = {
   status: "",
-  blog_id: "",
-  pub_date: "",
+  // blog_id: "",
+  // pub_date: "",
   title: "",
   author: "",
   comments: "",
@@ -23,13 +24,13 @@ const initialValues = {
 
 const schema = yup.object().shape({
   status: yup.boolean(),
-  blog_id: yup.string().required("Blog Id is a required field!"),
-  pub_date: yup.string().required("Date Id is a required field!"),
+  // blog_id: yup.string().required("Blog Id is a required field!"),
+  // pub_date: yup.string().required("Date Id is a required field!"),
   title: yup.string().required("Title is a required field!"),
   author: yup.string().required("Author is a required field!"),
-  comments: yup.string().required("Comments is a required field!"),
-  views: yup.string().required("Views is a required field!"),
-  description: yup.mixed().required("Description is a required field!"),
+  comments: yup.number().required("Comments is a required field!"),
+  views: yup.number().required("Views is a required field!"),
+  description: yup.string(),
   image: yup.mixed().required("Image is a required field!"),
 });
 
@@ -41,6 +42,9 @@ const validate = (values) => {
 const AddBlog = () => {
   const [message, setMessage] = useState();
   const navigate = useNavigate();
+
+  const editor = useRef(null);
+  const [content1, setContent1] = useState("");
 
   const [showImage, setShowImage] = useState(null);
 
@@ -54,14 +58,15 @@ const AddBlog = () => {
   const AddBlogFunc = async (values) => {
     let formfield = new FormData();
 
-    formfield.append("status", values.status);
-    formfield.append("blog_id", values.blog_id);
-    formfield.append("pub_date", values.pub_date);
+    formfield.append("status", values.status === "true");
+    // formfield.append("status", values.status);
+    // formfield.append("blog_id", values.blog_id)
+    // formfield.append("pub_date", values.pub_date);
     formfield.append("title", values.title);
     formfield.append("author", values.author);
     formfield.append("comments", values.comments);
     formfield.append("views", values.views);
-    formfield.append("description", values.description);
+    formfield.append("description", content1);
     if (values.image) {
       formfield.append("image", values.image);
     }
@@ -76,8 +81,13 @@ const AddBlog = () => {
         navigate("/blogs");
         window.location.reload(false);
       })
+      // .catch((error) => {
+      //   setMessage(error.message, "Error");
+      // });
       .catch((error) => {
-        setMessage(error.message, "Error");
+        console.log(error.response);
+        console.log(error.response?.data);
+        setMessage(error.response?.data || error.message);
       });
   };
 
@@ -130,57 +140,7 @@ const AddBlog = () => {
                     }) => (
                       <FormikForm noValidate onSubmit={(e) => handleSubmit(e)}>
                         <div className="row">
-                          <div className="col-lg-3">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Blog Id
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
-                            <Form.Group className="form-outline mb-3">
-                              <Form.Label>
-                                Blog Id
-                                <span className="text-danger">*</span>
-                              </Form.Label>
-                              <InputGroup hasValidation>
-                                <Form.Control
-                                  type="text"
-                                  name="blog_id"
-                                  id="blog_id"
-                                  value={values.blog_id}
-                                  onChange={handleChange}
-                                  isInvalid={
-                                    !!touched.blog_id && !!errors.blog_id
-                                  }
-                                  isValid={touched.blog_id && !errors.blog_id}
-                                  classname="form-control mb-0"
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  {errors.blog_id}
-                                </Form.Control.Feedback>
-                              </InputGroup>
-                            </Form.Group>
-                          </div>
-
-                          <div className="col-lg-3">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Name
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
+                          <div className="col-lg-4">
                             <Form.Group className="form-outline mb-3">
                               <Form.Label>
                                 Name
@@ -206,58 +166,7 @@ const AddBlog = () => {
                             </Form.Group>
                           </div>
 
-                          <div className="col-lg-3">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Date
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
-                            <Form.Group className="form-outline mb-3">
-                              <Form.Label>
-                                Date
-                                <span className="text-danger">*</span>
-                              </Form.Label>
-                              <InputGroup hasValidation>
-                                <Form.Control
-                                  type="date"
-                                  name="pub_date"
-                                  id="pub_date"
-                                  value={values.pub_date}
-                                  onChange={handleChange}
-                                  isInvalid={
-                                    !!touched.pub_date && !!errors.pub_date
-                                  }
-                                  isValid={touched.pub_date && !errors.pub_date}
-                                  classname="form-control mb-0"
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  {errors.pub_date}
-                                </Form.Control.Feedback>
-                              </InputGroup>
-                            </Form.Group>
-                          </div>
-
-                          <div className="col-lg-3">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Title
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
-
+                          <div className="col-lg-4">
                             <Form.Group className="form-outline mb-3">
                               <Form.Label>
                                 Title
@@ -280,22 +189,36 @@ const AddBlog = () => {
                               </InputGroup>
                             </Form.Group>
                           </div>
+
+                          <div className="col-lg-4">
+                            <Form.Group className="form-outline mb-3">
+                              <Form.Label>
+                                Comments
+                                <span className="text-danger">*</span>
+                              </Form.Label>
+                              <InputGroup hasValidation>
+                                <Form.Control
+                                  type="text"
+                                  name="comments"
+                                  id="comments"
+                                  value={values.comments}
+                                  onChange={handleChange}
+                                  isInvalid={
+                                    !!touched.comments && !!errors.comments
+                                  }
+                                  isValid={touched.comments && !errors.comments}
+                                  classname="form-control mb-0"
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.comments}
+                                </Form.Control.Feedback>
+                              </InputGroup>
+                            </Form.Group>
+                          </div>
                         </div>
 
                         <div className="row">
                           <div className="col-lg-4">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Comments
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
                             <Form.Group className="form-outline mb-3">
                               <Form.Label>
                                 Comments
@@ -322,19 +245,6 @@ const AddBlog = () => {
                           </div>
 
                           <div className="col-lg-4">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Views
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
-
                             <Form.Group className="form-outline mb-3">
                               <Form.Label>
                                 Views
@@ -389,33 +299,28 @@ const AddBlog = () => {
 
                         <div className="row">
                           <div className="col-lg-6">
-                            <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Descriptions
-                                </label>
-                                <textarea
-                                  className="form-control bg-light-subtle"
+                            <Form.Group className="form-outline mb-0 w-100">
+                              <Form.Label>
+                                Descriptions<span></span>
+                              </Form.Label>
+                              <InputGroup hasValidation>
+                                <JoditEditor
+                                  name="description"
                                   id="description"
-                                  rows="3"
-                                ></textarea>
-                              </div>
-                            </form>
+                                  ref={editor}
+                                  value={content1}
+                                  onChange={(newContent) =>
+                                    setContent1(newContent)
+                                  }
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.description}
+                                </Form.Control.Feedback>
+                              </InputGroup>
+                            </Form.Group>
                           </div>
 
                           <div className="col-lg-6">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Image
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
                             <Form.Group className="form-outline mb-3 imgDiv divv">
                               <Form.Label>
                                 Image
@@ -423,25 +328,20 @@ const AddBlog = () => {
                               </Form.Label>
                               <Form.Control
                                 type="file"
-                                name="slider_image"
-                                id="slider_image"
+                                name="image"
+                                id="image"
                                 onChange={(event) => {
                                   setFieldValue(
-                                    "slider_image",
+                                    "image",
                                     event.currentTarget.files[0],
                                   );
                                   onImageChange(event);
                                 }}
-                                isInvalid={
-                                  !!touched.slider_image &&
-                                  !!errors.slider_image
-                                }
-                                isValid={
-                                  touched.slider_image && !errors.slider_image
-                                }
+                                isInvalid={!!touched.image && !!errors.image}
+                                isValid={touched.image && !errors.image}
                               />
                               <Form.Control.Feedback type="invalid">
-                                {errors.slider_image}
+                                {errors.image}
                               </Form.Control.Feedback>
 
                               {showImage && (
@@ -466,7 +366,9 @@ const AddBlog = () => {
                           <button type="reset" className="btn btn-danger">
                             Cancel
                           </button>
-                          <button  className="btn btn-success"     type="submit"
+                          <button
+                            className="btn btn-success"
+                            type="submit"
                             disabled={isSubmitting}
                           >
                             {isSubmitting ? "Submitting..." : " Add Blog"}
@@ -483,7 +385,7 @@ const AddBlog = () => {
                 </div>
               </div>
 
-              {/* ========= Add Customer Modal ========= */}
+              {/* ========= Add Modal ========= */}
             </div>
           </div>
         </div>

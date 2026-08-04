@@ -1,11 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import "@iconify-icon/react";
 import Tooltip from "@mui/material/Tooltip";
 
+import axios from "axios";
+import { useApiContext } from "../../context/ApiContext";
+
 const Blog = () => {
+  const {
+    blog,
+    fetchBlog,
+    // handleApiPageChange,
+    // handleApiItemPerPageChange,
+    // handleApiSearchItemChange,
+    // resetPagination,
+  } = useApiContext();
+
+  useEffect(() => {
+    fetchBlog();
+  }, [fetchBlog]);
+
+  const [receivedId, setReceivedId] = useState(null);
+
+  // delete
+  const getId = (id) => {
+    setReceivedId(id);
+  };
+
+  const deleteSlider = async (id) => {
+    await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/home_api/home/${id}/`,
+    );
+    window.location.reload(false);
+  };
+
   return (
     <Wrapper>
       <div className="page-content">
@@ -53,53 +83,63 @@ const Blog = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="text-start">1</td>
-                        <td>
-                          <div className="d-flex align-items-center justify-content-center gap-2">
-                            <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                              <img
-                                src="/assets/images/product/p-1.png"
-                                alt=""
-                                className="avatar-md"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td className="text-center">XYZ</td>
-                        <td className="text-center">00-00-2000</td>
-                        <td className="text-center">Title...</td>
-                        <td className="text-center">50</td>
-                        <td className="text-center">100</td>
-                        <td className="text-center">Active</td>
-                        <td>
-                          <div className="d-flex gap-2 justify-content-end align-items-center">
-                            <Tooltip title="Edit" arrow>
-                              <Link
-                                to="/blog-update"
-                                className="btn btn-soft-primary btn-sm"
-                              >
-                                <iconify-icon
-                                  icon="solar:pen-2-broken"
-                                  className="align-middle fs-18"
-                                ></iconify-icon>
-                              </Link>
-                            </Tooltip>
+                      {blog &&
+                        blog.map((blg, index) => {
+                          return (
+                            <tr key={blg.id}>
+                              <td className="text-start">{index + 1}</td>
+                              <td>
+                                <div className="d-flex align-items-center justify-content-center gap-2">
+                                  <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                    <img
+                                      src={blg.image}
+                                      alt=""
+                                      className="avatar-md"
+                                    />
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="text-center">{blg.author}</td>
+                              <td className="text-center">{blg.pub_date}</td>
+                              <td className="text-center">{blg.title}</td>
+                              <td className="text-center">{blg.comments}</td>
+                              <td className="text-center">{blg.views}</td>
+                              <td className="text-center">
+                                {" "}
+                                <p>
+                                  {blg.status === true ? "Active" : "Inactive"}
+                                </p>
+                              </td>
+                              <td>
+                                <div className="d-flex gap-2 justify-content-end align-items-center">
+                                  <Tooltip title="Edit" arrow>
+                                    <Link
+                                      to="/blog-update"
+                                      className="btn btn-soft-primary btn-sm"
+                                    >
+                                      <iconify-icon
+                                        icon="solar:pen-2-broken"
+                                        className="align-middle fs-18"
+                                      ></iconify-icon>
+                                    </Link>
+                                  </Tooltip>
 
-                            <Tooltip title="Delete" arrow>
-                              <button className="btn btn-soft-danger btn-sm">
-                                <iconify-icon
-                                  icon="solar:trash-bin-minimalistic-2-broken"
-                                  className="align-middle fs-18"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#deleteModal"
-                                  type="button"
-                                ></iconify-icon>
-                              </button>
-                            </Tooltip>
-                          </div>
-                        </td>
-                      </tr>
+                                  <Tooltip title="Delete" arrow>
+                                    <button className="btn btn-soft-danger btn-sm">
+                                      <iconify-icon
+                                        icon="solar:trash-bin-minimalistic-2-broken"
+                                        className="align-middle fs-18"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        type="button"
+                                      ></iconify-icon>
+                                    </button>
+                                  </Tooltip>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
