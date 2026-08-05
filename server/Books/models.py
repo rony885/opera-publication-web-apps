@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.html import mark_safe
 from django.template.defaultfilters import truncatechars
 from django.contrib import admin
+from Author.models import Author
 
 
 class NoLogAdmin(admin.ModelAdmin):
@@ -58,8 +59,7 @@ class Category(models.Model):
 
     Image.short_description = "Image"
 
-
-class Author(models.Model):
+class UnitType(models.Model):
     status = models.BooleanField(default=True)
     name = models.CharField(max_length=255)
 
@@ -67,11 +67,28 @@ class Author(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = "book_author"
+        db_table = "unit_type"
         ordering = ["name"]
 
     def __str__(self):
         return self.name
+
+   
+
+
+# class Author(models.Model):
+#     status = models.BooleanField(default=True)
+#     name = models.CharField(max_length=255)
+
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     class Meta:
+#         db_table = "book_author"
+#         ordering = ["name"]
+
+#     def __str__(self):
+#         return self.name
 
 
 class Book(models.Model):
@@ -128,8 +145,14 @@ class Book(models.Model):
     
     unit_quantity = models.CharField(
         max_length=30,
-        default="1 Piece",
+        default="1",
     )
+    
+    unit_type = models.ForeignKey(
+            UnitType,
+            on_delete=models.CASCADE,
+            related_name="books",
+        )
 
     rating = models.DecimalField(
         max_digits=2,

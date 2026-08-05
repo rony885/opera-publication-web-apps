@@ -7,6 +7,11 @@ class Author(models.Model):
     status = models.BooleanField(default=True)
 
     name = models.CharField(max_length=255)
+    english_name = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
 
     image = models.ImageField(
         upload_to="uploads/images/author",

@@ -8,6 +8,7 @@ class AuthorAdmin(admin.ModelAdmin):
         "id",
         "Image",
         "name",
+        "english_name",
         "status",
         "created_at",
     )

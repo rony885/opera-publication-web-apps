@@ -37,6 +37,8 @@ from django.conf.urls.static import static
 from .views import (
     CategoryView,
     CategoryUnpaginateView,
+    UnitTypeView,
+    UnitTypeUnpaginateView,
     BookView,
     BookUnpaginateView,
 )
@@ -53,6 +55,18 @@ router.register(
     "unpaginate_category",
     CategoryUnpaginateView,
     basename="unpaginate_category",
+)
+
+router.register(
+    "unit_type",
+    UnitTypeView,
+    basename="unit_type",
+)
+
+router.register(
+    "unpaginate_unit_type",
+    UnitTypeUnpaginateView,
+    basename="unpaginate_unit_type",
 )
 
 router.register(

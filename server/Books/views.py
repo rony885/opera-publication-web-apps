@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .models import Category, Author, Book
-from .serializers import CategorySerializer, UnpaginateCategorySerializer, AuthorSerializer, UnpaginateAuthorSerializer, BookSerializer, UnpaginateBookSerializer
+from .models import Category, UnitType, Book
+from Author.models import Author
+from .serializers import CategorySerializer, UnpaginateCategorySerializer, AuthorSerializer, UnpaginateAuthorSerializer, UnitTypeSerializer, UnpaginateUnitTypeSerializer, BookSerializer, UnpaginateBookSerializer
 # from .paginations import CategoryPagination, BookPagination
 
 
@@ -26,6 +27,15 @@ class AuthorView(viewsets.ModelViewSet):
 class AuthorUnpaginateView(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = UnpaginateAuthorSerializer
+    
+class UnitTypeView(viewsets.ModelViewSet):
+    queryset = UnitType.objects.all()
+    serializer_class = UnitTypeSerializer
+
+
+class UnitTypeUnpaginateView(viewsets.ModelViewSet):
+    queryset = UnitType.objects.all()
+    serializer_class = UnpaginateUnitTypeSerializer
 
 
 class BookView(viewsets.ModelViewSet):

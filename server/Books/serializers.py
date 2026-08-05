@@ -46,7 +46,9 @@
 #         fields = "__all__"
 
 from rest_framework import serializers
-from .models import Category, Author, Book
+# from .models import Category, Author, Book
+from .models import Category, UnitType, Book
+from Author.models import Author
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -61,6 +63,20 @@ class UnpaginateCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
+
+class UnitTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UnitType
+        fields = "__all__"
+
+
+class UnpaginateUnitTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UnitType
+        fields = "__all__"
+
 
       
 class AuthorSerializer(serializers.ModelSerializer):
@@ -81,14 +97,17 @@ class UnpaginateAuthorSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+
 class BookSerializer(serializers.ModelSerializer):
 
     status = serializers.BooleanField(default=True)
 
     category = CategorySerializer()
 
+    unit_type = UnitTypeSerializer()
+    
     author = AuthorSerializer()
-  
+    
     class Meta:
         model = Book
         fields = "__all__"
@@ -100,8 +119,10 @@ class UnpaginateBookSerializer(serializers.ModelSerializer):
     
     category = CategorySerializer()
 
+    unit_type = UnitTypeSerializer()
+    
     author = AuthorSerializer()
-
+    
     class Meta:
         model = Book
         fields = "__all__"

@@ -29,9 +29,9 @@ const Blog = () => {
     setReceivedId(id);
   };
 
-  const deleteSlider = async (id) => {
+  const deleteBlog = async (id) => {
     await axios.delete(
-      `${process.env.REACT_APP_BASE_URL}/home_api/home/${id}/`,
+      `${process.env.REACT_APP_BASE_URL}/blog_api/blog/${id}/`,
     );
     window.location.reload(false);
   };
@@ -114,7 +114,7 @@ const Blog = () => {
                                 <div className="d-flex gap-2 justify-content-end align-items-center">
                                   <Tooltip title="Edit" arrow>
                                     <Link
-                                      to="/blog-update"
+                                      to={`/blog-update/${blg.id}`}
                                       className="btn btn-soft-primary btn-sm"
                                     >
                                       <iconify-icon
@@ -132,6 +132,7 @@ const Blog = () => {
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
                                         type="button"
+                                        onClick={() => getId(blg.id)}
                                       ></iconify-icon>
                                     </button>
                                   </Tooltip>
@@ -220,7 +221,7 @@ const Blog = () => {
                       <button
                         type="button"
                         className="btn btn-danger"
-                        // onClick={() => deleteProduct(receivedId)}
+                        onClick={() => deleteBlog(receivedId)}
                       >
                         Delete
                       </button>

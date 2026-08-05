@@ -1,6 +1,7 @@
 from django.contrib import admin
 # from django_json_widget.widgets import JSONEditorWidget
-from .models import Category, Author, Book, NoLogAdmin
+from .models import Category, UnitType, Book, NoLogAdmin
+from Author.models import Author
 
 
 @admin.register(Category)
@@ -20,21 +21,45 @@ class CategoryAdmin(NoLogAdmin):
         "created_at",
         "updated_at",
     )
-
-
-@admin.register(Author)
-class AuthorAdmin(NoLogAdmin):
+    
+@admin.register(UnitType)
+class UnitTypeAdmin(NoLogAdmin):
     list_display = (
         "id",
         "name",
         "status",
         "created_at",
     )
-    list_display_links = ("id", "name")
-    search_fields = ("name",)
-    list_filter = ("status",)
 
+    list_display_links = (
+        "id",
+        "name",
+    )
 
+    search_fields = (
+        "name",
+    )
+
+    list_filter = (
+        "status",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+# @admin.register(Author)
+# class AuthorAdmin(NoLogAdmin):
+#     list_display = (
+#         "id",
+#         "name",
+#         "status",
+#         "created_at",
+#     )
+#     list_display_links = ("id", "name")
+#     search_fields = ("name",)
+#     list_filter = ("status",)
 
 
 @admin.register(Book)
@@ -49,6 +74,7 @@ class BookAdmin(NoLogAdmin):
         "title",
         "author",
         "category",
+        "unit_type",
         "price",
         "stock",
         "status",
@@ -91,6 +117,7 @@ class BookAdmin(NoLogAdmin):
         "category",
         "author",   # <-- HTML Select will appear here
         "unit_quantity",
+        "unit_type",
         "rating",
         "old_price",
         "price",

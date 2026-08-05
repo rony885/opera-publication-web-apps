@@ -151,7 +151,7 @@ function App() {
 
               <Route path="/blogs" element={<Blog />}></Route>
               <Route path="/create-blog" element={<AddBlog />}></Route>
-              <Route path="/blog-update" element={<UpdateBlog />}></Route>
+              <Route path="/blog-update/:id" element={<UpdateBlog />}></Route>
 
               <Route path="/opera" element={<Opera />}></Route>
               <Route path="/writer-chirkut" element={<WriterChirkut />}></Route>
