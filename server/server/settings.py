@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_json_widget',
     
     # Installed Apps
+    'Address.apps.AddressConfig',
     'Home.apps.HomeConfig',
     'Books.apps.BooksConfig',
     'Author.apps.AuthorConfig',
