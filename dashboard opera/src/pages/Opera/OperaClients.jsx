@@ -85,14 +85,14 @@ const OperaClients = () => {
         navigate("/opera-clients");
         window.location.reload(false);
       })
+      // .catch((error) => {
+      //   setMessage(error.message, "Error");
+      // });
       .catch((error) => {
-        setMessage(error.message, "Error");
+        console.log(error.response);
+        console.log(error.response?.data);
+        setMessage(error.response?.data || error.message);
       });
-    // .catch((error) => {
-    //   console.log(error.response);
-    //   console.log(error.response?.data);
-    //   setMessage(error.response?.data || error.message);
-    // });
   };
 
   const submitAddOperaClientsForm = async (

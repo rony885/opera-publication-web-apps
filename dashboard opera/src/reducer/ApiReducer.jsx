@@ -140,6 +140,22 @@ const ApiReducer = (state, action) => {
         isError: false,
       };
 
+    case "SET_API_WRITTER_CHIRKUTT":
+      return {
+        ...state,
+        isLoading: false,
+        writter_chirkutt: action.payload,
+        isError: false,
+      };
+
+    case "SET_API_UNPAGINATE_WRITTER_CHIRKUTT":
+      return {
+        ...state,
+        isLoading: false,
+        unpaginate_writter_chirkutt: action.payload,
+        isError: false,
+      };
+
     //Contact Module
     case "SET_API_CONTACT":
       return {
