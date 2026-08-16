@@ -134,10 +134,16 @@ function App() {
               <Route path="/update-slider/:id" element={<UpdateHome />}></Route>
               <Route path="/banner" element={<Banner />}></Route>
               <Route path="/create-banner" element={<AddBanner />}></Route>
-              <Route path="/update-banner/:id" element={<UpdateBanner />}></Route>
+              <Route
+                path="/update-banner/:id"
+                element={<UpdateBanner />}
+              ></Route>
               <Route path="/feature" element={<Feature />}></Route>
               <Route path="/create-feature" element={<AddFeature />}></Route>
-              <Route path="/update-feature/:id" element={<UpdateFeature />}></Route>
+              <Route
+                path="/update-feature/:id"
+                element={<UpdateFeature />}
+              ></Route>
 
               <Route path="/book-list" element={<ProductsList />}></Route>
               <Route path="/add-book" element={<AddProduct />}></Route>
@@ -160,7 +166,7 @@ function App() {
                 element={<AddWriterChirkut />}
               ></Route>
               <Route
-                path="/writer-chirkut-update"
+                path="/writer-chirkut-update/:id"
                 element={<UpdateWriterChirkut />}
               ></Route>
               <Route path="/opera-clients" element={<OperaClients />}></Route>

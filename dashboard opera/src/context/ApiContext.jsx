@@ -41,7 +41,7 @@ const initialState = {
   // Opera Module
   opera_client: [],
   unpaginate_opera_client: [],
-  writter_chirkutt: [],
+  writter_chirkut: [],
   unpaginate_writter_chirkut: [],
 
   // Contact Module
@@ -91,7 +91,7 @@ const ApiContext = ({ children }) => {
     // Opera Module
     operaClient: `${process.env.REACT_APP_BASE_URL}/opera_api/opera_clients/`,
     unpaginateOperaClient: `${process.env.REACT_APP_BASE_URL}/opera_api/unpaginate_opera_clients/`,
-    WritterChirkut: `${process.env.REACT_APP_BASE_URL}/opera_api/writter_chirkut/`,
+    writterChirkut: `${process.env.REACT_APP_BASE_URL}/opera_api/writter_chirkut/`,
     unpaginateWritterChirkut: `${process.env.REACT_APP_BASE_URL}/opera_api/unpaginate_writter_chirkut/`,
 
     // Contact Module
@@ -220,9 +220,10 @@ const ApiContext = ({ children }) => {
       fetchData(urls.unpaginateOperaClient, "SET_API_UNPAGINATE_OPERA_CLIENT"),
     [fetchData, urls.unpaginateOperaClient],
   );
+
   const fetchWritterChirkut = useCallback(
-    () => fetchData(urls.WritterChirkut, "SET_API_WRITTER_CHIRKUT"),
-    [fetchData, urls.WritterChirkut],
+    () => fetchData(urls.writterChirkut, "SET_API_WRITTER_CHIRKUT"),
+    [fetchData, urls.writterChirkut],
   );
   const fetchUnpaginateWritterChirkut = useCallback(
     () =>

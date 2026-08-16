@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import "@iconify-icon/react";
 import Tooltip from "@mui/material/Tooltip";
 
+import axios from "axios";
+import { useApiContext } from "../../context/ApiContext";
+
 const WriterChirkut = () => {
+  const {
+    writter_chirkut,
+    fetchWritterChirkut,
+    // handleApiPageChange,
+    // handleApiItemPerPageChange,
+    // handleApiSearchItemChange,
+    // resetPagination,
+  } = useApiContext();
+  console.log(writter_chirkut);
+
+  useEffect(() => {
+    fetchWritterChirkut();
+  }, [fetchWritterChirkut]);
+
+  const [receivedId, setReceivedId] = useState(null);
+
+  // delete
+  const getId = (id) => {
+    setReceivedId(id);
+  };
+
+  const deleteWritterChirkut = async (id) => {
+    await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/opera_api/writter_chirkut/${id}/`,
+    );
+    window.location.reload(false);
+  };
+
   return (
     <Wrapper>
       <div className="page-content">
@@ -45,56 +76,72 @@ const WriterChirkut = () => {
                         <th className="text-center">Image</th>
                         <th className="text-center">Name</th>
                         <th className="text-center">Designation</th>
-                        <th className="text-center">Descriptions</th>
+                        <th className="text-center">Description</th>
+                        <th className="text-center">Status</th>
                         <th className="text-end">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="text-start">1</td>
-                        <td>
-                          <div className="d-flex align-items-center justify-content-center gap-2">
-                            <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                              <img
-                                src="/assets/images/product/p-1.png"
-                                alt=""
-                                className="avatar-md"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td className="text-center">XYZ</td>
-                        <td className="text-center">Designation...</td>
-                        <td className="text-center">Descriptions...</td>
+                      {writter_chirkut &&
+                        writter_chirkut.map((item, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="text-start">{index + 1}</td>
+                              <td>
+                                <div className="d-flex align-items-center justify-content-center gap-2">
+                                  <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                    <img
+                                      src={item.image}
+                                      alt="Imagee"
+                                      className="avatar-md"
+                                    />
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="text-center">{item.name}</td>
+                              <td className="text-center">
+                                {item.designation}
+                              </td>
+                              <td className="text-center">
+                                {item.description.slice(0, 50)}...
+                              </td>
+                              <td className="text-center">
+                                {" "}
+                                <p>
+                                  {item.status === true ? "Active" : "Inactive"}
+                                </p>
+                              </td>
+                              <td>
+                                <div className="d-flex gap-2 justify-content-end align-items-center">
+                                  <Tooltip title="Edit" arrow>
+                                    <Link
+                                      to={`/writer-chirkut-update/${item.id}`}
+                                      className="btn btn-soft-primary btn-sm"
+                                    >
+                                      <iconify-icon
+                                        icon="solar:pen-2-broken"
+                                        className="align-middle fs-18"
+                                      ></iconify-icon>
+                                    </Link>
+                                  </Tooltip>
 
-                        <td>
-                          <div className="d-flex gap-2 justify-content-end align-items-center">
-                            <Tooltip title="Edit" arrow>
-                              <Link
-                                to="/writer-chirkut-update"
-                                className="btn btn-soft-primary btn-sm"
-                              >
-                                <iconify-icon
-                                  icon="solar:pen-2-broken"
-                                  className="align-middle fs-18"
-                                ></iconify-icon>
-                              </Link>
-                            </Tooltip>
-
-                            <Tooltip title="Delete" arrow>
-                              <button className="btn btn-soft-danger btn-sm">
-                                <iconify-icon
-                                  icon="solar:trash-bin-minimalistic-2-broken"
-                                  className="align-middle fs-18"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#deleteModal"
-                                  type="button"
-                                ></iconify-icon>
-                              </button>
-                            </Tooltip>
-                          </div>
-                        </td>
-                      </tr>
+                                  <Tooltip title="Delete" arrow>
+                                    <button className="btn btn-soft-danger btn-sm">
+                                      <iconify-icon
+                                        icon="solar:trash-bin-minimalistic-2-broken"
+                                        className="align-middle fs-18"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        type="button"
+                                          onClick={() => getId(item.id)}
+                                      ></iconify-icon>
+                                    </button>
+                                  </Tooltip>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
@@ -175,7 +222,7 @@ const WriterChirkut = () => {
                       <button
                         type="button"
                         className="btn btn-danger"
-                        // onClick={() => deleteProduct(receivedId)}
+                        onClick={() => deleteWritterChirkut(receivedId)}
                       >
                         Delete
                       </button>

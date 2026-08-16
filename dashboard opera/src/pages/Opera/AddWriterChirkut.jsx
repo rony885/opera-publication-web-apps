@@ -13,12 +13,8 @@ import { useState } from "react";
 
 const initialValues = {
   status: "",
-  // blog_id: "",
-  // pub_date: "",
-  title: "",
-  author: "",
-  comments: "",
-  views: "",
+  name: "",
+  designation: "",
   description: "",
   image: "",
 };
@@ -133,18 +129,6 @@ const AddWriterChirkut = () => {
                       <FormikForm noValidate onSubmit={(e) => handleSubmit(e)}>
                         <div className="row">
                           <div className="col-lg-4">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Name
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
                             <Form.Group className="form-outline mb-3">
                               <Form.Label>
                                 Name
@@ -168,18 +152,6 @@ const AddWriterChirkut = () => {
                             </Form.Group>
                           </div>
                           <div className="col-lg-4">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Designation
-                                </label>
-                                <input
-                                  type="text"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
                             <Form.Group className="form-outline mb-3">
                               <Form.Label>
                                 Designation
@@ -208,18 +180,6 @@ const AddWriterChirkut = () => {
                             </Form.Group>
                           </div>
                           <div className="col-lg-4">
-                            {/* <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Image
-                                </label>
-                                <input
-                                  type="file"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form> */}
                             <Form.Group className="form-outline mb-3">
                               <Form.Label>
                                 status<span></span>
@@ -249,19 +209,68 @@ const AddWriterChirkut = () => {
                         </div>
 
                         <div className="row">
-                          <div className="col-lg-12">
-                            <form>
-                              <div className="mb-3">
-                                <label htmlFor="layout" className="form-label">
-                                  Descriptions
-                                </label>
-                                <textarea
-                                  className="form-control bg-light-subtle"
+                          <div className="col-lg-6">
+                            <Form.Group className="form-outline mb-0 w-100">
+                              <Form.Label>
+                                Descriptions<span></span>
+                              </Form.Label>
+                              <InputGroup hasValidation>
+                                <JoditEditor
+                                  className="w-100"
+                                  name="description"
                                   id="description"
-                                  rows="3"
-                                ></textarea>
-                              </div>
-                            </form>
+                                  ref={editor}
+                                  value={content1}
+                                  onChange={(newContent) =>
+                                    setContent1(newContent)
+                                  }
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.description}
+                                </Form.Control.Feedback>
+                              </InputGroup>
+                            </Form.Group>
+                          </div>
+
+                          <div className="col-lg-6">
+                            <Form.Group className="form-outline mb-3 imgDiv divv">
+                              <Form.Label>
+                                Image
+                                <span className="text-danger">*</span>
+                              </Form.Label>
+                              <Form.Control
+                                type="file"
+                                name="image"
+                                id="image"
+                                onChange={(event) => {
+                                  setFieldValue(
+                                    "image",
+                                    event.currentTarget.files[0],
+                                  );
+                                  onImageChange(event);
+                                }}
+                                isInvalid={!!touched.image && !!errors.image}
+                                isValid={touched.image && !errors.image}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {errors.image}
+                              </Form.Control.Feedback>
+
+                              {showImage && (
+                                <div>
+                                  <img
+                                    alt="img"
+                                    style={{
+                                      width: "150px",
+                                      height: "150px",
+                                      marginTop: "20px",
+                                      borderRadius: "50%",
+                                    }}
+                                    src={showImage}
+                                  />
+                                </div>
+                              )}
+                            </Form.Group>
                           </div>
                         </div>
 
@@ -269,8 +278,14 @@ const AddWriterChirkut = () => {
                           <button type="reset" className="btn btn-danger">
                             Cancel
                           </button>
-                          <button type="submit" className="btn btn-success">
-                            Submit
+                          <button
+                            className="btn btn-success"
+                            type="submit"
+                            disabled={isSubmitting}
+                          >
+                            {isSubmitting
+                              ? "Submitting..."
+                              : " Add Witter Chirkut"}
                           </button>
                         </div>
 
