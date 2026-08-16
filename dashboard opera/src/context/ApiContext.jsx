@@ -38,6 +38,10 @@ const initialState = {
   blog: [],
   unpaginate_blog: [],
 
+  // Opera Module
+  opera_client: [],
+  unpaginate_opera_client: [],
+
   // Contact Module
   contact: [],
   unpaginate_contact: [],
@@ -81,6 +85,10 @@ const ApiContext = ({ children }) => {
     // Blog Module
     blog: `${process.env.REACT_APP_BASE_URL}/blog_api/blog/`,
     unpaginateBlog: `${process.env.REACT_APP_BASE_URL}/blog_api/unpaginate_blog/`,
+
+    // Opera Module
+    operaClient: `${process.env.REACT_APP_BASE_URL}/opera_api/opera_clients/`,
+    unpaginateOperaClient: `${process.env.REACT_APP_BASE_URL}/opera_api/unpaginate_opera_clients/`,
 
     // Contact Module
     contact: `${process.env.REACT_APP_BASE_URL}/contact_api/contact/`,
@@ -198,6 +206,17 @@ const ApiContext = ({ children }) => {
     [fetchData, urls.unpaginateBlog],
   );
 
+  // Opera Module
+  const fetchOperaClient = useCallback(
+    () => fetchData(urls.operaClient, "SET_API_OPERA_CLIENT"),
+    [fetchData, urls.operaClient],
+  );
+  const fetchUnpaginateOperaClient = useCallback(
+    () =>
+      fetchData(urls.unpaginateOperaClient, "SET_API_UNPAGINATE_OPERA_CLIENT"),
+    [fetchData, urls.unpaginateOperaClient],
+  );
+
   // Contact Module
   const fetchContact = useCallback(
     () => fetchData(urls.contact, "SET_API_CONTACT"),
@@ -286,6 +305,9 @@ const ApiContext = ({ children }) => {
 
         fetchBlog,
         fetchUnpaginateBlog,
+
+        fetchOperaClient,
+        fetchUnpaginateOperaClient,
 
         fetchContact,
         fetchUnpaginateContact,

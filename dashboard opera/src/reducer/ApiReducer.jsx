@@ -123,6 +123,23 @@ const ApiReducer = (state, action) => {
         isError: false,
       };
 
+    // Opera Module
+    case "SET_API_OPERA_CLIENT":
+      return {
+        ...state,
+        isLoading: false,
+        opera_client: action.payload,
+        isError: false,
+      };
+
+    case "SET_API_UNPAGINATE_OPERA_CLIENT":
+      return {
+        ...state,
+        isLoading: false,
+        unpaginate_opera_client: action.payload,
+        isError: false,
+      };
+
     //Contact Module
     case "SET_API_CONTACT":
       return {

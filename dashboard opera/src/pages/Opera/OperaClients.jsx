@@ -1,11 +1,195 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "@iconify-icon/react";
 import Tooltip from "@mui/material/Tooltip";
 
+import { Formik, Form as FormikForm } from "formik";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import * as yup from "yup";
+import axios from "axios";
+import { useApiContext } from "../../context/ApiContext";
+
+const initialValues = {
+  status: "",
+  operaClientLink: "",
+  image: "",
+};
+
+const schema = yup.object().shape({
+  status: yup.boolean(),
+  operaClientLink: yup.string().required("Please enter a valid URL"),
+  image: yup.mixed().required("Image is a required field!"),
+});
+
+const validate = (values) => {
+  let errors = {};
+  return errors;
+};
+
 const OperaClients = () => {
+  const {
+    opera_client,
+    fetchOperaClient,
+    // handleApiPageChange,
+    // handleApiItemPerPageChange,
+    // handleApiSearchItemChange,
+    // resetPagination,
+  } = useApiContext();
+
+  useEffect(() => {
+    fetchOperaClient();
+  }, [fetchOperaClient]);
+
+  const [message, setMessage] = useState();
+  const navigate = useNavigate();
+
+  const [showImage, setShowImage] = useState(null);
+  const [showUpdateImage, setShowUpdateImage] = useState(null);
+
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setShowImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
+  const onUpdateImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setShowUpdateImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
+
+  // update
+  const [item, setItem] = useState({});
+  // const { id } = useParams();
+
+  // add
+  const AddOperaClientsFunc = async (values) => {
+    let formfield = new FormData();
+
+    formfield.append("status", values.status === "true");
+    formfield.append("operaClientLink", values.operaClientLink);
+
+    if (values.image) {
+      formfield.append("image", values.image);
+    }
+
+    await axios({
+      method: "POST",
+      url: `${process.env.REACT_APP_BASE_URL}/opera_api/opera_clients/`,
+      data: formfield,
+    })
+      .then((response) => {
+        setMessage(response.success, "Opera Clients is successfuly created...");
+        navigate("/opera-clients");
+        window.location.reload(false);
+      })
+      .catch((error) => {
+        setMessage(error.message, "Error");
+      });
+    // .catch((error) => {
+    //   console.log(error.response);
+    //   console.log(error.response?.data);
+    //   setMessage(error.response?.data || error.message);
+    // });
+  };
+
+  const submitAddOperaClientsForm = async (
+    values,
+    { setErrors, setSubmitting, resetForm },
+  ) => {
+    try {
+      setSubmitting(true);
+      await AddOperaClientsFunc(values);
+      setSubmitting(false);
+      // resetForm();
+    } catch (error) {
+      setErrors({ error: error.message });
+      setSubmitting(false);
+    }
+  };
+
+  // update
+  const updatedValues = {
+    status:
+      item.status === true ? "true" : item.status === false ? "false" : "",
+    operaClientLink: item.operaClientLink ? item.operaClientLink : "",
+    image: item.image ? item.image : "",
+  };
+
+  const UpdateOperaClientsFunc = async (values) => {
+    let formfield = new FormData();
+
+    formfield.append("status", values.status === "true");
+    formfield.append("operaClientLink", values.operaClientLink);
+    if (values.image !== item.image) {
+      formfield.append("image", values.image);
+    }
+
+    await axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_BASE_URL}/opera_api/opera_clients/${item.id}/`,
+      data: formfield,
+    })
+      .then((response) => {
+        setMessage(
+          response.success,
+          "Opera Clients is successfully updated...",
+        );
+        navigate("/opera-clients");
+        window.location.reload(false);
+      })
+      .catch((error) => {
+        setMessage(error.message, "Error");
+      });
+  };
+
+  const submitUpdateSliderForm = async (
+    values,
+    { setErrors, setSubmitting, resetForm },
+  ) => {
+    try {
+      setSubmitting(true);
+      await UpdateOperaClientsFunc(values);
+      setSubmitting(false);
+      // resetForm();
+    } catch (error) {
+      setErrors({ error: error.message });
+      setSubmitting(false);
+    }
+  };
+
+  // Get single client by ID for edit
+  const updateOperaClients = async (id) => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/opera_api/opera_clients/${id}/`,
+      );
+
+      setItem(data);
+
+      // Show existing image
+      setShowUpdateImage(data.image);
+    } catch (error) {
+      console.log("Edit data error:", error);
+    }
+  };
+
+  const [receivedId, setReceivedId] = useState(null);
+
+  // delete
+  const getId = (id) => {
+    setReceivedId(id);
+  };
+
+  const deleteclient = async (id) => {
+    await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/opera_api/opera_clients/${id}/`,
+    );
+    window.location.reload(false);
+  };
+
   return (
     <Wrapper>
       <div className="page-content">
@@ -49,49 +233,61 @@ const OperaClients = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="text-start">1</td>
-                        <td>
-                          <div className="d-flex align-items-center justify-content-center gap-2">
-                            <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                              <img
-                                src="/assets/images/product/p-1.png"
-                                alt=""
-                                className="avatar-md"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td className="text-center">Active</td>
-                        <td>
-                          <div className="d-flex gap-2 justify-content-end align-items-center">
-                            <Tooltip title="Edit" arrow>
-                              <Link
-                                className="btn btn-soft-primary btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModalCenteredScrollable"
-                              >
-                                <iconify-icon
-                                  icon="solar:pen-2-broken"
-                                  className="align-middle fs-18"
-                                ></iconify-icon>
-                              </Link>
-                            </Tooltip>
+                      {opera_client &&
+                        opera_client.map((client, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="text-start">{index + 1}</td>
+                              <td>
+                                <div className="d-flex align-items-center justify-content-center gap-2">
+                                  <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                    <img
+                                      src={client.image}
+                                      alt=""
+                                      className="avatar-md"
+                                    />
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="text-center">
+                                {" "}
+                                {client.status === true ? "Active" : "Inactive"}
+                              </td>
+                              <td>
+                                <div className="d-flex gap-2 justify-content-end align-items-center">
+                                  <Tooltip title="Edit" arrow>
+                                    <button
+                                      onClick={() =>
+                                        updateOperaClients(client.id)
+                                      }
+                                      className="btn btn-soft-primary btn-sm"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#exampleModalCenteredScrollable"
+                                    >
+                                      <iconify-icon
+                                        icon="solar:pen-2-broken"
+                                        className="align-middle fs-18"
+                                      ></iconify-icon>
+                                    </button>
+                                  </Tooltip>
 
-                            <Tooltip title="Delete" arrow>
-                              <button className="btn btn-soft-danger btn-sm">
-                                <iconify-icon
-                                  icon="solar:trash-bin-minimalistic-2-broken"
-                                  className="align-middle fs-18"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#deleteModal"
-                                  type="button"
-                                ></iconify-icon>
-                              </button>
-                            </Tooltip>
-                          </div>
-                        </td>
-                      </tr>
+                                  <Tooltip title="Delete" arrow>
+                                    <button className="btn btn-soft-danger btn-sm">
+                                      <iconify-icon
+                                        icon="solar:trash-bin-minimalistic-2-broken"
+                                        className="align-middle fs-18"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        type="button"
+                                        onClick={() => getId(client.id)}
+                                      ></iconify-icon>
+                                    </button>
+                                  </Tooltip>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
@@ -156,59 +352,157 @@ const OperaClients = () => {
                     </div>
                     <div className="modal-body">
                       <div className="card-body">
-                        <div className="row">
-                          <div className="col-lg-12">
-                            <form>
-                              <div className="mb-3">
-                                <label
-                                  htmlFor="meta-tag"
-                                  className="form-label"
-                                >
-                                  Image
-                                </label>
-                                <input
-                                  type="file"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div className="col-lg-12">
-                            <form>
-                              <div className="mb-3">
-                                <label
-                                  htmlFor="meta-tag"
-                                  className="form-label"
-                                >
-                                  Status
-                                </label>
-                                <select
-                                  className="form-control"
-                                  id="layout"
-                                  data-choices
-                                  data-choices-groups
-                                  data-placeholder="Select Layout"
-                                >
-                                  <option defaultValue="">Select</option>
-                                  <option defaultValue="Fashion">Active</option>
-                                  <option defaultValue="Dining">
-                                    Inactive
-                                  </option>
-                                </select>
-                              </div>
-                            </form>
-                          </div>
+                        <Formik
+                          initialValues={initialValues}
+                          validationSchema={schema}
+                          onSubmit={submitAddOperaClientsForm}
+                          validate={validate}
+                        >
+                          {({
+                            handleSubmit,
+                            handleChange,
+                            values,
+                            touched,
+                            errors,
+                            isSubmitting,
+                            setFieldValue,
+                          }) => (
+                            <FormikForm
+                              noValidate
+                              onSubmit={(e) => handleSubmit(e)}
+                            >
+                              <div className="row">
+                                <div className="col-lg-12">
+                                  <Form.Group className="form-outline mb-3 imgDiv divv">
+                                    <Form.Label>
+                                      Image
+                                      <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                      type="file"
+                                      name="image"
+                                      id="image"
+                                      onChange={(event) => {
+                                        setFieldValue(
+                                          "image",
+                                          event.currentTarget.files[0],
+                                        );
+                                        onImageChange(event);
+                                      }}
+                                      isInvalid={
+                                        !!touched.image && !!errors.image
+                                      }
+                                      isValid={touched.image && !errors.image}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                      {errors.image}
+                                    </Form.Control.Feedback>
 
-                          <div className="d-flex justify-content-end gap-2 my-2">
-                            <button type="reset" className="btn btn-danger">
-                              Cancel
-                            </button>
-                            <button type="submit" className="btn btn-success">
-                              Submit
-                            </button>
-                          </div>
-                        </div>
+                                    {showImage && (
+                                      <div>
+                                        <img
+                                          alt="img"
+                                          style={{
+                                            width: "150px",
+                                            height: "150px",
+                                            marginTop: "20px",
+                                            borderRadius: "50%",
+                                          }}
+                                          src={showImage}
+                                        />
+                                      </div>
+                                    )}
+                                  </Form.Group>
+                                </div>
+                                <div className="col-lg-12">
+                                  <Form.Group className="form-outline mb-3">
+                                    <Form.Label>
+                                      status<span></span>
+                                    </Form.Label>
+                                    <InputGroup hasValidation>
+                                      <Form.Select
+                                        name="status"
+                                        id="status"
+                                        value={values.status}
+                                        onChange={handleChange}
+                                        isInvalid={
+                                          !!touched.status && !!errors.status
+                                        }
+                                        isValid={
+                                          touched.status && !errors.status
+                                        }
+                                        className="form-control mb-0"
+                                      >
+                                        <option value="">Select</option>
+                                        <option value={`${true}`}>
+                                          Active
+                                        </option>
+                                        <option value={`${false}`}>
+                                          Inactive
+                                        </option>
+                                      </Form.Select>
+                                      <Form.Control.Feedback type="invalid">
+                                        {errors.status}
+                                      </Form.Control.Feedback>
+                                    </InputGroup>
+                                  </Form.Group>
+                                </div>
+                                <div className="col-lg-12">
+                                  <Form.Group className="form-outline mb-3">
+                                    <Form.Label>
+                                      URL
+                                      <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <InputGroup hasValidation>
+                                      <Form.Control
+                                        type="text"
+                                        name="operaClientLink"
+                                        id="operaClientLink"
+                                        value={values.operaClientLink}
+                                        onChange={handleChange}
+                                        isInvalid={
+                                          !!touched.operaClientLink &&
+                                          !!errors.operaClientLink
+                                        }
+                                        isValid={
+                                          touched.operaClientLink &&
+                                          !errors.operaClientLink
+                                        }
+                                        classname="form-control mb-0"
+                                      />
+                                      <Form.Control.Feedback type="invalid">
+                                        {errors.operaClientLink}
+                                      </Form.Control.Feedback>
+                                    </InputGroup>
+                                  </Form.Group>
+                                </div>
+
+                                <div className="d-flex justify-content-end gap-2 my-2">
+                                  <button
+                                    type="reset"
+                                    className="btn btn-danger"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    className="btn btn-success"
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                  >
+                                    {isSubmitting
+                                      ? "Submitting..."
+                                      : " Add Client"}
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* message  */}
+                              {message && (
+                                <h2 className="text-center m-5">{message}</h2>
+                              )}
+                            </FormikForm>
+                          )}
+                        </Formik>
                       </div>
                     </div>
                   </div>
@@ -242,59 +536,151 @@ const OperaClients = () => {
                     </div>
                     <div className="modal-body">
                       <div className="card-body">
-                        <div className="row">
-                          <div className="col-lg-12">
-                            <form>
-                              <div className="mb-3">
-                                <label
-                                  htmlFor="meta-tag"
-                                  className="form-label"
-                                >
-                                  Image
-                                </label>
-                                <input
-                                  type="file"
-                                  id="meta-tag"
-                                  className="form-control"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div className="col-lg-12">
-                            <form>
-                              <div className="mb-3">
-                                <label
-                                  htmlFor="meta-tag"
-                                  className="form-label"
-                                >
-                                  Status
-                                </label>
-                                <select
-                                  className="form-control"
-                                  id="layout"
-                                  data-choices
-                                  data-choices-groups
-                                  data-placeholder="Select Layout"
-                                >
-                                  <option defaultValue="">Select</option>
-                                  <option defaultValue="Fashion">Active</option>
-                                  <option defaultValue="Dining">
-                                    Inactive
-                                  </option>
-                                </select>
-                              </div>
-                            </form>
-                          </div>
+                        <Formik
+                          enableReinitialize={true}
+                          initialValues={updatedValues}
+                          validationSchema={schema}
+                          onSubmit={submitUpdateSliderForm}
+                          validate={validate}
+                        >
+                          {({
+                            handleSubmit,
+                            handleChange,
+                            values,
+                            touched,
+                            errors,
+                            isSubmitting,
+                            setFieldValue,
+                          }) => (
+                            <FormikForm
+                              noValidate
+                              onSubmit={(e) => handleSubmit(e)}
+                            >
+                              <div className="row">
+                                <div className="col-lg-12">
+                                  <Form.Group className="form-outline mb-3 imgDiv divv">
+                                    <Form.Label>
+                                      Image
+                                      <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <Form.Control
+                                      type="file"
+                                      name="image"
+                                      id="image"
+                                      onChange={(event) => {
+                                        setFieldValue(
+                                          "image",
+                                          event.currentTarget.files[0],
+                                        );
+                                        onUpdateImageChange(event);
+                                      }}
+                                      isInvalid={
+                                        !!touched.image && !!errors.image
+                                      }
+                                      isValid={touched.image && !errors.image}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                      {errors.image}
+                                    </Form.Control.Feedback>
 
-                          <div className="d-flex justify-content-end gap-2 my-2">
-                            <button type="reset" className="btn btn-danger">
-                              Cancel
-                            </button>
-                            <button type="submit" className="btn btn-success">
-                              Update
-                            </button>
-                          </div>
-                        </div>
+                                    {showUpdateImage && (
+                                      <div>
+                                        <img
+                                          alt="img"
+                                          style={{
+                                            width: "150px",
+                                            height: "150px",
+                                            marginTop: "20px",
+                                            borderRadius: "50%",
+                                          }}
+                                          src={showUpdateImage}
+                                        />
+                                      </div>
+                                    )}
+                                  </Form.Group>
+                                </div>
+                              </div>
+                              <div className="col-lg-12">
+                                <Form.Group className="form-outline mb-3">
+                                  <Form.Label>
+                                    status<span></span>
+                                  </Form.Label>
+                                  <InputGroup hasValidation>
+                                    <Form.Select
+                                      name="status"
+                                      id="status"
+                                      value={values.status}
+                                      onChange={handleChange}
+                                      isInvalid={
+                                        !!touched.status && !!errors.status
+                                      }
+                                      isValid={touched.status && !errors.status}
+                                      className="form-control mb-0"
+                                    >
+                                      <option value="">Select</option>
+                                      <option value={`${true}`}>Active</option>
+                                      <option value={`${false}`}>
+                                        Inactive
+                                      </option>
+                                    </Form.Select>
+                                    <Form.Control.Feedback type="invalid">
+                                      {errors.status}
+                                    </Form.Control.Feedback>
+                                  </InputGroup>
+                                </Form.Group>
+                              </div>
+                              <div className="col-lg-12">
+                                <Form.Group className="form-outline mb-3">
+                                  <Form.Label>
+                                    URL
+                                    <span className="text-danger">*</span>
+                                  </Form.Label>
+                                  <InputGroup hasValidation>
+                                    <Form.Control
+                                      type="text"
+                                      name="operaClientLink"
+                                      id="operaClientLink"
+                                      value={values.operaClientLink}
+                                      onChange={handleChange}
+                                      isInvalid={
+                                        !!touched.operaClientLink &&
+                                        !!errors.operaClientLink
+                                      }
+                                      isValid={
+                                        touched.operaClientLink &&
+                                        !errors.operaClientLink
+                                      }
+                                      classname="form-control mb-0"
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                      {errors.operaClientLink}
+                                    </Form.Control.Feedback>
+                                  </InputGroup>
+                                </Form.Group>
+                              </div>
+
+                              <div className="d-flex justify-content-end gap-2 my-2">
+                                <button type="reset" className="btn btn-danger">
+                                  Cancel
+                                </button>
+                                <button
+                                  className="btn btn-success"
+                                  type="submit"
+                                  disabled={isSubmitting}
+                                >
+                                  {isSubmitting
+                                    ? "Submitting..."
+                                    : "Update Client"}
+                                </button>
+                              </div>
+
+                              {/* message  */}
+                              {message && (
+                                <h2 className="text-center m-5">{message}</h2>
+                              )}
+                            </FormikForm>
+                          )}
+                        </Formik>
                       </div>
                     </div>
                   </div>
@@ -344,7 +730,7 @@ const OperaClients = () => {
                       <button
                         type="button"
                         className="btn btn-danger"
-                        // onClick={() => deleteProduct(receivedId)}
+                        onClick={() => deleteclient(receivedId)}
                       >
                         Delete
                       </button>
