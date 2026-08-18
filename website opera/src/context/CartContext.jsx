@@ -73,7 +73,7 @@ const CartProvider = ({ children }) => {
     });
   };
 
-  const removeItem = (id) => {
+  const removeCart = (id) => {
     dispatch({ type: "REMOVE_ITEM", payload: id });
   };
 
@@ -109,7 +109,7 @@ const CartProvider = ({ children }) => {
       payload: orderData,
     });
   };
-  
+
   const clearOrder = () => {
     dispatch({ type: "CLEAR_ORDER" });
   };
@@ -141,6 +141,7 @@ const CartProvider = ({ children }) => {
     dispatch({ type: "CART_TOTAL_SPECIAL_PRICE" });
 
     localStorage.setItem("ecomCart", JSON.stringify(state.cart));
+    localStorage.setItem("ecomWishlist", JSON.stringify(state.wishlist));
   }, [state.cart, state.wishlist]);
 
   // useEffect(() => {
@@ -191,7 +192,7 @@ const CartProvider = ({ children }) => {
 
         // cart
         addToCart,
-        removeItem,
+        removeCart,
         clearCart,
         setDecrement,
         setIncrement,

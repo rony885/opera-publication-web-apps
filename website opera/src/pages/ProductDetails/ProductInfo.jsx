@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+
 import ProductArray from "../../../src/DataJS/Products.js";
 import categoriesArray from "../../DataJS/categories.js";
+import AuthorsArray from "../../DataJS/authors.js";
 import { useCartContext } from "../../context/CartContext.jsx";
-import authors from "../../DataJS/authors.js"; 
+import convertToBanglaNumber from "../../components/banglaConvert/convertToBanglaNumber.jsx";
 
 const ProductInfo = () => {
+  const {
+    cart,
+    addToCart,
+    removeCart,
+    addToWishlist,
+    removeWishlist,
+    wishlist,
+  } = useCartContext();
+
   const [productDetails, setProductDetails] = useState([]);
-  const { cart, wishlist, addToCart, addToWishlist } = useCartContext();
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     setProductDetails(ProductArray);
@@ -32,7 +45,25 @@ const ProductInfo = () => {
     (item) => item.id === findProductDetails?.id,
   );
 
+  const authorName = AuthorsArray.find(
+    (author) => author.id === findProductDetails?.authorId,
+  )?.name;
 
+  const increaseQuantity = () => {
+    setQuantity((prev) => {
+      const newQuantity = prev + 1;
+
+      return newQuantity > 10 ? 10 : newQuantity;
+    });
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prev) => {
+      const newQuantity = prev - 1;
+
+      return newQuantity < 1 ? 1 : newQuantity;
+    });
+  };
 
   return (
     <Wrapper>
@@ -45,7 +76,7 @@ const ProductInfo = () => {
       >
         <div className="container z-index-common">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title fs-4 fw-normal">বইয়ের বিস্তারিত</h1>
+            <h1 className="breadcumb-title fs-4 fw-normal">বইয়ের বিস্তারিত</h1>
             <div className="breadcumb-menu-wrap">
               <div className="breadcumb-menu">
                 <span>
@@ -54,7 +85,7 @@ const ProductInfo = () => {
                   </Link>
                 </span>
                 <span className="fw-normal" style={{ color: "#FF3333" }}>
-                  বইয়ের বিস্তারিত
+                  বইয়ের বিস্তারিত
                 </span>
               </div>
             </div>
@@ -94,17 +125,23 @@ const ProductInfo = () => {
                   <strong>By:</strong>{" "}
                   <Link
                     to="#"
-                    // to={`/author-details/${author.id}`}
                     className="fs-6 fw-normal"
                     style={{ color: "#FF3333" }}
                   >
-                    {findProductDetails && findProductDetails.author}
+                    {/* {findProductDetails && findProductDetails.author} */}
+                    {authorName}
                   </Link>
                 </span>
                 <p className="product-price fw-normal">
-                  ৳{findProductDetails && findProductDetails.price}{" "}
+                  ৳
+                  {convertToBanglaNumber(
+                    findProductDetails && findProductDetails.price,
+                  )}{" "}
                   <del className="fw-normal">
-                    ৳{findProductDetails && findProductDetails.oldPrice}
+                    ৳
+                    {convertToBanglaNumber(
+                      findProductDetails && findProductDetails.oldPrice,
+                    )}
                   </del>
                 </p>
                 <div className="product-rating">
@@ -121,10 +158,13 @@ const ProductInfo = () => {
                   </span>
                 </div>
                 <p className="text fw-normal fs-5">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit
+                  {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit
                   purus vel, of Link viveirra facilisi neque quisque. Phasellus
                   aliquam ut id rhoncus. In viverra sed vitae vivamus amet,
-                  nuncg vivamus...{" "}
+                  nuncg vivamus...{" "} */}
+                  {findProductDetails?.descriptions
+                    ? `${findProductDetails.descriptions.slice(0, 200)}... `
+                    : "No description available. "}
                   <span
                     className="text-danger fw-normal"
                     style={{ cursor: "pointer" }}
@@ -151,7 +191,8 @@ const ProductInfo = () => {
                       <div className="quantity__buttons">
                         <button
                           className="quantity-plus qty-btn"
-                          onClick={() => setQuantity(quantity + 1)}
+                          // onClick={() => setQuantity(quantity + 1)}
+                          onClick={increaseQuantity}
                         >
                           <i className="fal fa-plus"></i>
                         </button>
@@ -161,18 +202,27 @@ const ProductInfo = () => {
                           className="qty-input"
                           step="1"
                           min="1"
-                          max="100"
+                          max="10"
                           name="quantity"
                           // defaultValue="01"
                           title="Qty"
                           value={quantity}
-                          onChange={(e) => setQuantity(Number(e.target.value))}
+                          // onChange={(e) => setQuantity(Number(e.target.value))}
+                          onChange={(e) => {
+                            let value = Number(e.target.value);
+
+                            if (value < 1) value = 1;
+                            if (value > 10) value = 10;
+
+                            setQuantity(value);
+                          }}
                         />
                         <button
                           className="quantity-minus qty-btn"
-                          onClick={() =>
-                            quantity > 1 && setQuantity(quantity - 1)
-                          }
+                          // onClick={() =>
+                          //   quantity > 1 && setQuantity(quantity - 1)
+                          // }
+                          onClick={decreaseQuantity}
                         >
                           <i className="fal fa-minus"></i>
                         </button>
@@ -182,51 +232,85 @@ const ProductInfo = () => {
                   <Link
                     to="/cart"
                     className="vs-btn fw-normal"
-                    onClick={() =>
-                      addToCart(
-                        findProductDetails.id,
-                        1,
-                        null,
-                        null,
-                        findProductDetails,
-                      )
-                    }
+                    // onClick={() =>
+                    //   addToCart(
+                    //     findProductDetails.id,
+                    //     1,
+                    //     null,
+                    //     null,
+                    //     findProductDetails,
+                    //   )
+                    // }
+                    onClick={(e) => {
+                      e.preventDefault();
+
+                      if (!findProductDetails) return;
+
+                      if (isInCart) {
+                        const cartItem = cart.find(
+                          (item) => item.productId === findProductDetails.id,
+                        );
+
+                        if (cartItem) {
+                          removeCart(cartItem.id);
+                        }
+                      } else {
+                        addToCart(
+                          findProductDetails.id,
+                          quantity,
+                          null,
+                          null,
+                          findProductDetails,
+                        );
+                      }
+                    }}
                   >
                     <i className="fa-solid fa-basket-shopping"></i>{" "}
                     {isInCart ? "Already in Cart" : "Add to Cart"}
                   </Link>
-                  {/* <Link
-                    to="/wishlist"
-                    className="icon-btn"
-                    onClick={() => addToWishlist(findProductDetails)}
+
+                  <Link
+                    // to="/wishlist"
+                    className="icon-btn wishlist-btn"
+                    data-tooltip-id="wishlist-tooltip"
+                    data-tooltip-content={
+                      isInWishlist ? "Already in Wishlist" : "Add to Wishlist"
+                    }
+                    // onClick={(e) => {
+                    //   if (isInWishlist) {
+                    //     e.preventDefault();
+                    //     navigate("/wishlist");
+                    //     return;
+                    //   }
+
+                    //   addToWishlist(findProductDetails);
+                    //   navigate("/wishlist");
+                    // }}
                     onClick={(e) => {
                       e.preventDefault();
 
+                      if (!findProductDetails) return;
+
                       if (isInWishlist) {
-                        alert("Already in Wishlist");
+                        removeWishlist(findProductDetails.id);
                       } else {
                         addToWishlist(findProductDetails);
                       }
                     }}
                   >
-                    <i className="far fa-heart"></i>
-                  </Link> */}
-                  <button
-                    className="icon-btn"
-                    onClick={() => {
-                      if (isInWishlist) {
-                        alert("Already in Wishlist");
-                        return;
-                      }
-
-                      addToWishlist(findProductDetails);
-
-                      // go to wishlist page after adding
-                      Navigate("/wishlist");
-                    }}
-                  >
-                    <i className="far fa-heart"></i>
-                  </button>
+                    <i
+                      className="far fa-heart"
+                      style={{
+                        color: isInWishlist ? "#CC0033" : "",
+                      }}
+                    ></i>
+                  </Link>
+                  <Tooltip
+                    id="wishlist-tooltip"
+                    place="top" // top | bottom
+                    offset={8}
+                    className="wishlist-tooltip"
+                  />
                 </div>
                 <div className="product_meta">
                   <h4 className="h5 fw-normal">Information:</h4>
@@ -644,6 +728,15 @@ const Wrapper = styled.section`
   }
   .product-description__tab .nav .nav-link.active {
     color: #ff3333 !important;
+  }
+
+  /* wishlist */
+  .wishlist-tooltip {
+    padding: 0px -30px !important;
+    font-size: 12px !important;
+    border-radius: 3px !important;
+    line-height: 1 !important;
+    z-index: 9999 !important;
   }
 `;
 

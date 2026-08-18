@@ -19,7 +19,7 @@ const MobileMenu = ({ menuOpen, closeMenu }) => {
                 src="/assets/img/Opera logo 195 x 60.png"
                 alt="Opera Publication"
                 className="logo"
-                style={{height: "70px"}}
+                style={{ height: "70px" }}
               />
             </Link>
             <button className="vs-menu-toggle" onClick={closeMenu}>
@@ -74,17 +74,7 @@ const MobileMenu = ({ menuOpen, closeMenu }) => {
 
               <li>
                 <NavLink
-                  to="/about"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={closeMenu}
-                >
-                  সম্বন্ধে
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/shop"
+                  to="/book"
                   className={({ isActive }) => (isActive ? "active" : "")}
                   onClick={closeMenu}
                 >
@@ -138,6 +128,16 @@ const MobileMenu = ({ menuOpen, closeMenu }) => {
                   onClick={closeMenu}
                 >
                   ব্লগ
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/opera"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                  onClick={closeMenu}
+                >
+                  অপেরা
                 </NavLink>
               </li>
 

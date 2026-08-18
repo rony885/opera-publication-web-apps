@@ -40,7 +40,7 @@ const Blog = () => {
 
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
-          <div className="vs-sort-bar">
+          {/* <div className="vs-sort-bar">
             <div className="row gap-4 align-items-center">
               <div className="col-md-auto flex-grow-1">
                 <p className="woocommerce-result-count">
@@ -54,7 +54,7 @@ const Blog = () => {
                     name="orderby"
                     aria-label="Shop order"
                   >
-                    <option defaultValue="recent_product">
+                    <option defaultValue="recent_product" selected="selected">
                       Short By Latest
                     </option>
                     <option defaultValue="popularity">
@@ -74,7 +74,7 @@ const Blog = () => {
                 </form>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="row g-4">
             {blogs.map((item, index) => (
@@ -124,15 +124,17 @@ const Blog = () => {
                     </div>
 
                     <h2 className="blog-title fw-normal">
-                      <Link to={`/blog-details/${item.id}`}>{item.title}</Link>
+                      <Link to={`/blog/blog-details/${item.id}`}>
+                        {item.title}
+                      </Link>
                     </h2>
 
                     <div className="btn-area fw-normal">
                       <Link
                         className="vs-btn fw-normal"
-                        to={`/blog-details/${item.id}`}
+                        to={`/blog/blog-details/${item.id}`}
                       >
-                        Read More<i className="fa-regular fa-arrow-right"></i>
+                        আরও দেখুন<i className="fa-regular fa-arrow-right"></i>
                       </Link>
 
                       <div className="social-media">

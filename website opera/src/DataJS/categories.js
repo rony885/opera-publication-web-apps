@@ -1,6 +1,7 @@
 const categories = [
   {
     id: 1,
+    // name: "আমার সোনার বাংলা",
     name: "বিজ্ঞান বিষয়ক",
     subCategories: ["AI", "Data Science", "Robotics"],
     img: "/assets/img/product/product-img-3-1.jpg",

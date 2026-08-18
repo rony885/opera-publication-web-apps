@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
 const featureData = [
   {
     id: 1,
     icon1: "assets/img/feature/feature-icon-1-1.png",
     icon2: "assets/img/feature/feature-icon-2-1.png",
     // title: "Free Delivery",
-    title: "ফ্রি ডেলিভারি",
+    // title: "ফ্রি ডেলিভারি",
+    title: "ফাস্ট ডেলিভারি",
     // desc: "To get free delivery order now",
     desc: "ফ্রি ডেলিভারি পেতে এখনই অর্ডার করুন",
     delay: "0.20s",
@@ -62,7 +64,7 @@ const FeatureArea = () => {
                     <h2 className="feature-title fw-normal">
                       <Link to="#">{item.title}</Link>
                     </h2>
-                    <p className="feature-text fw-normal">{item.desc}</p>
+                    {/* <p className="feature-text fw-normal">{item.desc}</p> */}
                   </div>
                 </div>
               </div>

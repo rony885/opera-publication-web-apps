@@ -8,14 +8,12 @@ const NotFound = () => {
         className="breadcumb-wrapper"
         style={{
           backgroundImage: `url("/assets/img/bg/breadcumb-bg.png")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
+          padding: "30px 0",
         }}
       >
         <div className="container z-index-common">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title">Error Page</h1>
+            <h1 className="breadcumb-title fw-normal fs-1">Error Page</h1>
             <div className="breadcumb-menu-wrap">
               <div className="breadcumb-menu">
                 <span>

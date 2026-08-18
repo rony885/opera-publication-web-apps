@@ -1,32 +1,3 @@
-/* @font-face {
-    font-family: "Chayalipi";
-    src: url("/public/assets/fonts/Chayalipi.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-}
-
-body {
-    font-family: "Chayalipi", sans-serif !important;
-    font-weight: 600 !important;
-} */
-
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-@font-face {
-  font-family: "Chayalipi";
-  src: url("/public/assets/fonts/Chayalipi.ttf") format("truetype");
-  unicode-range: U+0980-09FF;
-} */
-
-/* body {
-  font-family:
-    "Chayalipi",
-    "Poppins",
-    sans-serif;
-    Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
-} */
-
-
 /* 🇧🇩 Bangla Font */
 @font-face {
   font-family: "Chayalipi";
@@ -48,7 +19,42 @@ body {
 }
 
 
+
+
+/* Bangla Font */
+/* @font-face {
+  font-family: "Chayalipi";
+  src: url("/public/assets/fonts/Chayalipi.ttf") format("truetype");
+  unicode-range: U+0980-09FF;
+} */
+
+/* Default English Font */
 /* body {
-  font-family: "Poppins", sans-serif;
-  font-style: italic;
+  font-family: "Times New Roman", serif;
+} */
+
+/* Auto Bangla detection */
+/* :lang(bn) {
+  font-family: "Chayalipi";
+} */
+
+
+/* Full page font */
+/* .author-details-page {
+  font-family: "Chayalipi" !important;
+} */
+
+/* everything uses Chayalipi */
+/* .author-details-page * {
+  font-family: "Chayalipi" !important;
+} */
+
+/* ENGLISH TEXT STYLE (ASCII range) */
+/* .author-details-page * {
+  font-weight: normal;
+} */
+
+/* Bold English (A-Z, a-z detection trick) */
+/* .author-details-page *:not(:lang(bn)) {
+  font-weight: bold;
 } */

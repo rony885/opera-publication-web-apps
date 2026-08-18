@@ -14,7 +14,9 @@ const Authors = () => {
       <div className="container">
         <div className="title-area2 animation-style1 title-anime">
           {/* <h2 className="sec-title title-anime__title fw-normal">Featured Authors</h2> */}
-          <h2 className="sec-title title-anime__title fw-normal fs-1">সেরা লেখকগণ</h2>
+          <h2 className="sec-title title-anime__title fw-normal fs-1">
+            লেখকগণ
+          </h2>
           <Link
             className="vs-btn wow animate__flipInX fw-normal py-2 fs-5"
             data-wow-delay="0.70s"
@@ -35,10 +37,14 @@ const Authors = () => {
                 <div className="feature-style2">
                   <span className="feature-img">
                     {/* <img src={author.img} alt="feature imagee"  style={{height: "195px", width: "195px"}}/> */}
-                    <img src={author.img} alt="feature imagee" />
+                    <img
+                      src={author.img}
+                      alt="feature imagee"
+                      style={{ height: "195px", width: "195px" }}
+                    />
                   </span>
                   <h2 className="feature-title fs-5 fw-normal">
-                    <Link to={`/author-details/${author.id}`}>
+                    <Link to={`/authors/author-details/${author.id}`}>
                       {author.name}
                     </Link>
                   </h2>

@@ -82,9 +82,10 @@ const Testimonial = () => {
     <section className="vs-testi__layout1 space">
       <div className="container">
         <div className="title-area2 text-center mb-4">
-          <h2 className="sec-title fw-normal">পাঠকের চিরকুট</h2>
+          {/* <h2 className="sec-title fw-normal">পাঠকের চিরকুট</h2> */}
+          <h2 className="sec-title fw-normal">লেখকের চিরকুট</h2>
           <Link className="vs-btn fw-normal py-2 fs-5" to="#">
-          আরও দেখুন
+            আরও দেখুন
           </Link>
         </div>
 

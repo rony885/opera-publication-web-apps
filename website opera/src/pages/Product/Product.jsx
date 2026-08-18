@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+
 import ProductArray from "../../../src/DataJS/Products.js";
 import categoriesArray from "../../DataJS/categories.js";
 import Loader2 from "../../components/Loader2.jsx";
+
 import { useCartContext } from "../../context/CartContext.jsx";
+import convertBanglaPercentage from "../../components/banglaConvert/convertBanglaPercentage.jsx";
+import AuthorsArray from "../../../src/DataJS/authors.js";
+import convertToBanglaNumber from "../../components/banglaConvert/convertToBanglaNumber.jsx";
 
 const Product = () => {
-  const { addToCart, addToWishlist } = useCartContext();
-  const [price, setPrice] = useState(25000);
-  // const filteredProducts =
-  //   selectedCategory === "all"
-  //     ? products
-  //     : products.filter((item) => item.categoryId === Number(selectedCategory));
+  const {
+    cart,
+    addToCart,
+    removeCart,
+    addToWishlist,
+    removeWishlist,
+    wishlist,
+  } = useCartContext();
 
   // Scroll Fix for Category & SubCategory
   useEffect(() => {
@@ -32,38 +41,42 @@ const Product = () => {
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // useEffect(() => {
-  //   setProducts(ProductArray);
-  //   setCategories(categoriesArray);
-  // }, []);
+  const [price, setPrice] = useState(0);
+  const [sortOrder, setSortOrder] = useState("");
+
+  const minPrice =
+    products.length > 0
+      ? Math.min(...products.map((item) => Number(item.price)))
+      : 0;
+
+  const maxPrice =
+    products.length > 0
+      ? Math.max(...products.map((item) => Number(item.price)))
+      : 0;
+
   useEffect(() => {
     setLoading(true);
 
     const loadData = () => {
       setProducts(ProductArray);
       setCategories(categoriesArray);
+      setAuthors(AuthorsArray);
+
+      const highestPrice = Math.max(
+        ...ProductArray.map((item) => Number(item.price)),
+      );
+
+      setPrice(highestPrice);
+
       setLoading(false);
     };
 
     loadData();
   }, []);
-
-  // const [selectedCategory, setSelectedCategory] = useState("all");
-  // const [selectedSubCategory, setSelectedSubCategory] = useState("all");
-
-  // const activeCategory = categories.find((cat) => cat.id === selectedCategory);
-
-  // const filteredProducts = products.filter((item) => {
-  //   const categoryMatch =
-  //     selectedCategory === "all" || item.categoryId === selectedCategory;
-
-  //   const subCategoryMatch =
-  //     selectedSubCategory === "all" || item.subCategory === selectedSubCategory;
-
-  //   return categoryMatch && subCategoryMatch;
-  // });
 
   const [selectedCategory, setSelectedCategory] = useState(() => {
     return localStorage.getItem("selectedCategory") || "all";
@@ -72,14 +85,6 @@ const Product = () => {
   const [selectedSubCategory, setSelectedSubCategory] = useState(() => {
     return localStorage.getItem("selectedSubCategory") || "all";
   });
-
-  // useEffect(() => {
-  //   localStorage.setItem("selectedCategory", selectedCategory);
-  // }, [selectedCategory]);
-
-  // useEffect(() => {
-  //   localStorage.setItem("selectedSubCategory", selectedSubCategory);
-  // }, [selectedSubCategory]);
 
   useEffect(() => {
     const handleStorageChange = (e) => {
@@ -108,32 +113,76 @@ const Product = () => {
     (cat) => String(cat.id) === String(selectedCategory),
   );
 
-  // const filteredProducts = products.filter((item) => {
-  //   const categoryMatch =
-  //     selectedCategory === "all" ||
-  //     String(item.categoryId) === String(selectedCategory);
+  const filteredProducts = products
+    .filter((item) => {
+      const categoryMatch =
+        selectedCategory === "all" ||
+        String(item.categoryId) === String(selectedCategory);
 
-  //   const subCategoryMatch =
-  //     selectedSubCategory === "all" ||
-  //     item.subCategory === selectedSubCategory;
+      const subCategoryMatch =
+        selectedSubCategory === "all" ||
+        item.subCategory === selectedSubCategory;
 
-  //   return categoryMatch && subCategoryMatch;
-  // });
+      const authorName =
+        AuthorsArray.find((author) => author.id === item.authorId)?.name || "";
 
-  const filteredProducts = products.filter((item) => {
-    const categoryMatch =
-      selectedCategory === "all" ||
-      String(item.categoryId) === String(selectedCategory);
+      const searchMatch =
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        authorName.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const subCategoryMatch =
-      selectedSubCategory === "all" || item.subCategory === selectedSubCategory;
+      const priceMatch = item.price <= price;
 
-    return categoryMatch && subCategoryMatch;
-  });
+      return categoryMatch && subCategoryMatch && searchMatch && priceMatch;
+    })
+    .sort((a, b) => {
+      if (sortOrder === "price-low") {
+        return a.price - b.price;
+      }
+
+      if (sortOrder === "price-high") {
+        return b.price - a.price;
+      }
+
+      if (sortOrder === "name-a-z") {
+        return a.title.localeCompare(b.title);
+      }
+
+      if (sortOrder === "name-z-a") {
+        return b.title.localeCompare(a.title);
+      }
+
+      return 0;
+    });
 
   useEffect(() => {
     setSelectedSubCategory("all");
   }, [selectedCategory]);
+
+  const handleClearFilters = () => {
+    setSearchTerm("");
+
+    // clear category
+    setSelectedCategory("all");
+    setSelectedSubCategory("all");
+
+    // clear sorting
+    setSortOrder("");
+
+    // reset price slider to maximum price
+    setPrice(maxPrice);
+
+    // clear localStorage
+    localStorage.removeCart("selectedCategory");
+    localStorage.removeCart("selectedSubCategory");
+  };
+
+  const getAuthorName = (book) => {
+    const author = authors.find((item) => item.id === book.authorId);
+
+    return /^[A-Za-z0-9\s.,'"():&-]+$/.test(book.title)
+      ? author?.englishName
+      : author?.name;
+  };
 
   return (
     <Wrapper>
@@ -166,49 +215,57 @@ const Product = () => {
       <section className="books-layout1 space-top space-extra-bottom">
         <div className="container">
           <div className="row g-4">
-            <div className="col-xl-8 col-lg-7">
+            <div className="col-xl-9 col-lg-7">
               <div className="vs-sort-bar">
                 <div className="row gap-4 align-items-center">
                   <div className="col-md-auto flex-grow-1">
-                    <p className="woocommerce-result-count">
+                    {/* <p className="woocommerce-result-count">
                       Showing <span>1-9 of 40</span> results
+                    </p> */}
+                    <p className="woocommerce-result-count">
+                      Showing{" "}
+                      <span>
+                        {filteredProducts.length > 0 ? 1 : 0}-
+                        {filteredProducts.length} of {products.length}
+                      </span>{" "}
+                      results
                     </p>
                   </div>
                   <div className="col-md-auto">
                     <form className="woocommerce-ordering" method="get">
                       <select
                         name="orderby"
-                        className="orderby fw-normal"
+                        className="orderby fw-normal fs-6"
                         aria-label="Shop order"
-                        // style={{ backgroundColor: "#F8EBE5", color: "#2e4a5b" }}
-                        style={{ backgroundColor: "#FF3333" }}
+                        value={sortOrder}
+                        onChange={(e) => setSortOrder(e.target.value)}
+                        style={{
+                          backgroundColor: "#F8EBE5",
+                          color: "#2e4a5b",
+                          fontFamily: "Arial, sans-serif",
+                        }}
+                        // style={{
+                        //   backgroundColor: "#FF3333",
+                        //   fontFamily: "Arial, sans-serif",
+                        //   color: "#fff",
+                        // }}
                       >
-                        <option
-                          defaultValue="recent_product"
-                          className=" fw-normal"
-                        >
-                          Short By Latest
-                        </option>
-                        <option
-                          defaultValue="popularity"
-                          className=" fw-normal"
-                        >
-                          Sort by popularity
-                        </option>
-                        <option defaultValue="rating" className=" fw-normal">
-                          Sort by average rating
-                        </option>
-                        <option defaultValue="date" className=" fw-normal">
-                          Sort by latest
-                        </option>
-                        <option defaultValue="price" className=" fw-normal">
+                        <option value="">Sort By</option>
+
+                        <option value="price-low">
                           Sort by price: low to high
                         </option>
-                        <option
-                          defaultValue="price-desc"
-                          className=" fw-normal"
-                        >
+
+                        <option value="price-high">
                           Sort by price: high to low
+                        </option>
+
+                        <option value="name-a-z">
+                          Sort by Alphabetically: A - Z
+                        </option>
+
+                        <option value="name-z-a">
+                          Sort by Alphabetically: Z - A
                         </option>
                       </select>
                     </form>
@@ -231,122 +288,196 @@ const Product = () => {
                     </h4>
                   </div>
                 ) : (
-                  filteredProducts.map((item) => (
-                    <div
-                      key={item.id}
-                      className="col-xl-4 col-lg-6 col-md-4 col-sm-6"
-                    >
+                  // filteredProducts.map((book) => (
+                  filteredProducts &&
+                  filteredProducts.map((book) => {
+                    const isWishlisted = wishlist.some(
+                      (item) => item.id === book.id,
+                    );
+
+                    const isInCart = cart.some(
+                      (item) => item.productId === book.id,
+                    );
+
+                    return (
                       <div
-                        className="product-style1 wow animate__fadeInUp"
-                        data-wow-delay={item.delay}
+                        key={book.id}
+                        className="col-xl-3 col-lg-6 col-md-4 col-sm-6"
                       >
-                        <div className="product-img">
-                          <img
-                            src={item.img}
-                            alt="product"
-                            style={{ height: "400px" }}
-                          />
+                        <div
+                          className="product-style1 wow animate__fadeInUp"
+                          data-wow-delay={book.delay}
+                        >
+                          <div className="product-img">
+                            <img
+                              src={book.img}
+                              alt="product"
+                              style={{ height: "320px" }}
+                            />
 
-                          <div className="product-btns">
-                            <Link
-                              to="/wishlist"
-                              className="icon-btn wishlist"
-                              onClick={() => addToWishlist(item)}
-                            >
-                              <i className="far fa-heart"></i>
-                            </Link>
-                            <Link
-                              to="/cart"
-                              className="icon-btn cart"
-                              onClick={() =>
-                                addToCart(item.id, 1, null, null, item)
-                              }
-                            >
-                              <i className="fa-solid fa-basket-shopping"></i>
-                            </Link>
-                          </div>
+                            <div className="product-btns">
+                              <Link
+                                className="icon-btn wishlist"
+                                data-tooltip-id="wishlist-tooltip"
+                                data-tooltip-content={
+                                  isWishlisted
+                                    ? "Already in Wishlist"
+                                    : "Add to Wishlist"
+                                }
+                                onClick={(e) => {
+                                  e.preventDefault();
 
-                          {/* <ul className="post-box">
-                            {item.badge.map((tag, idx) => (
-                              <li key={idx}>{tag}</li>
-                            ))}
-                          </ul> */}
-                          <ul className="post-box">
-                            {item.badge.map((tag, idx) => (
-                              <li
-                                key={idx}
-                                className={tag === "Hot" ? "hot-badge" : ""}
+                                  if (isWishlisted) {
+                                    removeWishlist(book.id);
+                                  } else {
+                                    addToWishlist(book);
+                                  }
+                                }}
                               >
-                                {tag}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                                <i
+                                  className={
+                                    isWishlisted
+                                      ? "fas fa-heart"
+                                      : "far fa-heart"
+                                  }
+                                  style={{
+                                    color: isWishlisted ? "#CC0033" : "",
+                                  }}
+                                />
+                              </Link>
+                              <Tooltip
+                                id="wishlist-tooltip"
+                                place="left"
+                                offset={1}
+                                className="wishlist-tooltip"
+                              />
 
-                        <div className="product-content">
-                          <div className="product-rating">
-                            <span
-                              className="star fw-normal"
-                              style={{ fontSize: "16px" }}
-                            >
-                              <i className="fas fa-star"></i> ({item.rating})
-                            </span>
-                            <ul className="price-list">
-                              <li>
-                                <del
-                                  className="fw-normal"
-                                  style={{ fontSize: "18px" }}
+                              <Link
+                                className="icon-btn cart"
+                                data-tooltip-id="cart-tooltip"
+                                data-tooltip-content={
+                                  isInCart ? "Already in Cart" : "Add to Cart"
+                                }
+                                onClick={(e) => {
+                                  e.preventDefault();
+
+                                  if (isInCart) {
+                                    const cartItem = cart.find(
+                                      (item) => item.productId === book.id,
+                                    );
+
+                                    if (cartItem) {
+                                      removeCart(cartItem.id);
+                                    }
+                                  } else {
+                                    addToCart(book.id, 1, null, null, book);
+                                  }
+                                }}
+                              >
+                                <i
+                                  className="fa-solid fa-basket-shopping"
+                                  style={{
+                                    color: isInCart ? "#CC0033" : "",
+                                  }}
+                                ></i>
+                              </Link>
+                              <Tooltip
+                                id="cart-tooltip"
+                                place="left"
+                                offset={1}
+                                className="wishlist-tooltip"
+                              />
+                            </div>
+
+                            <ul className="post-box">
+                              {book.badge.map((tag, idx) => (
+                                <li
+                                  key={idx}
+                                  className={tag === "Hot" ? "hot-badge" : ""}
                                 >
-                                  ৳{item.oldPrice}
-                                </del>
-                              </li>
-                              <li
-                                className="fw-normal"
-                                style={{ fontSize: "18px" }}
-                              >
-                                ৳{item.price}
-                              </li>
+                                  {tag === "Hot"
+                                    ? "হট"
+                                    : convertBanglaPercentage(tag)}
+                                </li>
+                              ))}
                             </ul>
                           </div>
 
-                          {/* <span
+                          <div className="product-content">
+                            <div className="product-rating">
+                              <span
+                                className="star fw-normal"
+                                style={{ fontSize: "16px" }}
+                              >
+                                <i className="fas fa-star"></i> ({book.rating})
+                              </span>
+                              <ul className="price-list">
+                                <li>
+                                  <del
+                                    className="fw-normal"
+                                    style={{ fontSize: "18px" }}
+                                  >
+                                    ৳{convertToBanglaNumber(book.oldPrice)}
+                                  </del>
+                                </li>
+                                <li
+                                  className="fw-normal"
+                                  style={{ fontSize: "18px" }}
+                                >
+                                  ৳{convertToBanglaNumber(book.price)}
+                                </li>
+                              </ul>
+                            </div>
+
+                            {/* <span
                             className="stock-badge fw-normal"
                             style={{
-                              color: item.inStock ? "#28a745" : "#FF3333",
+                              color: book.inStock ? "#28a745" : "#FF3333",
                               fontWeight: "600",
                               fontSize: "14px",
                               padding: "3px 8px",
                               borderRadius: "4px",
-                              background: item.inStock
+                              background: book.inStock
                                 ? "rgba(40,167,69,0.1)"
                                 : "rgba(220,53,69,0.1)",
                             }}
                           >
-                            {item.inStock ? "In Stock" : "Out of Stock"}
+                            {book.inStock ? "In Stock" : "Out of Stock"}
                           </span> */}
 
-                          <h2 className="product-title fs-5 fw-normal mt-2">
-                            <Link to={`/shop-details/${item.id}`} className="">
-                              {item.title}{" "}
-                              {item.subtitle && (
-                                <span
-                                  style={{
-                                    color: "#2e4a5bb9",
-                                    fontSize: "14px",
-                                  }}
-                                >
-                                  ({item.subtitle})
-                                </span>
-                              )}
-                            </Link>
-                          </h2>
-                          <span className="product-author fs-6">
-                            <strong>By:</strong> {item.author}
-                          </span>
+                            <h2 className="product-title fs-5 fw-normal mt-2 text-center">
+                              <Link
+                                to={`/book/book-details/${book.id}`}
+                                className=""
+                              >
+                                {book.title}{" "}
+                                {book.subtitle && (
+                                  <span
+                                    style={{
+                                      color: "#2e4a5bb9",
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    ({book.subtitle})
+                                  </span>
+                                )}
+                              </Link>
+                            </h2>
+                            <span className="product-author fs-6 text-center">
+                              {/* <strong>By:</strong> {item.author} */}
+                              {/* {item.author} */}
+                              {/* {
+                                AuthorsArray.find(
+                                  (author) => author.id === book.authorId,
+                                )?.name
+                              } */}
+                              {getAuthorName(book)}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
 
@@ -394,23 +525,13 @@ const Product = () => {
               </div>
             </div>
 
-            <div className="col-xl-4 col-lg-5">
+            <div className="col-xl-3 col-lg-5">
               <aside className="sidebar-area">
                 <div className="search-form mb-4">
                   <button
                     className="vs-btn fw-normal py-3 fs-5"
                     type="submit"
-                    // onClick={() => {
-                    //   setSelectedCategory("all");
-                    //   setSelectedSubCategory("all");
-                    // }}
-                    onClick={() => {
-                      setSelectedCategory("all");
-                      setSelectedSubCategory("all");
-
-                      localStorage.removeItem("selectedCategory");
-                      localStorage.removeItem("selectedSubCategory");
-                    }}
+                    onClick={handleClearFilters}
                   >
                     {/* Clear All */}
                     সব ক্লিয়ার
@@ -418,58 +539,29 @@ const Product = () => {
                 </div>
 
                 <div className="widget widget_search wow animate__fadeInUp pb-2 pt-4">
-                  <form className="search-form">
+                  <form
+                    className="search-form"
+                    onSubmit={(e) => e.preventDefault()}
+                  >
                     <div className="search-box">
                       <input
                         type="text"
                         placeholder="এখানে অনুসন্ধান করুন..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                       />
                       <i className="fa fa-search search-icon"></i>
                     </div>
                   </form>
                 </div>
 
-                {/* <div
+                <div
                   className="widget wow animate__fadeInUp"
                   data-wow-delay="0.40s"
                 >
                   <h3 className="widget_title mb-35 title-shep fs-5 fw-normal">
-                    Filter By Price
-                  </h3>
-                  <div className="slider-area">
-                    <div className="slider-area-wrapper">
-                      <div id="skipstep" className="slider mb-20"></div>
-                      <div className="range-btn">
-                        <button
-                          className="vs-btn fs-6 fw-normal"
-                          type="submit"
-                          style={{ padding: "12px 35px" }}
-                        >
-                          Filter
-                        </button>
-                        <div className="price-range fw-normal">
-                          Price: ৳
-                          <span
-                            className="price fw-normal"
-                            id="skip-value-lower"
-                          ></span>
-                          -৳
-                          <span
-                            className="price fw-normal"
-                            id="skip-value-upper"
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-
-                <div
-                  className="widget wow animate__fadeInUp d-none"
-                  data-wow-delay="0.40s"
-                >
-                  <h3 className="widget_title mb-35 title-shep fs-5 fw-normal">
-                    Filter By Price
+                    {/* Filter By Price */}
+                    প্রাইস অনুযায়ী ফিল্টার করুন
                   </h3>
 
                   <div className="slider-area">
@@ -478,10 +570,10 @@ const Product = () => {
                       <div className="mb-4">
                         <input
                           type="range"
-                          min="500"
-                          max="50000"
+                          min={minPrice}
+                          max={maxPrice}
                           value={price}
-                          onChange={(e) => setPrice(e.target.value)}
+                          onChange={(e) => setPrice(Number(e.target.value))}
                           className="form-range"
                           style={{ cursor: "pointer", accentColor: "#FF3333" }}
                         />
@@ -492,14 +584,20 @@ const Product = () => {
                           className="vs-btn fs-6 fw-normal"
                           type="submit"
                           style={{ padding: "12px 35px" }}
+                          onClick={() => setPrice(price)}
                         >
-                          Filter
+                          ফিল্টার
                         </button>
 
                         <div className="price-range fw-normal fs-6">
-                          Price: ৳<span className="price fw-normal">500</span>
+                          প্রাইস: ৳
+                          <span className="price fw-normal">
+                            {convertToBanglaNumber(minPrice)}
+                          </span>
                           &nbsp;- ৳
-                          <span className="price fw-normal">{price}</span>
+                          <span className="price fw-normal">
+                            {convertToBanglaNumber(price)}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -522,6 +620,9 @@ const Product = () => {
                           onClick={() => {
                             setSelectedCategory("all");
                             setSelectedSubCategory("all");
+
+                            localStorage.removeCart("selectedCategory");
+                            localStorage.removeCart("selectedSubCategory");
                           }}
                         >
                           <Link to="#" className="fs-5">
@@ -541,14 +642,20 @@ const Product = () => {
                                 ? "active"
                                 : ""
                             }`}
+                            style={{ cursor: "pointer" }}
                             // onClick={() => {
                             //   setSelectedCategory(cat.id);
                             //   setSelectedSubCategory("all");
                             // }}
-                            style={{ cursor: "pointer" }}
                             onClick={() => {
                               setSelectedCategory(cat.id);
                               setSelectedSubCategory("all");
+
+                              localStorage.setItem("selectedCategory", cat.id);
+                              localStorage.setItem(
+                                "selectedSubCategory",
+                                "all",
+                              );
                             }}
                           >
                             <Link to="#" className=" fs-5">
@@ -619,7 +726,8 @@ const Product = () => {
                       <div className="media-body">
                         <h4 className="post-title">
                           <Link
-                            className="text-inherit fs-5 fw-normal"
+                            style={{ lineHeight: "20px" }}
+                            className="text-inherit fs-6 fw-normal"
                             to="/blog-details"
                           >
                             Rat Phnory Mttke Srial Tofairle
@@ -648,8 +756,9 @@ const Product = () => {
                       <div className="media-body">
                         <h4 className="post-title fw-normal">
                           <Link
+                            style={{ lineHeight: "20px" }}
                             className="text-inherit fs-5"
-                            to="blog-det/ails"
+                            to="/blog-details"
                           >
                             Amazona Book Cover
                           </Link>
@@ -677,6 +786,7 @@ const Product = () => {
                       <div className="media-body">
                         <h4 className="post-title">
                           <Link
+                            style={{ lineHeight: "20px" }}
                             className="text-inherit fs-5 fw-normal"
                             to="blog-det/ails"
                           >
@@ -823,6 +933,21 @@ const Wrapper = styled.section`
   .vs-pagination a {
     border: 1px solid #ff3333 !important;
     /* font-family: 'Courier New', Courier, monospace */
+  }
+  .title-shep:before {
+    background-color: #ff3333 !important;
+  }
+  .title-shep:after {
+    background-color: #ff3333 !important;
+  }
+
+  .wishlist-tooltip,
+  .cart-tooltip {
+    padding: 0px -30px !important;
+    font-size: 12px !important;
+    border-radius: 3px !important;
+    line-height: 1 !important;
+    z-index: 9999 !important;
   }
 `;
 

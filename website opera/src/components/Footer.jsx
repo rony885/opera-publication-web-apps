@@ -55,7 +55,8 @@ const Footer = () => {
                         />
                         <button type="submit" className="vs-btn fw-normal">
                           {/* <i className="fa-solid fa-paper-plane"></i> Subscribe */}
-                          <i className="fa-solid fa-paper-plane"></i> সাবস্ক্রাইব 
+                          <i className="fa-solid fa-paper-plane"></i>{" "}
+                          সাবস্ক্রাইব
                         </button>
                       </div>
                     </div>
@@ -91,23 +92,36 @@ const Footer = () => {
                       <Link
                         to="https://www.facebook.com/operapublication"
                         target="_blank"
+                        rel="noopener noreferrer"
                       >
                         <i className="fab fa-facebook-f"></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to="#" target="_blank">
+                      <Link
+                        to="https://x.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <i className="fa-brands fa-x-twitter"></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to="#" target="_blank">
+                      <Link
+                        to="https://www.instagram.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <i className="fab fa-instagram"></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to="#" target="_blank">
-                        <i className="fab fa-dribbble"></i>
+                      <Link
+                        to="https://www.youtube.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i className="fab fa-youtube"></i>
                       </Link>
                     </li>
                   </ul>
@@ -132,11 +146,7 @@ const Footer = () => {
                         <i className="far fa-angle-right"></i> হোম
                       </Link>
                     </li>
-                    <li>
-                      <Link to="/about" className="fs-5 fw-normal">
-                        <i className="far fa-angle-right"></i> সম্বন্ধে
-                      </Link>
-                    </li>
+
                     <li>
                       <Link to="/books" className="fs-5 fw-normal">
                         <i className="far fa-angle-right"></i> বই
@@ -150,6 +160,11 @@ const Footer = () => {
                     <li>
                       <Link to="/blog" className="fs-5 fw-normal">
                         <i className="far fa-angle-right"></i> ব্লগ
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/opera" className="fs-5 fw-normal">
+                        <i className="far fa-angle-right"></i> অপেরা
                       </Link>
                     </li>
                     <li>
@@ -176,18 +191,13 @@ const Footer = () => {
                   <ul className="menu">
                     <li>
                       <Link to="#">
-                        <i className="far fa-angle-right"></i> Privacy
+                        <i className="far fa-angle-right"></i> নিয়ম &amp;
+                        শর্তাবলি
                       </Link>
                     </li>
                     <li>
                       <Link to="#">
-                        <i className="far fa-angle-right"></i> Policy
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="#">
-                        <i className="far fa-angle-right"></i> Terms &amp;
-                        Conditions
+                        <i className="far fa-angle-right"></i> প্রাইভেসি পলিসি
                       </Link>
                     </li>
                   </ul>

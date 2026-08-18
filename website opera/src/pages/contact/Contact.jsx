@@ -1,8 +1,100 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+// import { useApiContext } from "../../context/ApiContext";
+
+import { Formik, Form as FormikForm } from "formik";
+import Form from "react-bootstrap/Form";
+// import InputGroup from "react-bootstrap/InputGroup";
+import * as yup from "yup";
+import axios from "axios";
+
+const initialValues = {
+  name: "",
+  email: "",
+  phone: "",
+  address: "",
+  subject: "",
+  message: "",
+};
+
+const schema = yup.object().shape({
+  name: yup.string().required("Name is a required field!"),
+  email: yup.string().required("Email is a required field!"),
+  phone: yup.string().required("Phone is a required field!"),
+  address: yup.string().required("Address is a required field!"),
+  subject: yup.string().required("Subject is a required field!"),
+  message: yup.string().required("Message is a required field!"),
+});
+
+const validate = (values) => {
+  let errors = {};
+
+  if (!values.phone) {
+    errors.phone = "Phone is required!";
+  } else if (/^[0-9\b]+$/.test(values.phone) === false) {
+    errors.phone = "Only number!";
+  } else if (values.phone.length !== 11) {
+    errors.phone = "Mobile Number contains 11 digit!";
+  }
+
+  return errors;
+};
+
 const Contact = () => {
+  // data fetching
+  // const { contact, fetchContact } = useApiContext();
+
+  // console.log("contact", contact);
+  // useEffect(() => {
+  //   fetchContact();
+  // }, [fetchContact]);
+
+  const [message, setMessage] = useState();
+
+  // add
+  const AddContactFunc = async (values) => {
+    let formfield = new FormData();
+
+    formfield.append("name", values.name);
+    formfield.append("email", values.email);
+    formfield.append("phone", values.phone);
+    formfield.append("address", values.address);
+    formfield.append("subject", values.subject);
+    formfield.append("message", values.message);
+
+    await axios({
+      method: "POST",
+      url: `${process.env.REACT_APP_BASE_URL}/contact_api/unpaginate_contact/`,
+      data: formfield,
+    })
+      .then((response) => {
+        setMessage(response.success, "Contact is successfuly created...");
+        // navigate("/");
+        window.location.reload(false);
+      })
+      .catch((error) => {
+        setMessage(error.message, "Error");
+        console.log(error);
+      });
+  };
+
+  const submitAddContactForm = async (
+    values,
+    { setErrors, setSubmitting, resetForm },
+  ) => {
+    try {
+      setSubmitting(true);
+      await AddContactFunc(values);
+      setSubmitting(false);
+      // resetForm();
+    } catch (error) {
+      setErrors({ error: error.message });
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Wrapper>
       <div
@@ -33,72 +125,6 @@ const Contact = () => {
 
       <section className="contact-layout2 space">
         <div className="container">
-          {/* <div className="row g-4 space-bottom">
-            <div className="col-xl-4 col-lg-6 col-md-6">
-              <div
-                className="contact-media wow animate__fadeInUp"
-                data-wow-delay="0.25s"
-              >
-                <div className="media-style1">
-                  <div className="media-info">
-                    <h3 className="media-title"> Address</h3>
-                    <div className="media-icon">
-                      <img src="/assets/img/icons/location.svg" alt="icon" />
-                    </div>
-                  </div>
-                  <p className="media-text">
-                    Ga -27/2 A, Shahjadpur, Gulshan, Dhaka-1212
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-4 col-lg-6 col-md-6">
-              <div
-                className="contact-media wow animate__fadeInUp"
-                data-wow-delay="0.45s"
-              >
-                <div className="media-style1">
-                  <div className="media-info">
-                    <h3 className="media-title"> Contact Number</h3>
-                    <div className="media-icon">
-                      <img src="/assets/img/icons/call.svg" alt="icon" />
-                    </div>
-                  </div>
-                  <p className="media-text">
-                    <Link to="tel:01739392329" className="contact-link">
-                      01739392329
-                    </Link>
-                    <br />
-                    <Link to="tel:01914503351" className="contact-link">
-                      01914503351
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-4 col-lg-6 col-md-6">
-              <div
-                className="contact-media wow animate__fadeInUp"
-                data-wow-delay="0.65s"
-              >
-                <div className="media-style1">
-                  <div className="media-info">
-                    <h3 className="media-title">Email </h3>
-                    <div className="media-icon">
-                      <img src="/assets/img/icons/mail.svg" alt="icon" />
-                    </div>
-                  </div>
-                  <p className="media-text">
-                    <Link to="mailto: info@operapublication.com">
-                      info@operapublication.com
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> */}
           <div className="row g-4 space-bottom">
             {/* Address */}
             <div className="col-xl-4 col-lg-6 col-md-6 d-flex">
@@ -181,7 +207,7 @@ const Contact = () => {
 
           <div className="row">
             <div className="col-12 text-center">
-              <form
+              <div
                 className="form-style1 ajax-contact wow animate__fadeInUp"
                 data-wow-delay="0.35s"
               >
@@ -191,90 +217,215 @@ const Contact = () => {
                     আমাদের সাথে যোগাযোগ করুন
                   </h2>
                 </div>
-                <div className="row gx-20">
-                  <div className="col-md-6 form-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      placeholder="নাম"
-                    />
-                    <i className="fas fa-user"></i>
-                  </div>
-                  <div className="col-md-6 form-group">
-                    <input
-                      className="form-control"
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="ই-মেইল"
-                    />
-                    <i className="fas fa-envelope"></i>
-                  </div>
-                  <div className="col-md-6 form-group">
-                    <input
-                      className="form-control"
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="নাম্বার"
-                    />
-                    <i className="fas fa-phone"></i>
-                  </div>
-                  <div className="col-md-6 form-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="last-name"
-                      id="last-name"
-                      placeholder="ঠিকানা"
-                    />
-                    <i className="fas fa-location-dot"></i>
-                  </div>
 
-                  {/* <div className="col-md-6 form-group">
-                    <select
-                      name="orderby"
-                      className="orderby"
-                      aria-label="Shop order"
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={schema}
+                  onSubmit={submitAddContactForm}
+                  validate={validate}
+                >
+                  {({
+                    handleSubmit,
+                    handleChange,
+                    values,
+                    touched,
+                    errors,
+                    isSubmitting,
+                    setFieldValue,
+                  }) => (
+                    <FormikForm
+                      noValidate
+                      onSubmit={(e) => handleSubmit(e)}
+                      className="custom-form"
+                      name="contactform"
+                      id="contactform"
                     >
-                      <option defaultValue="recent_product" selected="selected">
-                        Select Service
-                      </option>
-                      <option defaultValue="popularity">
-                        Sort by popularity
-                      </option>
-                      <option defaultValue="rating">
-                        Sort by average rating
-                      </option>
-                      <option defaultValue="date">Sort by latest</option>
-                      <option defaultValue="price">
-                        Sort by price: low to high
-                      </option>
-                      <option defaultValue="price-desc">
-                        Sort by price: high to low
-                      </option>
-                    </select>
-                  </div> */}
-                  <div className="col-md-12 form-group">
-                    <textarea
-                      name="message"
-                      className="form-control"
-                      placeholder="এখানে বার্তা লিখুন..."
-                      required=""
-                    ></textarea>
-                  </div>
-                  <div className="col-md-12 form-group">
-                    <button
-                      className="vs-btn justify-content-center fw-normal"
-                      type="submit"
-                    >
-                      বার্তা পাঠান
-                    </button>
-                  </div>
-                </div>
-              </form>
+                      <div className="row gx-20">
+                        <div className="col-md-6 form-group">
+                          {/* <input
+                            className="form-control"
+                            type="text"
+                            name="first-name"
+                            id="first-name"
+                            placeholder="নাম"
+                          />
+                          <i className="fas fa-user"></i> */}
+                          <Form.Group className="col-md-6 form-group w-100">
+                            <div className="input-single">
+                              <Form.Control
+                                type="text"
+                                name="name"
+                                id="name"
+                                placeholder="নাম"
+                                value={values.name}
+                                onChange={handleChange}
+                                isInvalid={!!touched.name && !!errors.name}
+                                required
+                              />
+                              <i className="fas fa-user"></i>
+                            </div>
+
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="error-message"
+                            >
+                              {errors.name}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+
+                        <div className="col-md-6 form-group">
+                          <Form.Group className="col-md-6 form-group w-100">
+                            <div className="input-single">
+                              <Form.Control
+                                type="text"
+                                name="email"
+                                id="email"
+                                placeholder="ই-মেইল"
+                                value={values.email}
+                                onChange={handleChange}
+                                isInvalid={!!touched.email && !!errors.email}
+                                required
+                              />
+                              <i className="fas fa-envelope"></i>
+                            </div>
+
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="error-message"
+                            >
+                              {errors.email}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6 form-group">
+                          <Form.Group className="col-md-6 form-group w-100">
+                            <div className="input-single">
+                              <Form.Control
+                                type="text"
+                                name="phone"
+                                id="phone"
+                                placeholder="নাম্বার"
+                                value={values.phone}
+                                onChange={handleChange}
+                                isInvalid={!!touched.phone && !!errors.phone}
+                                required
+                              />
+                              <i className="fas fa-phone"></i>
+                            </div>
+
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="error-message"
+                            >
+                              {errors.phone}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6 form-group">
+                          <Form.Group className="col-md-6 form-group w-100">
+                            <div className="input-single">
+                              <Form.Control
+                                type="text"
+                                name="address"
+                                id="address"
+                                placeholder="ঠিকানা"
+                                value={values.address}
+                                onChange={handleChange}
+                                isInvalid={
+                                  !!touched.address && !!errors.address
+                                }
+                                required
+                              />
+                              <i className="fas fa-location-dot"></i>
+                            </div>
+
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="error-message"
+                            >
+                              {errors.address}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+
+                        <div className="col-md-6 form-group">
+                          <Form.Group className="col-md-6 form-group w-100">
+                            <div className="input-single">
+                              <Form.Control
+                                type="text"
+                                name="subject"
+                                id="subject"
+                                placeholder="বিষয়"
+                                value={values.subject}
+                                onChange={handleChange}
+                                isInvalid={
+                                  !!touched.subject && !!errors.subject
+                                }
+                                required
+                              />
+                              <i className="fas fa-pen"></i>
+                            </div>
+
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="error-message"
+                            >
+                              {errors.subject}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+
+                        <div className="col-md-6 form-group">
+                          {/* <textarea
+                            name="message"
+                            className="form-control"
+                            placeholder="এখানে বার্তা লিখুন..."
+                            required=""
+                          ></textarea> */}
+                          <div className="col-md-6 form-group w-100">
+                            <Form.Group className="w-100">
+                              <div className="input-single">
+                                <Form.Control
+                                  as="textarea"
+                                  rows={3}
+                                  name="message"
+                                  id="message"
+                                  className="form-control"
+                                  placeholder="এখানে বার্তা লিখুন..."
+                                  value={values.message}
+                                  onChange={handleChange}
+                                  isInvalid={
+                                    !!touched.message && !!errors.message
+                                  }
+                                />
+                              </div>
+
+                              <Form.Control.Feedback type="invalid">
+                                {errors.message}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </div>
+                        </div>
+                        <div className="col-md-12 form-group">
+                          <button
+                            className="vs-btn justify-content-center fw-normal"
+                            type="submit"
+                            disabled={isSubmitting}
+                          >
+                            {/* বার্তা পাঠান */}
+                            {isSubmitting ? "Sending..." : "বার্তা পাঠান"}
+                          </button>
+                        </div>
+                      </div>
+                      {/* message  */}
+                      {message && (
+                        <h2 className="text-center m-5">{message}</h2>
+                      )}
+                    </FormikForm>
+                  )}
+                </Formik>
+              </div>
               <p className="form-messages mb-0 mt-3"></p>
             </div>
           </div>
@@ -321,13 +472,72 @@ const Wrapper = styled.section`
     min-height: 70px;
   }
   .orderby {
-    background-color: #ffffff !important;
+    /* background-color: #ffffff !important; */
     color: #3333 !important;
   }
 
   .orderby option {
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     color: #000000;
+  }
+  .form-control {
+  text-transform: none;
+}
+
+  .form-control:focus {
+    /* background-color: transparent !important; */
+    /* color: #fff !important; */
+    outline: none !important;
+    border-color: none !important;
+  }
+  .input-single .form-control:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  //formik css
+  .invalid-feedback {
+    font-size: 12px;
+    color: red;
+  }
+
+  .imgDiv {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  //formik css
+
+  .form-group {
+    position: relative;
+  }
+
+  .input-single {
+    position: relative;
+  }
+
+  .input-single .form-control {
+    padding-right: 45px;
+  }
+
+  .input-single i {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+  }
+  .input-single textarea.form-control {
+    min-height: 150px;
+    resize: vertical; /* or resize: none; */
+  }
+
+  .error-message {
+    display: block !important;
+    font-size: 16px;
+    position: relative;
+    z-index: 99999;
   }
 `;
 

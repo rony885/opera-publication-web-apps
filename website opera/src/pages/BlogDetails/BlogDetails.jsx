@@ -57,7 +57,9 @@ const BlogDetails = () => {
                     src={findBlogDetails && findBlogDetails.img}
                     alt="blog Imagee"
                   />
-                  <div className="blog-tag">Thriller</div>
+                  <div className="blog-tag py-2">
+                    {findBlogDetails && findBlogDetails.author}
+                  </div>
                   <div className="blog-meta fw-normal">
                     <Link to="/blog">
                       <i className="fas fa-calendar-alt"></i>
@@ -77,7 +79,10 @@ const BlogDetails = () => {
                   className="blog-content wow animate__fadeInUp fw-normal"
                   data-wow-delay="0.50s"
                 >
-                  <h2 className="blog-title fw-normal">
+                  <h2
+                    className="blog-title fw-normal"
+                    style={{ marginTop: "32px" }}
+                  >
                     {findBlogDetails && findBlogDetails.title}
                   </h2>
                   {/* <p className="blog-text">
@@ -86,7 +91,26 @@ const BlogDetails = () => {
                   <p className="blog-text mb-30">
                     {findBlogDetails && findBlogDetails.description}
                   </p> */}
-                  <p className="blog-text atma-regular fw-normal fs-5">
+                  <p
+                    className="blog-text atma-regular fw-normal fs-5"
+                    style={{ textAlign: "justify" }}
+                  >
+                    {/* Improve your JavaScript skills with these useful tips and
+                    tricks that can make your code cleaner and more efficient. */}
+                    {findBlogDetails && findBlogDetails.description}
+                  </p>
+                  <p className="blog-text mb-30 tiro-bangla-regular-italic fw-normal fs-5">
+                    {/* Scalability is key in modern apps. Learn strategies and
+                    architecture patterns to build scalable systems. */}
+                    {/* {findBlogDetails && findBlogDetails.description[1]} */}
+                  </p>
+                  <p className="blog-text mb-30 iphone-bangla fw-normal fs-5">
+                    {/* Understand the difference between frontend and backend
+                    development and how they work together. */}
+                    {/* {findBlogDetails && findBlogDetails.description[2]} */}
+                  </p>
+
+                  {/* <p className="blog-text atma-regular fw-normal fs-5">
                     বাংলাদেশ দক্ষিণ এশিয়ার একটি স্বাধীন ও সার্বভৌম রাষ্ট্র, যার
                     সাংবিধানিক নাম "গণপ্রজাতন্ত্রী বাংলাদেশ" [১, ৩]। ১৯৭১ সালে
                     দীর্ঘ ৯ মাস যুদ্ধের পর ১৬ই ডিসেম্বর দেশটি স্বাধীনতা লাভ করে
@@ -105,8 +129,9 @@ const BlogDetails = () => {
                     বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর এবং স্বাধীন রাষ্ট্র।
                     বাংলাদেশ নদীমাতৃক ও কৃষি প্রধান দেশ। বাংলাদেশের মোট আয়তন ১
                     লক্ষ ৪৭ হাজার ৫৭০ বর্গ
-                  </p>
-                  <div className="row mb-3">
+                  </p> */}
+
+                  {/* <div className="row mb-3">
                     <div className="col-lg-6">
                       <div className="list-style1">
                         <ul className="list-unstyled">
@@ -163,9 +188,9 @@ const BlogDetails = () => {
                     >
                       <i className="fas fa-play"></i>
                     </Link>
-                  </div>
+                  </div> */}
 
-                  <blockquote className="vs-quote">
+                  {/* <blockquote className="vs-quote">
                     <p>
                       "Lorem ipsum dolor sit amet consectetur adipiscing elit.
                       Quisque faucibus ex sapien vitae pellentesque sem
@@ -184,8 +209,9 @@ const BlogDetails = () => {
                     lacus nec metus bibendum egestas. Iaculis massa nisl
                     malesuada lacinia integer nunc posuere. Ut hendrerit semper
                     vel class aptent taciti sociosqu.
-                  </p>
-                  <div
+                  </p> */}
+
+                  {/* <div
                     className="blog-group-imgs mb-30 wow animate__fadeInUp"
                     data-wow-delay="0.60s"
                   >
@@ -254,8 +280,9 @@ const BlogDetails = () => {
                         </ul>
                       </div>
                     </div>
-                  </div>
-                  <div className="blog-author">
+                  </div> */}
+
+                  {/* <div className="blog-author">
                     <div className="media-img">
                       <img
                         src="/assets/img/blog/blog-author.jpg"
@@ -296,8 +323,9 @@ const BlogDetails = () => {
                         </li>
                       </ul>
                     </div>
-                  </div>
-                  <div
+                  </div> */}
+
+                  {/* <div
                     className="vs-comments-wrap wow animate__fadeInUp"
                     data-wow-delay="0.70s"
                   >
@@ -363,7 +391,8 @@ const BlogDetails = () => {
                         </ul>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
+
                   <div
                     className="vs-comment-form wow animate__fadeInUp"
                     data-wow-delay="0.80s"
@@ -418,137 +447,6 @@ const BlogDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="col-xl-4 col-lg-5">
-              <aside className="sidebar-area">
-                <div
-                  className="widget widget_search wow animate__fadeInUp"
-                  data-wow-delay="0.30s"
-                >
-                  <h3 className="wp-block-heading widget_title title-shep">
-                    Search
-                  </h3>
-                  <form className="search-form">
-                    <input type="text" placeholder="Search Here..." />
-                    <button className="vs-btn" type="submit">
-                      Search
-                    </button>
-                  </form>
-                </div>
-                <div
-                  className="widget wow animate__fadeInUp"
-                  data-wow-delay="0.40s"
-                >
-                  <div className="wp-block-group widget_categories is-layout-constrained wp-block-group-is-layout-constrained">
-                    <div className="wp-block-group__inner-container">
-                      <h3 className="wp-block-heading widget_title title-shep">
-                        Categories
-                      </h3>
-                      <ul className="wp-block-categories-list wp-block-categories">
-                        <li className="cat-item">
-                          <Link to="/blog">Romance</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Thriller</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Fantasy</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Since Fiction</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Since</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Astronomy</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Kids</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Cartoon & Story</Link>
-                        </li>
-                        <li className="cat-item">
-                          <Link to="/blog">Educational</Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="widget wow animate__fadeInUp"
-                  data-wow-delay="0.50s"
-                >
-                  <h3 className="widget_title title-shep">Latest News</h3>
-                  <div className="recent-post-wrap">
-                    <div className="recent-post">
-                      <div className="media-img">
-                        <Link to="/blog-details">
-                          <img
-                            src="/assets/img/blog/recent-post-1-1.jpg"
-                            alt="Blog Imagee"
-                          />
-                        </Link>
-                      </div>
-                      <div className="media-body">
-                        <div className="recent-post-meta">
-                          <i className="fas fa-calendar-alt"></i> 16 January,
-                          2025
-                        </div>
-                        <h4 className="post-title">
-                          <Link className="text-inherit" to="/blog-details">
-                            Lorem ipsum dolor sit amet consectetur.
-                          </Link>
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="recent-post">
-                      <div className="media-img">
-                        <Link to="/blog-details">
-                          <img
-                            src="/assets/img/blog/recent-post-1-2.jpg"
-                            alt="Blog Imagee"
-                          />
-                        </Link>
-                      </div>
-                      <div className="media-body">
-                        <div className="recent-post-meta">
-                          <i className="fas fa-calendar-alt"></i> 16 January,
-                          2025
-                        </div>
-                        <h4 className="post-title">
-                          <Link className="text-inherit" to="/blog-details">
-                            How to Improve amet Your Riding Skills
-                          </Link>
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="recent-post">
-                      <div className="media-img">
-                        <Link to="/blog-details">
-                          <img
-                            src="/assets/img/blog/recent-post-1-3.jpg"
-                            alt="Blog Imagee"
-                          />
-                        </Link>
-                      </div>
-                      <div className="media-body">
-                        <div className="recent-post-meta">
-                          <i className="fas fa-calendar-alt"></i> 16 January,
-                          2025
-                        </div>
-                        <h4 className="post-title">
-                          <Link className="text-inherit" to="/blog-details">
-                            Lorem ipsum dolor sit amet consectetur.
-                          </Link>
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </aside>
-            </div> */}
           </div>
         </div>
       </section>

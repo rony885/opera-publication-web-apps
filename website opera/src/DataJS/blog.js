@@ -8,20 +8,21 @@ const blog = [
     views: 63,
     title: "Lorem ipsum dolor sit amet consectetur.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet accumsan tortor. Nulla facilisi. Sed vel ligula at quam aliquet tincidunt.",
+      "Improve your JavaScript skills with these useful tips and tricks that can make your code cleaner and more efficient. Scalability is key in modern apps. Learn strategies and architecture patterns to build scalable systems. Understand the difference between frontend and backend development and how they work together.",
+
     slug: "lorem-ipsum-1",
   },
   {
     id: 2,
     img: "/assets/img/blog/blog-img-1-2.jpg",
-    date: "16 March, 2025",
-    author: "Rafiq",
-    comments: 3,
-    views: 100,
-    title: "Exploring modern web development trends.",
+    date: "১৬ মার্চ, ২০২৫",
+    author: "রফিক",
+    comments: "৩",
+    views: "১০০",
+    title: "বাংলাদেশ: স্বাধীনতা, ইতিহাস ও ঐতিহ্য",
     description:
-      "Modern web development is evolving rapidly with new frameworks and tools. This article explores the latest trends shaping the future of development.",
-    slug: "web-development-trends",
+      'বাংলাদেশ দক্ষিণ এশিয়ার একটি স্বাধীন ও সার্বভৌম রাষ্ট্র, যার সাংবিধানিক নাম "গণপ্রজাতন্ত্রী বাংলাদেশ" [১, ৩]। ১৯৭১ সালে দীর্ঘ ৯ মাস যুদ্ধের পর ১৬ই ডিসেম্বর দেশটি স্বাধীনতা লাভ করে [১০]। ঢাকা বাংলাদেশের রাজধানী ও বৃহত্তম শহর [৩]। পদ্মা, মেঘনা, যমুনা নদীবেষ্টিত এই উর্বর বদ্বীপ দেশটি বিশ্বের অন্যতম ঘনবসতিপূর্ণ এবং জনসংখ্যায় ৮ম বৃহত্তম দেশ। বাংলাদেশের সাংবিধানিক নাম হল গণপ্রজাতন্ত্রী বাংলাদেশ। বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর এবং স্বাধীন রাষ্ট্র। বাংলাদেশ নদীমাতৃক ও কৃষি প্রধান দেশ। বাংলাদেশের মোট আয়তন ১ লক্ষ ৪৭ হাজার ৫৭০ বর্গ কিলোমিটার। বাংলাদেশের সাংবিধানিক নাম হল গণপ্রজাতন্ত্রী বাংলাদেশ। বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর এবং স্বাধীন রাষ্ট্র। বাংলাদেশ নদীমাতৃক ও কৃষি প্রধান দেশ। বাংলাদেশের মোট আয়তন ১ লক্ষ ৪৭ হাজার ৫৭০ বর্গ কিলোমিটার।',
+    slug: "bangladesh-itihash-o-oitijjo",
   },
   {
     id: 3,
@@ -32,7 +33,7 @@ const blog = [
     views: 120,
     title: "Understanding React best practices.",
     description:
-      "React has become one of the most popular libraries. Learn best practices to build scalable and maintainable applications.",
+      "Improve your JavaScript skills with these useful tips and tricks that can make your code cleaner and more efficient. Scalability is key in modern apps. Learn strategies and architecture patterns to build scalable systems. Understand the difference between frontend and backend development and how they work together.",
     slug: "react-best-practices",
   },
   {
@@ -44,7 +45,7 @@ const blog = [
     views: 130,
     title: "UI/UX design principles for beginners.",
     description:
-      "Design plays a crucial role in user experience. This guide introduces fundamental UI/UX principles for beginners.",
+      'বাংলাদেশ দক্ষিণ এশিয়ার একটি স্বাধীন ও সার্বভৌম রাষ্ট্র, যার সাংবিধানিক নাম "গণপ্রজাতন্ত্রী বাংলাদেশ" [১, ৩]। ১৯৭১ সালে দীর্ঘ ৯ মাস যুদ্ধের পর ১৬ই ডিসেম্বর দেশটি স্বাধীনতা লাভ করে [১০]। ঢাকা বাংলাদেশের রাজধানী ও বৃহত্তম শহর [৩]। পদ্মা, মেঘনা, যমুনা নদীবেষ্টিত এই উর্বর বদ্বীপ দেশটি বিশ্বের অন্যতম ঘনবসতিপূর্ণ এবং জনসংখ্যায় ৮ম বৃহত্তম দেশ। বাংলাদেশের সাংবিধানিক নাম হল গণপ্রজাতন্ত্রী বাংলাদেশ। বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর এবং স্বাধীন রাষ্ট্র। বাংলাদেশ নদীমাতৃক ও কৃষি প্রধান দেশ। বাংলাদেশের মোট আয়তন ১ লক্ষ ৪৭ হাজার ৫৭০ বর্গ কিলোমিটার। বাংলাদেশের সাংবিধানিক নাম হল গণপ্রজাতন্ত্রী বাংলাদেশ। বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর এবং স্বাধীন রাষ্ট্র। বাংলাদেশ নদীমাতৃক ও কৃষি প্রধান দেশ। বাংলাদেশের মোট আয়তন ১ লক্ষ ৪৭ হাজার ৫৭০ বর্গ কিলোমিটার।',
     slug: "ui-ux-design",
   },
   {
@@ -56,7 +57,7 @@ const blog = [
     views: 140,
     title: "JavaScript tips and tricks you should know.",
     description:
-      "Improve your JavaScript skills with these useful tips and tricks that can make your code cleaner and more efficient.",
+      "Improve your JavaScript skills with these useful tips and tricks that can make your code cleaner and more efficient. Scalability is key in modern apps. Learn strategies and architecture patterns to build scalable systems. Understand the difference between frontend and backend development and how they work together.",
     slug: "js-tips-tricks",
   },
   {
@@ -68,7 +69,7 @@ const blog = [
     views: 110,
     title: "How to build scalable applications.",
     description:
-      "Scalability is key in modern apps. Learn strategies and architecture patterns to build scalable systems.",
+      "Improve your JavaScript skills with these useful tips and tricks that can make your code cleaner and more efficient. Scalability is key in modern apps. Learn strategies and architecture patterns to build scalable systems. Understand the difference between frontend and backend development and how they work together.",
     slug: "scalable-apps",
   },
   {
@@ -80,7 +81,7 @@ const blog = [
     views: 90,
     title: "Frontend vs Backend development.",
     description:
-      "Understand the difference between frontend and backend development and how they work together.",
+      "Improve your JavaScript skills with these useful tips and tricks that can make your code cleaner and more efficient. Scalability is key in modern apps. Learn strategies and architecture patterns to build scalable systems. Understand the difference between frontend and backend development and how they work together.",
     slug: "frontend-vs-backend",
   },
   {
@@ -92,7 +93,7 @@ const blog = [
     views: 80,
     title: "Top tools for developers in 2025.",
     description:
-      "Discover the most useful tools and software developers are using in 2025 to improve productivity.",
+      "Improve your JavaScript skills with these useful tips and tricks that can make your code cleaner and more efficient. Scalability is key in modern apps. Learn strategies and architecture patterns to build scalable systems. Understand the difference between frontend and backend development and how they work together.",
     slug: "developer-tools-2025",
   },
   {
@@ -104,7 +105,7 @@ const blog = [
     views: 70,
     title: "Getting started with APIs.",
     description:
-      "APIs are essential for modern applications. Learn how to work with APIs step by step.",
+      'বাংলাদেশ দক্ষিণ এশিয়ার একটি স্বাধীন ও সার্বভৌম রাষ্ট্র, যার সাংবিধানিক নাম "গণপ্রজাতন্ত্রী বাংলাদেশ" [১, ৩]। ১৯৭১ সালে দীর্ঘ ৯ মাস যুদ্ধের পর ১৬ই ডিসেম্বর দেশটি স্বাধীনতা লাভ করে [১০]। ঢাকা বাংলাদেশের রাজধানী ও বৃহত্তম শহর [৩]। পদ্মা, মেঘনা, যমুনা নদীবেষ্টিত এই উর্বর বদ্বীপ দেশটি বিশ্বের অন্যতম ঘনবসতিপূর্ণ এবং জনসংখ্যায় ৮ম বৃহত্তম দেশ। বাংলাদেশের সাংবিধানিক নাম হল গণপ্রজাতন্ত্রী বাংলাদেশ। বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর এবং স্বাধীন রাষ্ট্র। বাংলাদেশ নদীমাতৃক ও কৃষি প্রধান দেশ। বাংলাদেশের মোট আয়তন ১ লক্ষ ৪৭ হাজার ৫৭০ বর্গ কিলোমিটার। বাংলাদেশের সাংবিধানিক নাম হল গণপ্রজাতন্ত্রী বাংলাদেশ। বাংলাদেশ দক্ষিণ এশিয়ার একটি সুন্দর এবং স্বাধীন রাষ্ট্র। বাংলাদেশ নদীমাতৃক ও কৃষি প্রধান দেশ। বাংলাদেশের মোট আয়তন ১ লক্ষ ৪৭ হাজার ৫৭০ বর্গ কিলোমিটার।',
     slug: "api-guide",
   },
 ];

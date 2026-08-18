@@ -5,27 +5,46 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
-import convertBanglaPercentage from "../../components/banglaConvert/convertBanglaPercentage.jsx";
-import ProductArray from "../../../src/DataJS/Products.js";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+
 import { useCartContext } from "../../context/CartContext.jsx";
+import convertBanglaPercentage from "../../components/banglaConvert/convertBanglaPercentage.jsx";
+import convertToBanglaNumber from "../../components/banglaConvert/convertToBanglaNumber.jsx";
+import ProductArray from "../../../src/DataJS/Products.js";
 // import categoriesArray from "../../DataJS/categories.js";
+import AuthorsArray from "../../../src/DataJS/authors.js";
 
 const Product = () => {
-  const { addToCart, addToWishlist } = useCartContext();
+  // const { cart, addToCart, addToWishlist, wishlist } = useCartContext();
+  const {
+    cart,
+    addToCart,
+    removeCart,
+    addToWishlist,
+    removeWishlist,
+    wishlist,
+  } = useCartContext();
+
   const [products, setProducts] = useState([]);
+  const [authors, setAuthors] = useState([]);
   // const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     setProducts(ProductArray);
+    setAuthors(AuthorsArray);
     // setCategories(categoriesArray);
   }, []);
+
+  const allNewBook =
+    products && products.filter((prod) => prod.isNewBook === true);
 
   // Slider settings
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4, // default for large screens
+    slidesToShow: 6, // default for large screens
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -63,6 +82,17 @@ const Product = () => {
     sliderRef.current.slickPrev();
   };
 
+  // const isWishlisted = wishlist.some((item) => item.id === book.id);
+  // const isInCart = cart.some((item) => item.productId === book.id);
+
+  const getAuthorName = (book) => {
+    const author = authors.find((item) => item.id === book.authorId);
+
+    return /^[A-Za-z0-9\s.,'"():&-]+$/.test(book.title)
+      ? author?.englishName
+      : author?.name;
+  };
+
   return (
     <Wrapper>
       <section
@@ -74,91 +104,157 @@ const Product = () => {
         <div className="container">
           <div className="title-area text-center">
             {/* <h2 className="sec-title fw-normal">Book Of The Month</h2> */}
-            <h2 className="sec-title fw-normal fs-1">মাসের সেরা বই</h2>
+            {/* <h2 className="sec-title fw-normal fs-1">মাসের সেরা বই</h2> */}
+            <h2 className="sec-title fw-normal fs-1">নতুন বই</h2>
           </div>
 
           <Slider ref={sliderRef} {...settings} className="book-carousel mt-4">
-            {products &&
-              products.map((book) => (
-                <div key={book.id} className="px-2">
-                  <div className="product-style1">
-                    <div className="product-img position-relative">
-                      <img
-                        src={book.img}
-                        alt={book.title}
-                        className="img-fluid"
-                        style={{
-                          height: "400px",
-                        }}
-                      />
-                      <div className="product-btns">
-                        <Link
-                          to="/wishlist"
-                          className="icon-btn wishlist"
-                          onClick={() => addToWishlist(book)}
-                        >
-                          <i className="far fa-heart"></i>
-                        </Link>
+            {allNewBook &&
+              allNewBook.map((book) => {
+                const isWishlisted = wishlist.some(
+                  (item) => item.id === book.id,
+                );
 
-                        <Link
-                          to="/cart"
-                          className="icon-btn cart"
-                          onClick={() =>
-                            addToCart(book.id, 1, null, null, book)
-                          }
-                        >
-                          <i className="fa-solid fa-basket-shopping"></i>
-                        </Link>
-                      </div>
+                const isInCart = cart.some(
+                  (item) => item.productId === book.id,
+                );
 
-                      {/* <ul className="post-box">
-                        {book.badge.map((tag, idx) => (
-                          <li
-                            key={idx}
-                            className={tag === "Hot" ? "hot-badge" : ""}
+                return (
+                  <div key={book.id} className="px-2">
+                    <div className="product-style1">
+                      <div className="product-img position-relative">
+                        <img
+                          src={book.img}
+                          alt={book.title}
+                          className="img-fluid"
+                          style={{
+                            height: "310px",
+                          }}
+                        />
+                        <div className="product-btns">
+                          {/* <Link
+                            to="/wishlist"
+                            className="icon-btn wishlist"
+                            onClick={() => addToWishlist(book)}
                           >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul> */}
-                      <ul className="post-box">
-                        {book.badge.map((tag, idx) => (
-                          <li
-                            key={idx}
-                            className={tag === "Hot" ? "hot-badge" : ""}
+                            <i className="far fa-heart"></i>
+                          </Link> */}
+
+                          <Link
+                            // to="/wishlist"
+                            className="icon-btn wishlist"
+                            data-tooltip-id="wishlist-tooltip"
+                            data-tooltip-content={
+                              isWishlisted
+                                ? "Already in Wishlist"
+                                : "Add to Wishlist"
+                            }
+                            // onClick={() => addToWishlist(book)}
+                            onClick={(e) => {
+                              e.preventDefault();
+
+                              if (isWishlisted) {
+                                removeWishlist(book.id);
+                              } else {
+                                addToWishlist(book);
+                              }
+                            }}
                           >
-                            {tag === "Hot"
-                              ? "হট"
-                              : convertBanglaPercentage(tag)}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="product-content mt-3 ">
-                      <div className="product-rating mb-1">
-                        <span className="star" style={{ fontSize: "16px" }}>
-                          {/* <i className="fas fa-star"></i> ({book.rating}) */}
-                          <i className="fas fa-star"></i> (
-                          {book.rating.toLocaleString("bn-BD")})
-                        </span>
-                        <ul className="price-list">
-                          <li>
-                            <del
-                              className="fw-normal"
-                              style={{ fontSize: "18px" }}
+                            <i
+                              className={
+                                isWishlisted ? "fas fa-heart" : "far fa-heart"
+                              }
+                              style={{ color: isWishlisted ? "#CC0033" : "" }}
+                            />
+                          </Link>
+                          <Tooltip
+                            id="wishlist-tooltip"
+                            place="left"
+                            offset={1}
+                            className="wishlist-tooltip"
+                          />
+
+                          {/* <Link
+                            to="/cart"
+                            className="icon-btn cart"
+                            onClick={() =>
+                              addToCart(book.id, 1, null, null, book)
+                            }
+                          >
+                            <i className="fa-solid fa-basket-shopping"></i>
+                          </Link> */}
+                          <Link
+                            // to="/cart"
+                            className="icon-btn cart"
+                            data-tooltip-id="cart-tooltip"
+                            data-tooltip-content={
+                              isInCart ? "Already in Cart" : "Add to Cart"
+                            }
+                            // onClick={() =>
+                            //   addToCart(book.id, 1, null, null, book)
+                            // }
+                            onClick={(e) => {
+                              e.preventDefault();
+
+                              if (isInCart) {
+                                const cartItem = cart.find(
+                                  (item) => item.productId === book.id,
+                                );
+
+                                if (cartItem) {
+                                  removeCart(cartItem.id);
+                                }
+                              } else {
+                                addToCart(book.id, 1, null, null, book);
+                              }
+                            }}
+                          >
+                            <i
+                              className="fa-solid fa-basket-shopping"
+                              style={{
+                                color: isInCart ? "#CC0033" : "",
+                              }}
+                            ></i>
+                          </Link>
+                          <Tooltip
+                            id="cart-tooltip"
+                            place="left"
+                            offset={1}
+                            className="wishlist-tooltip"
+                          />
+                        </div>
+
+                        <ul className="post-box">
+                          {book.badge.map((tag, idx) => (
+                            <li
+                              key={idx}
+                              className={tag === "Hot" ? "hot-badge" : ""}
                             >
-                              ৳{book.oldPrice}
-                            </del>
-                          </li>
-                          <li
-                            className="fw-normal"
-                            style={{ fontSize: "18px" }}
-                          >
-                            ৳{book.price}
-                          </li>
+                              {tag === "Hot"
+                                ? "হট"
+                                : convertBanglaPercentage(tag)}
+                            </li>
+                          ))}
                         </ul>
                       </div>
-                      {/* <span
+                      <div className="product-content mt-3 ">
+                        <div className="product-rating mb-1">
+                          <span className="star" style={{ fontSize: "16px" }}>
+                            <i className="fas fa-star"></i> ({book.rating})
+                          </span>
+                          <ul className="price-list">
+                            <li>
+                              <del style={{ fontSize: "18px" }}>
+                                ৳{convertToBanglaNumber(book.oldPrice)}
+                              </del>
+                            </li>
+                            <li style={{ fontSize: "18px" }}>
+                              <span className="fw-normal">৳</span>
+                              {convertToBanglaNumber(book.price)}
+                            </li>
+                          </ul>
+                        </div>
+                        {/* <span
                         className="stock-badge"
                         style={{
                           color: book.inStock ? "#28a745" : "#FF3333",
@@ -173,16 +269,24 @@ const Product = () => {
                       >
                         {book.inStock ? "In Stock" : "Out of Stock"}
                       </span> */}
-                      <h2 className="product-title fs-5 fw-normal mt-2">
-                        <Link to="/shop">{book.title}</Link>
-                      </h2>{" "}
-                      <span className="product-author d-block fs-6 mb-1">
-                        <strong>By:</strong> {book.author}
-                      </span>
+                        <h2 className="product-title fs-5 fw-normal mt-2 text-center">
+                          <Link to="/book">{book.title}</Link>
+                        </h2>{" "}
+                        <span className="product-author d-block fs-6 mb-1 text-center">
+                          {/* <strong>By:</strong> {book.author} */}
+                          {/* {book.author} */}
+                          {/* {
+                            AuthorsArray.find(
+                              (author) => author.id === book.authorId,
+                            )?.name
+                          } */}
+                          {getAuthorName(book)}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
           </Slider>
 
           {/* Custom arrows */}
@@ -255,6 +359,15 @@ const Wrapper = styled.section`
   .product-style1 .product-btns .icon-btn:hover {
     color: #ffffff !important;
     /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+  }
+
+  .wishlist-tooltip,
+  .cart-tooltip {
+    padding: 0px -30px !important;
+    font-size: 12px !important;
+    border-radius: 3px !important;
+    line-height: 1 !important;
+    z-index: 9999 !important;
   }
 `;
 

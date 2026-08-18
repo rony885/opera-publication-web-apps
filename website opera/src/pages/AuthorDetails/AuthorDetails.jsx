@@ -1,86 +1,59 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import authorArray from "../../DataJS/authors.js";
 
-const booksData = [
-  {
-    id: 1,
-    title: "Rivetmane 10An",
-    author: "Rodja Heartmann",
-    img: "/assets/img/product/product-img-3-1.jpg",
-    rating: 4.5,
-    oldPrice: 39.99,
-    price: 30.0,
-    tag: ["Hot", "-30%"],
-    inStock: true,
-  },
-  {
-    id: 2,
-    title: "Love Nature",
-    author: "Rodja Heartmann",
-    img: "/assets/img/product/product-img-3-2.jpg",
-    rating: 4.5,
-    oldPrice: 39.99,
-    price: 30.0,
-    tag: ["Hot", "-30%"],
-    inStock: false,
-  },
-  {
-    id: 3,
-    title: "Love Story",
-    author: "Rodja Heartmann",
-    img: "/assets/img/product/product-img-3-3.jpg",
-    rating: 4.5,
-    oldPrice: 39.99,
-    price: 30.0,
-    tag: ["Hot", "-30%"],
-    inStock: true,
-  },
-  {
-    id: 4,
-    title: "Stotc Stoite Ust...",
-    author: "Rodja Heartmann",
-    img: "/assets/img/product/product-img-3-4.jpg",
-    rating: 4.5,
-    oldPrice: 39.99,
-    price: 30.0,
-    tag: ["Hot", "-30%"],
-    inStock: false,
-  },
-  {
-    id: 5,
-    title: "Cook Design Psvter",
-    author: "Rodja Heartmann",
-    img: "/assets/img/product/product-img-3-5.jpg",
-    rating: 4.5,
-    oldPrice: 39.99,
-    price: 30.0,
-    tag: ["Hot", "-30%"],
-    inStock: true,
-  },
-  {
-    id: 6,
-    title: "Cover Design",
-    author: "Rodja Heartmann",
-    img: "/assets/img/product/product-img-3-6.jpg",
-    rating: 4.5,
-    oldPrice: 39.99,
-    price: 30.0,
-    tag: ["Hot", "-30%"],
-    inStock: false,
-  },
-];
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+
+import convertToBanglaNumber from "../../components/banglaConvert/convertToBanglaNumber.jsx";
+import convertBanglaPercentage from "../../components/banglaConvert/convertBanglaPercentage.jsx";
+
+import authorArray from "../../DataJS/authors.js";
+import ProductArray from "../../../src/DataJS/Products.js";
+import { useCartContext } from "../../context/CartContext.jsx";
 
 const AuthorDetails = () => {
+  const {
+    cart,
+    addToCart,
+    removeCart,
+    addToWishlist,
+    removeWishlist,
+    wishlist,
+  } = useCartContext();
+
+  const [products, setProducts] = useState([]);
   const [authors, setAuthors] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
+    setProducts(ProductArray);
     setAuthors(authorArray);
   }, []);
 
   const findAuthDetails = authors.find((auth) => auth.id === parseInt(id));
+
+  const authorBooks = products.filter(
+    (book) => book.authorId === findAuthDetails?.id,
+  );
+
+  // =======
+  // const findAuthDetails = authors.find((auth) => auth.id === Number(id));
+
+  // const sameAuthorIds = authors
+  //   .filter((author) => author.name === findAuthDetails?.name)
+  //   .map((author) => author.id);
+
+  // const authorBooks = products.filter((book) =>
+  //   sameAuthorIds.includes(book.authorId),
+  // );
+
+  // =======
+  // const findAuthDetails = authors.find((auth) => auth.id === Number(id));
+
+  // const authorBooks = products.filter(
+  //   (book) => book.authorKey === findAuthDetails?.authorKey,
+  // );
 
   return (
     <Wrapper>
@@ -110,7 +83,7 @@ const AuthorDetails = () => {
         </div>
       </div>
 
-      <section className="author-details space">
+      <section className="author-details space author-details-page">
         <div className="container space-bottom position-relative">
           <div className="row align-items-center gx-60 g-4">
             <div className="col-xl-5 col-lg-6">
@@ -128,7 +101,7 @@ const AuthorDetails = () => {
                 </h2>
                 <p
                   className="text text-justify fw-normal fs-5"
-                  style={{ textAlign: "justify" }}
+                  style={{ textAlign: "justify", fontFamily: "Chayalipi" }}
                 >
                   {findAuthDetails && findAuthDetails.description[0]}
                 </p>
@@ -142,23 +115,39 @@ const AuthorDetails = () => {
                   </h3>
                   <ul className="social-links">
                     <li>
-                      <Link to="#" target="_blank">
+                      <Link
+                        to="https://www.facebook.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <i className="fab fa-facebook-f"></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to="#" target="_blank">
+                      <Link
+                        to="https://x.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <i className="fa-brands fa-x-twitter"></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to="#" target="_blank">
+                      <Link
+                        to="https://www.instagram.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <i className="fab fa-instagram"></i>
                       </Link>
                     </li>
                     <li>
-                      <Link to="#" target="_blank">
-                        <i className="fab fa-dribbble"></i>
+                      <Link
+                        to="https://www.youtube.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i className="fab fa-youtube"></i>
                       </Link>
                     </li>
                   </ul>
@@ -173,65 +162,167 @@ const AuthorDetails = () => {
       <section className="romance-layout1">
         <div className="container space-bottom position-relative">
           <div className="title-area2 animation-style1 title-anime">
-            <h2 className="sec-title title-anime__title fw-normal">
-              {/* Books By Rodja heartmann */}
+            {/* <h2 className="sec-title title-anime__title fw-normal">
+              Books By Rodja heartmann
               এনামুল হক রচিত বইসমূহ
+              {findAuthDetails && findAuthDetails.name} রচিত বইসমূহ
+            </h2> */}
+            <h2 className="sec-title title-anime__title fw-normal">
+              {/^[A-Za-z]/.test(findAuthDetails?.englishName || "")
+                ? findAuthDetails?.name
+                : findAuthDetails?.name}{" "}
+              রচিত বইসমূহ
             </h2>
             <Link
               className="vs-btn wow animate__flipInX fw-normal py-2 fs-5"
               data-wow-delay="0.70s"
-              to="/shop"
+              to="/book"
             >
               আরও দেখুন
             </Link>
           </div>
           <div className="row g-4">
-            {booksData.map((book) => {
-              return (
-                <div key={book.id} className="col-xl-2 col-md-4 col-sm-6">
-                  <div
-                    className="product-style1 wow animate__fadeInUp"
-                    data-wow-delay="0.30s"
-                  >
-                    <div className="product-img">
-                      <img src={book.img} alt="product imagee" />
-                      <div className="product-btns">
-                        <Link to="wishlist" className="icon-btn wishlist">
-                          <i className="far fa-heart"></i>
-                        </Link>
-                        <Link to="cart" className="icon-btn cart">
-                          <i className="fa-solid fa-basket-shopping"></i>
-                        </Link>
-                      </div>
-                      {/* <ul className="post-box">
-                        <li>Hot</li>
-                        <li>-30%</li>
-                      </ul> */}
-                      <ul className="post-box">
-                        {book.tag.map((tg, idx) => (
-                          <li
-                            key={idx}
-                            className={tg === "Hot" ? "hot-badge" : ""}
+            {authorBooks.length > 0 ? (
+              authorBooks.map((book) => {
+                const author = authors.find((a) => a.id === book.authorId);
+
+                const isEnglishBook = /^[A-Za-z0-9\s.,'":()&-]+$/.test(
+                  book.title,
+                );
+
+                const authorName = isEnglishBook
+                  ? author?.englishName
+                  : author?.name;
+
+                const isWishlisted = wishlist.some(
+                  (item) => item.id === book.id,
+                );
+
+                const isInCart = cart.some(
+                  (item) => item.productId === book.id,
+                );
+
+                return (
+                  <div key={book.id} className="col-xl-2 col-md-4 col-sm-6">
+                    <div
+                      className="product-style1 wow animate__fadeInUp"
+                      data-wow-delay="0.30s"
+                    >
+                      <div className="product-img">
+                        <img
+                          src={book.img}
+                          alt="product imagee"
+                          style={{
+                            height: "300px",
+                          }}
+                        />
+                        <div className="product-btns">
+                          <Link
+                            className="icon-btn wishlist"
+                            data-tooltip-id="wishlist-tooltip"
+                            data-tooltip-content={
+                              isWishlisted
+                                ? "Already in Wishlist"
+                                : "Add to Wishlist"
+                            }
+                            onClick={(e) => {
+                              e.preventDefault();
+
+                              if (isWishlisted) {
+                                removeWishlist(book.id);
+                              } else {
+                                addToWishlist(book);
+                              }
+                            }}
                           >
-                            {tg}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="product-content">
-                      <div className="product-rating">
-                        <span className="star fw-normal">
-                          <i className="fas fa-star"></i> ({book.rating})
-                        </span>
-                        <ul className="price-list">
-                          <li>
-                            <del className="fw-normal">৳{book.oldPrice}</del>
-                          </li>
-                          <li className="fw-normal">৳{book.price}</li>
+                            <i
+                              className={
+                                isWishlisted ? "fas fa-heart" : "far fa-heart"
+                              }
+                              style={{ color: isWishlisted ? "#CC0033" : "" }}
+                            />
+                          </Link>
+                          <Tooltip
+                            id="wishlist-tooltip"
+                            place="left"
+                            offset={1}
+                            className="wishlist-tooltip"
+                          />
+
+                          <Link
+                            className="icon-btn cart"
+                            data-tooltip-id="cart-tooltip"
+                            data-tooltip-content={
+                              isInCart ? "Already in Cart" : "Add to Cart"
+                            }
+                            onClick={(e) => {
+                              e.preventDefault();
+
+                              if (isInCart) {
+                                const cartItem = cart.find(
+                                  (item) => item.productId === book.id,
+                                );
+
+                                if (cartItem) {
+                                  removeCart(cartItem.id);
+                                }
+                              } else {
+                                addToCart(book.id, 1, null, null, book);
+                              }
+                            }}
+                          >
+                            <i
+                              className="fa-solid fa-basket-shopping"
+                              style={{
+                                color: isInCart ? "#CC0033" : "",
+                              }}
+                            ></i>
+                          </Link>
+                          <Tooltip
+                            id="cart-tooltip"
+                            place="left"
+                            offset={1}
+                            className="wishlist-tooltip"
+                          />
+                        </div>
+
+                        <ul className="post-box">
+                          {book.badge.map((tag, idx) => (
+                            <li
+                              key={idx}
+                              className={tag === "Hot" ? "hot-badge" : ""}
+                            >
+                              {tag === "Hot"
+                                ? "হট"
+                                : convertBanglaPercentage(tag)}
+                            </li>
+                          ))}
                         </ul>
                       </div>
+                      <div className="product-content">
+                        <div className="product-rating">
+                          <span className="star fw-normal">
+                            <i className="fas fa-star"></i> ({book.rating})
+                          </span>
+                          <ul className="price-list">
+                            <li>
+                              <del
+                                className="fw-normal"
+                                style={{ fontSize: "18px" }}
+                              >
+                                ৳{convertToBanglaNumber(book.oldPrice)}
+                              </del>
+                            </li>
+                            <li
+                              className="fw-normal"
+                              style={{ fontSize: "18px" }}
+                            >
+                              ৳{convertToBanglaNumber(book.price)}
+                            </li>
+                          </ul>
+                        </div>
 
-                      {/* <span
+                        {/* <span
                         className="stock-badge fw-normal"
                         style={{
                           color: book.inStock ? "#28a745" : "#FF3333",
@@ -247,17 +338,26 @@ const AuthorDetails = () => {
                         {book.inStock ? "In Stock" : "Out of Stock"}
                       </span> */}
 
-                      <h2 className="product-title fw-normal mt-2">
-                        <Link to="/shop">{book.title}</Link>
-                      </h2>
-                      <span className="product-author fw-normal">
-                        <strong>By:</strong> {book.author}
-                      </span>
+                        <h2 className="product-title fw-normal fs-5 mt-2 text-center mb-1">
+                          <Link to="/book">{book.title}</Link>
+                        </h2>
+                        <span className="product-author fw-normal fs-6 text-center">
+                          {/* <strong>By:</strong> {book.author} */}
+                          {/* {findAuthDetails?.name} */}
+                          {authorName}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="col-12 text-center">
+                <h4 className="fw-normal py-5 text-danger">
+                  এই লেখকের কোনো বই পাওয়া যায়নি
+                </h4>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -287,6 +387,15 @@ const Wrapper = styled.section`
   }
   .product-style1 .product-btns .icon-btn:hover {
     color: #ffffff !important;
+  }
+
+  .wishlist-tooltip,
+  .cart-tooltip {
+    padding: 0px -30px !important;
+    font-size: 12px !important;
+    border-radius: 3px !important;
+    line-height: 1 !important;
+    z-index: 9999 !important;
   }
 `;
 

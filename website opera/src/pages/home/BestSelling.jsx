@@ -50,7 +50,7 @@ const BestSelling = () => {
                   to="/author-details"
                 >
                   {/* Read More */}
-                 আরও দেখুন
+                  আরও দেখুন
                 </Link>
               </div>
             </div>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import categoriesArray from "../../DataJS/categories.js";
 import { useCartContext } from "../../context/CartContext.jsx";
 import convertToBanglaNumber from "../banglaConvert/convertToBanglaNumber.jsx";
@@ -10,105 +10,52 @@ const Header = ({ toggleMenu, closeMenu }) => {
     cart,
     total_item,
     total_price,
-    removeItem,
+    removeCart,
     setIncrement,
     setDecrement,
     wishlist,
   } = useCartContext();
 
-  const location = useLocation(); // gives you current path
-  const [isActiveCategory, setIsActiveCategory] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [openLang, setOpenLang] = useState(false);
+  // const cartListRef = useRef(null);
+  const cartRef = useRef(null);
   const [categories, setCategories] = useState([]);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   useEffect(() => {
     setCategories(categoriesArray);
   }, []);
 
   const toggleCategory = () => {
-    setIsActiveCategory(!isActiveCategory);
+    setIsCategoryOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        // change 50 to whatever scroll height you want
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+    const cart = cartRef.current;
 
-    window.addEventListener("scroll", handleScroll);
+    if (!cart) return;
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const updateCategoryState = () => {
-      if (window.innerWidth < 1300) {
-        // Always disable below 1300px
-        setIsActiveCategory(false);
-      } else {
-        // Above 1300px → follow path rule
-        if (location.pathname === "/") {
-          setIsActiveCategory(true);
-        } else {
-          setIsActiveCategory(false);
-        }
-      }
-    };
-
-    updateCategoryState(); // run on mount
-
-    window.addEventListener("resize", updateCategoryState);
-
-    return () => window.removeEventListener("resize", updateCategoryState);
-  }, [location.pathname]);
-
-  // cart scroll code
-  useEffect(() => {
-    const cartBox = document.querySelector(".cart_list");
-
-    if (!cartBox) return;
-
-    const handleWheel = (e) => {
-      const { scrollTop, scrollHeight, clientHeight } = cartBox;
-
-      const isScrollingUp = e.deltaY < 0;
-      const isScrollingDown = e.deltaY > 0;
-
-      const isAtTop = scrollTop === 0;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight;
-
-      // Prevent page scroll when inside cart
-      if ((isScrollingUp && isAtTop) || (isScrollingDown && isAtBottom)) {
-        e.preventDefault();
-      }
-
+    const stopScroll = (e) => {
       e.stopPropagation();
     };
 
-    cartBox.addEventListener("wheel", handleWheel, { passive: false });
+    cart.addEventListener("wheel", stopScroll, { passive: false });
 
     return () => {
-      cartBox.removeEventListener("wheel", handleWheel);
+      cart.removeEventListener("wheel", stopScroll);
     };
   }, []);
 
   return (
     <Wrapper>
-      <header className="vs-header header-layout1">
+      <header className="vs-header header-layout1 style2">
         <div className="header-top">
           <div className="container">
             <div className="row justify-content-md-between justify-content-center align-items-center">
               <div className="col-auto">
                 <div className="header-links d-md-inline d-none">
                   <ul>
-                    <li className="fw-normal">
+                    <li>
                       <i className="fa-solid fa-truck-fast"></i>দ্রুততম ডেলিভারি
                       সেবা
                     </li>
@@ -117,52 +64,117 @@ const Header = ({ toggleMenu, closeMenu }) => {
               </div>
               <div className="col-auto">
                 <div className="header-right">
-                  <div className="dropdown d-none">
-                    <Link
-                      className="dropdown-toggle"
-                      to="#"
-                      role="button"
-                      id="dropdownMenuLink"
-                      aria-expanded="false"
-                      onClick={() => setOpenLang(!openLang)}
-                    >
-                      <span className="globe-icon">
-                        <i className="fal fa-globe"></i>
-                      </span>
-                      English
-                    </Link>
-                    <ul className={`dropdown-menu ৳{openLang ? "show" : ""}`}>
-                      <li>
-                        <Link className="dropdown-item" to="#">
-                          Bangla
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="#">
-                          English
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-
                   <div className="header-social">
-                    <Link to="https://www.facebook.com/operapublication">
+                    <Link
+                      to="https://www.facebook.com/operapublication"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="fab fa-facebook-f"></i>
                     </Link>
-                    <Link to="#">
+                    <Link
+                      to="https://x.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="fa-brands fa-x-twitter"></i>
                     </Link>
-                    <Link to="#">
+                    <Link
+                      to="https://www.instagram.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="fab fa-instagram"></i>
                     </Link>
-                    <Link to="#">
+                    <Link
+                      to="https://www.youtube.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="fab fa-youtube"></i>
                     </Link>
                   </div>
-                  <div className="user-login">
+
+                  {/* <div className="user-login">
                     <Link to="#">
                       <i className="fa-solid fa-user"></i>
                     </Link>
+                  </div> */}
+
+                  <div className="user-login">
+                    <button
+                      type="button"
+                      className="user-login-btn"
+                      onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                      aria-label="User menu"
+                    >
+                      <i className="fa-solid fa-user"></i>
+                    </button>
+
+                    <div
+                      className={`user-dropdown ${
+                        isUserMenuOpen ? "user-dropdown-active" : ""
+                      }`}
+                    >
+                      <Link
+                        to="/account"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <i className="fa-solid fa-user-circle"></i>
+                        <span>Account Info</span>
+                      </Link>
+
+                      <Link
+                        to="/profile"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <i className="fa-solid fa-id-card"></i>
+                        <span>Profile</span>
+                      </Link>
+
+                      <Link
+                        to="/orders"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <i className="fa-solid fa-box"></i>
+                        <span>Order</span>
+                      </Link>
+
+                      <Link
+                        to="/settings"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <i className="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                      </Link>
+
+                      <Link
+                        to="/registration"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <i className="fa-solid fa-gear"></i>
+                        <span>Registration</span>
+                      </Link>
+                      <Link
+                        to="/accounts"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <i className="fa-solid fa-gear"></i>
+                        <span>Accounts</span>
+                      </Link>
+
+                      <button
+                        type="button"
+                        className="user-dropdown-logout"
+                        onClick={() => {
+                          setIsUserMenuOpen(false);
+                          // logout function here
+                        }}
+                      >
+                        <i className="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -171,25 +183,20 @@ const Header = ({ toggleMenu, closeMenu }) => {
         </div>
         <div className="header-middle">
           <div className="container">
-            <div className="row justify-content-between align-items-center gx-sm-0">
+            <div className="row justify-content-sm-between justify-content-center align-items-center gx-sm-0">
               <div className="col-auto">
                 <div className="header-logo">
                   <Link to="/">
                     <img
-                      // src="/assets/img/logo.svg"
-                      // src="/assets/img/195X60.png"
-                      // src="/assets/img/Opera Publication Logo.png"
-                      // src="/assets/img/Opera Publication Logo11.png"
                       src="/assets/img/Opera logo 195 x 60.png"
                       alt="Opera"
                       className="logo"
-                      // style={{ width: "195px", height: "60px" }}
-                      // style={{ width: "120px", height: "75px" }}
-                      style={{ height: "80px" }}
+                      style={{ height: "70px" }}
                     />
                   </Link>
                 </div>
               </div>
+
               <div className="col-auto">
                 <div className="header-inner">
                   <form className="header-search">
@@ -204,17 +211,16 @@ const Header = ({ toggleMenu, closeMenu }) => {
                       placeholder="এখানে অনুসন্ধান করুন....."
                     />
                   </form>
-
                   <div className="header-buttons">
                     <Link to="/wishlist" className="vs-icon wishlist">
                       <i className="fal fa-heart"></i>
-                      {/* <span className="badge">0</span> */}
                       <span className="badge">{wishlist.length}</span>
                     </Link>
 
                     <div className="header-cart">
                       <Link to="/cart" className="vs-icon has-badge">
                         <i className="fa-solid fa-basket-shopping"></i>
+                        {/* <span className="badge">0</span> */}
                         <span className="badge">{total_item}</span>
                       </Link>
                       <div
@@ -225,97 +231,14 @@ const Header = ({ toggleMenu, closeMenu }) => {
                         }}
                       >
                         <div
-                          className="widget_shopping_cart_content"
+                          className="widget_shopping_cart_content cart-scroll"
+                          ref={cartRef}
                           style={{
                             height: "100%",
                             display: "flex",
                             flexDirection: "column",
                           }}
                         >
-                          {/* <ul className="cart_list">
-                            <li className="mini_cart_item">
-                              <Link to="#" className="remove">
-                                <i className="far fa-times"></i>
-                              </Link>
-                              <Link to="/shop-details" className="img">
-                                <img
-                                  src="/assets/img/cart/cat-img-1.jpg"
-                                  alt="Cart Imagee"
-                                />
-                              </Link>
-                              <Link
-                                to="/shop-details"
-                                className="product-title fw-normal"
-                              >
-                                Smart Watch
-                              </Link>
-                              <span className="amount fw-normal">৳৯৯.00</span>
-                              <div className="quantity">
-                                <button className="quantity-minus qut-btn">
-                                  <i className="far fa-minus"></i>
-                                </button>
-                                <input
-                                  type="number"
-                                  className="qty-input"
-                                  defaultValue="1"
-                                  min="1"
-                                  max="99"
-                                />
-                                <button className="quantity-plus qut-btn">
-                                  <i className="far fa-plus"></i>
-                                </button>
-                              </div>
-                              <div className="subtotal">
-                                <span className="fw-normal fs-6">
-                                  Subtotal:
-                                </span>
-                                &nbsp;
-                                <span className="amount fw-normal fs-6">
-                                  ৳৯৯.00
-                                </span>
-                              </div>
-                            </li>
-                            <li className="mini_cart_item">
-                              <Link to="#" className="remove">
-                                <i className="far fa-times"></i>
-                              </Link>
-                              <Link to="/shop-details" className="img">
-                                <img
-                                  src="/assets/img/cart/cat-img-2.jpg"
-                                  alt="Cart Imagee"
-                                />
-                              </Link>
-                              <Link
-                                to="/shop-details"
-                                className="product-title fw-normal"
-                              >
-                                Boss Chair
-                              </Link>
-                              <span className="amount fw-normal">৳৯0.00</span>
-                              <div className="quantity">
-                                <button className="quantity-minus qut-btn">
-                                  <i className="far fa-minus"></i>
-                                </button>
-                                <input
-                                  type="number"
-                                  className="qty-input"
-                                  defaultValue="2"
-                                  min="1"
-                                  max="99"
-                                />
-                                <button className="quantity-plus qut-btn">
-                                  <i className="far fa-plus"></i>
-                                </button>
-                              </div>
-                              <div className="subtotal fw-normal fs-6">
-                                <span>Subtotal:</span>&nbsp;
-                                <span className="amount fw-normal fs-6">
-                                  ৳১৬0.00
-                                </span>
-                              </div>
-                            </li>
-                          </ul> */}
-
                           <ul
                             className="cart_list"
                             style={{
@@ -333,27 +256,36 @@ const Header = ({ toggleMenu, closeMenu }) => {
                                   {/* REMOVE BUTTON */}
                                   <button
                                     className="remove border-0 bg-transparent"
-                                    onClick={() => removeItem(item.id)}
+                                    onClick={() => removeCart(item.id)}
                                   >
-                                    <i className="far fa-times"></i>
+                                    <i className="far fa-times text-danger"></i>
                                   </button>
 
                                   {/* PRODUCT IMAGE */}
-                                  <Link to="/shop-details" className="img">
+                                  <Link
+                                    to={`/book/book-details/${item.id}`}
+                                    className="img"
+                                  >
                                     <img src={item.image} alt={item.name} />
                                   </Link>
 
                                   {/* PRODUCT TITLE */}
                                   <Link
-                                    to="/shop-details"
+                                    to={`/book/book-details/${item.id}`}
                                     className="product-title fw-normal"
                                   >
                                     {item.name}
                                   </Link>
 
                                   {/* PRODUCT PRICE */}
-                                  <span className="amount fw-normal">
+                                  {/* <span className="amount fw-normal">
                                     ৳{convertToBanglaNumber(item.sPrice || 0)}
+                                  </span> */}
+                                  <span className="amount fw-normal">
+                                    ৳
+                                    {convertToBanglaNumber(
+                                      Number(item.sPrice) || 0,
+                                    )}
                                   </span>
 
                                   {/* QUANTITY */}
@@ -368,9 +300,9 @@ const Header = ({ toggleMenu, closeMenu }) => {
 
                                     {/* INPUT */}
                                     <input
-                                      type="number"
+                                      type="text"
                                       className="qty-input fw-normal"
-                                      value={item.amount}
+                                      value={convertToBanglaNumber(item.amount)}
                                       readOnly
                                     />
 
@@ -392,7 +324,8 @@ const Header = ({ toggleMenu, closeMenu }) => {
                                     <span className="amount fw-normal fs-6">
                                       ৳
                                       {convertToBanglaNumber(
-                                        item.sPrice * item.amount || 0,
+                                        (Number(item.sPrice) || 0) *
+                                          (Number(item.amount) || 0),
                                       )}
                                     </span>
                                   </div>
@@ -404,24 +337,17 @@ const Header = ({ toggleMenu, closeMenu }) => {
                               </li>
                             )}
                           </ul>
-
                           <p
                             className="total"
                             style={{ fontFamily: "sans-serif" }}
                           >
                             <strong>Subtotal:</strong>
-
-                            <span
-                              className="amount"
-                              style={{
-                                color: "#FF3333",
-                                fontFamily: "sans-serif",
-                              }}
-                            >
-                              ৳{convertToBanglaNumber(total_price || 0)}
+                            <span className="amount fw-normal fs-6">
+                              {/* ৳২৫৯.০০ */}৳
+                              {convertToBanglaNumber(Number(total_price) || 0)}
                             </span>
                           </p>
-                          <p className="buttons">
+                          <p className="buttons d-flex gap-1">
                             <Link to="/cart" className="vs-btn fw-normal py-2">
                               View cart
                             </Link>
@@ -436,229 +362,187 @@ const Header = ({ toggleMenu, closeMenu }) => {
                       </div>
                     </div>
                   </div>
-
-                  
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* <div className="sticky-wrapper header-bottom"> */}
-        <div
-          // className="sticky-wrapper header-bottom will-sticky"
-          className={`sticky-wrapper header-bottom ${
-            isScrolled ? "will-sticky" : ""
-          }`}
-          style={{ minHeight: "80px" }}
-        >
-          {/* <div className="sticky-active "> */}
-          <div className={`sticky-active ${isScrolled ? "active" : ""}`}>
+        <div className="sticky-wrapper header-bottom">
+          <div className="sticky-active">
             <div className="container">
               <div className="menu-top">
                 <div className="row justify-content-between align-items-center gx-sm-0">
-                  <div className="col-auto">
-                    <div className="header-category style2">
-                      <button
-                        className="category-toggler fs-4"
-                        onClick={toggleCategory}
-                        disabled={
-                          location.pathname === "/" && window.innerWidth > 1300
-                        }
-                      >
-                        <i className="fa-solid fa-bars-sort"></i>ক্যাটাগরি
-                      </button>
-                      <div
-                        className={`vs-box-nav ৳{
-                          isActiveCategory ? "active" : ""
-                        }`}
-                        style={{
-                          visibility: isActiveCategory ? "visible" : "hidden",
-                        }}
-                      >
-                        <ul>
-                          {categories.map((cat) => {
-                            return (
-                              <li key={cat.id}>
-                                <Link
-                                  to="/shop"
-                                  style={{
-                                    fontSize: "20px",
-                                    fontWeight: "500",
-                                  }}
-                                  onClick={() => {
-                                    localStorage.setItem(
-                                      "selectedCategory",
-                                      String(cat.id),
-                                    );
-                                    localStorage.setItem(
-                                      "selectedSubCategory",
-                                      "all",
-                                    );
+                  <div className="col-xl-auto">
+                    <div className="menu-inner">
+                      <div className="header-category">
+                        <button
+                          className="category-toggler"
+                          onClick={toggleCategory}
+                        >
+                          <i className="fa-solid fa-bars-sort"></i>{" "}
+                          <span className="fs-5">ক্যাটাগরি</span>
+                        </button>
+                        {/* <div className="vs-box-nav"> */}
+                        <div
+                          className={`vs-box-nav ${isCategoryOpen ? "active" : ""}`}
+                          style={{
+                            display: isCategoryOpen ? "block" : "none",
+                          }}
+                        >
+                          <ul>
+                            {categories &&
+                              categories.map((cat) => {
+                                return (
+                                  <li key={cat.id}>
+                                    <Link
+                                      to="/book"
+                                      style={{
+                                        fontSize: "20px",
+                                        fontWeight: "500",
+                                      }}
+                                      onClick={() => {
+                                        localStorage.setItem(
+                                          "selectedCategory",
+                                          String(cat.id),
+                                        );
+                                        localStorage.setItem(
+                                          "selectedSubCategory",
+                                          "all",
+                                        );
 
-                                    window.dispatchEvent(
-                                      new CustomEvent("localStorageChange", {
-                                        detail: {
-                                          category: String(cat.id),
-                                        },
-                                      }),
-                                    );
-                                    setIsActiveCategory(false); // ✅ ADD THIS LINE
-                                  }}
-                                >
-                                  <img
-                                    src="/assets/img/icons/categori-i-2.svg"
-                                    alt="icon"
-                                    style={{ height: "20px" }}
-                                  />
-                                  {cat.name}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
+                                        window.dispatchEvent(
+                                          new CustomEvent(
+                                            "localStorageChange",
+                                            {
+                                              detail: {
+                                                category: String(cat.id),
+                                              },
+                                            },
+                                          ),
+                                        );
+                                        setIsCategoryOpen(false);
+                                      }}
+                                    >
+                                      <img
+                                        src="/assets/img/icons/categori-i-2.svg"
+                                        alt="icon"
+                                        style={{ height: "20px" }}
+                                      />
+                                      {cat.name}
+                                    </Link>
+                                  </li>
+                                );
+                              })}
+                          </ul>
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="header-logo">
-                      <Link to="/">
-                        <img
-                          // src="/assets/img/dark-logo.svg"
-                          // src="/assets/img/Opera Publication Logo11.png"
-                          src="/assets/img/Opera logo 195 x 60.png"
-                          alt="Opera"
-                          className="logo"
-                          // style={{ width: "195px", height: "60px" }}
-                          // style={{ width: "120px", height: "70px" }}
-                          style={{ height: "80px" }}
-                        />
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="col-auto">
-                    <nav className="main-menu menu-style1 d-none d-lg-block">
-                      <ul className="iphone-bangla">
-                        <li className="menu-item-has-children">
-                          <NavLink
-                            to="/"
-                            className={({ isActive }) =>
-                              isActive ? "active" : ""
-                            }
-                          >
-                            হোম
-                          </NavLink>
-                        </li>
-
-                        <li className="menu-item-has-children">
-                          <NavLink
-                            to="/about"
-                            className={({ isActive }) =>
-                              isActive ? "active" : ""
-                            }
-                          >
-                            সম্বন্ধে
-                          </NavLink>
-                        </li>
-
-                        <li className="menu-item-has-children">
-                          <NavLink
-                            to="/shop"
-                            className={({ isActive }) =>
-                              isActive ? "active" : ""
-                            }
-                          >
-                            বই
-                          </NavLink>
-                        </li>
-
-                        <li className="menu-item-has-children">
-                          <NavLink
-                            to="/authors"
-                            className={({ isActive }) =>
-                              isActive ? "active" : ""
-                            }
-                          >
-                            লেখক
-                          </NavLink>
-                        </li>
-
-                        {/* <li className="menu-item-has-children">
-                          <NavLink
-                            to="/vendor"
-                            className={({ isActive }) =>
-                              isActive ? "active" : ""
-                            }
-                          >
-                            Vendor
-                          </NavLink>
-
-                          <ul className="sub-menu">
-                            <li>
+                      <div className="header-logo">
+                        <Link to="/">
+                          <img
+                            // src="/assets/img/dark-logo.svg"
+                            // src="/assets/img/Opera Publication Logo11.png"
+                            src="/assets/img/Opera logo 195 x 60.png"
+                            alt="Opera"
+                            className="logo"
+                            // style={{ width: "195px", height: "60px" }}
+                            // style={{ width: "120px", height: "70px" }}
+                            style={{ height: "80px" }}
+                          />
+                        </Link>
+                      </div>
+                      <div className="menu-area">
+                        <nav className="main-menu menu-style1 d-none d-lg-block">
+                          <ul>
+                            <li className="menu-item-has-children">
                               <NavLink
-                                to="/vendor"
+                                to="/"
                                 className={({ isActive }) =>
                                   isActive ? "active" : ""
                                 }
                               >
-                                Vendor
+                                হোম
                               </NavLink>
                             </li>
 
                             <li>
                               <NavLink
-                                to="/vendor-details"
+                                to="/book"
                                 className={({ isActive }) =>
                                   isActive ? "active" : ""
                                 }
                               >
-                                Vendor Details
+                                বই
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                to="/authors"
+                                className={({ isActive }) =>
+                                  isActive ? "active" : ""
+                                }
+                              >
+                                লেখক
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                to="/blog"
+                                className={({ isActive }) =>
+                                  isActive ? "active" : ""
+                                }
+                              >
+                                ব্লগ
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                to="/opera"
+                                className={({ isActive }) =>
+                                  isActive ? "active" : ""
+                                }
+                              >
+                                অপেরা
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                to="/contact"
+                                className={({ isActive }) =>
+                                  isActive ? "active" : ""
+                                }
+                              >
+                                যোগাযোগ
                               </NavLink>
                             </li>
                           </ul>
-                        </li> */}
-
-                        <li className="menu-item-has-children">
-                          <NavLink
-                            to="/blog"
-                            className={({ isActive }) =>
-                              isActive ? "active" : ""
-                            }
-                          >
-                            ব্লগ
-                          </NavLink>
-                        </li>
-
-                        <li>
-                          <NavLink
-                            to="/contact"
-                            className={({ isActive }) =>
-                              isActive ? "active" : ""
-                            }
-                          >
-                            যোগাযোগ
-                          </NavLink>
-                        </li>
-                      </ul>
-                    </nav>
-                    <button
-                      className="vs-menu-toggle d-inline-block d-lg-none"
-                      onClick={toggleMenu}
-                    >
-                      <i className="fal fa-bars"></i>
-                    </button>
+                        </nav>
+                        <button
+                          className="vs-menu-toggle d-inline-block d-lg-none"
+                          onClick={toggleMenu}
+                        >
+                          <i className="fal fa-bars"></i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
+
                   <div className="col-auto d-xl-block d-none">
                     <div className="header-info">
                       <div className="header-info_icon">
                         <i className="fas fa-phone"></i>
                       </div>
                       <div className="media-body">
-                        <span className="header-info_label fw-normal fs-6">
-                          Call Us 24/7
+                        <span className="header-info_label fw-normal fs-6 text-white">
+                          যোগাযোগ করুন ২৪/৭
                         </span>
                         <div className="header-info_link fw-normal fs-6">
-                          <Link to="tel:01739392329">01739392329</Link>
+                          <Link
+                            style={{ fontSize: "15px" }}
+                            to="tel:01739392329"
+                          >
+                            01739392329
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -762,44 +646,253 @@ const Wrapper = styled.section`
     font-weight: 500 !important;
   }
 
-  .vs-menu-toggle {
+  /* .vs-menu-toggle {
     background-color: #ffffff !important;
     color: #ff3333 !important;
-  }
-
-  .cart_table .cart-productname:hover {
-    color: #ff3333 !important;
-  }
-  .quantity.style2 .qty-btn {
-    border: 1px solid #ff3333 !important;
-    /* background-color: #ff3333 !important; */
-  }
-  .quantity.style2 .qty-btn:hover {
-    background-color: #ff3333 !important;
-  }
-
-  .cart_table .qty-input {
-    border: 1px solid #ff3333 !important;
-    /* color: var(--title-color); */
-  }
-
-  .quantity .qty-input:focus {
-    background-color: #ff3333;
-    color: #ffffff;
-    border-color: #ff3333;
-    outline: none;
-  }
-
-  .cart_totals .shipping-calculator-button {
-    color: #ff3333;
-  }
-  input[type="radio"]:checked ~ label::before {
-    border: 5px solid #ff3333;
-  }
+  } */
 
   .header-category .vs-box-nav ul li a::after {
     content: "";
     background-color: #ff3333;
+  }
+  /* ================== */
+  /* .header-info_label {
+    font-size: 14px;
+    color: #ff3333 !important;
+  } */
+  /* .header-info_link a:hover {
+    color: #cc0033 !important;
+  } */
+  .header-layout1.style2 .header-cart .vs-icon {
+    background-color: #ffffff !important;
+    border-color: var(--title-color);
+    transition: all 0.5s ease;
+  }
+  .header-layout1.style2 .header-cart:hover .vs-icon {
+    background-color: #ff3333 !important;
+  }
+
+  .header-layout1.style2 .header-cart .vs-icon .badge {
+    color: #ffffff !important;
+    background-color: #2e4a5b !important;
+  }
+
+  .header-layout1.style2 .header-top {
+    background-color: #2e4a5b !important;
+  }
+  .header-info_icon {
+    background-color: #ffffff !important;
+    border: 2px solid #ff3333 !important;
+    transition: all 0.5s ease;
+  }
+  .header-info_icon:hover {
+    /* background-color: #ff3333 !important; */
+    /* color: #ffffff !important; */
+    color: #ff3333 !important;
+    border: 2px solid #ffffff !important;
+  }
+  .sticky_cart {
+    border: none !important;
+  }
+  .sticky_cart i {
+    color: #ffffff !important;
+  }
+  /* .header-layout1.style2 .header-cart .vs-icon .badge {
+    color: #ff3333 !important;
+    transition: all 0.5s ease;
+  }
+  .header-layout1.style2 .header-cart .vs-icon:hover .badge {
+    color: #ffffff !important;
+  } */
+  .widget_shopping_cart .qut-btn {
+    border: 1px solid #ff3333 !important;
+  }
+  .widget_shopping_cart .total .amount {
+    color: #ff3333 !important;
+  }
+  .widget_shopping_cart .qty-input {
+    border: 1px solid #ff3333 !important;
+  }
+  .header-social a:hover {
+    color: #ff3333 !important;
+  }
+
+  .header-category {
+    position: relative;
+  }
+  .vs-box-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 9999;
+    width: 336px;
+    background: #fff;
+  }
+
+  .vs-menu-toggle {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    /* font-size: 24px; */
+    border: none;
+    display: inline-block;
+    background-color: var(--theme-color);
+    color: var(--white-color);
+    border-radius: 0%;
+    background-color: red;
+  }
+
+  @media (max-width: 991px) {
+    .vs-box-nav {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      width: 330px;
+      /* max-height: 70vh; */
+      /* overflow-y: auto; */
+      z-index: 99999;
+      background: #fff;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  /* ============================= */
+  /* USER LOGIN DROPDOWN */
+  /* ============================= */
+
+  .user-login {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .user-login-btn {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    background: #f8ebe5;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .user-login-btn:hover {
+    color: #ff3333;
+  }
+
+  /* Dropdown */
+
+  .user-dropdown {
+    position: absolute;
+    top: calc(100% + -2px);
+    right: 0;
+    width: 220px;
+    padding: 8px 0;
+
+    /* Main dropdown color */
+    background: #f8ebe5;
+
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+    border: 1px solid #ff3333;
+
+    z-index: 99999;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.25s ease;
+  }
+
+  /* Open */
+
+  .user-dropdown-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Dropdown links */
+
+  .user-dropdown a,
+  .user-dropdown-logout {
+    width: 100%;
+    min-height: 45px;
+    padding: 10px 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border: none;
+    background: #f8ebe5 !important;
+    text-decoration: none;
+
+    color: #ff3333;
+    font-size: 15px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  /* Icons */
+
+  .user-dropdown a i,
+  .user-dropdown-logout i {
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+    color: #ff3333;
+    transition: all 0.25s ease;
+  }
+
+  /* Text */
+
+  .user-dropdown a span,
+  .user-dropdown-logout span {
+    flex: 1;
+    text-align: left;
+  }
+
+  /* Hover */
+
+  .user-dropdown a:hover,
+  .user-dropdown-logout:hover {
+    background-color: #f8ebe5;
+    color: #ff3333;
+  }
+  */ .user-dropdown a:hover i,
+  .user-dropdown-logout:hover i {
+    color: #ff3333;
+  }
+
+  /* Logout */
+
+  .user-dropdown-logout {
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    margin-top: 5px;
+    padding-top: 12px;
+    color: #ff3333;
+  }
+
+  .user-dropdown-logout i {
+    color: #ff3333;
+  }
+
+  .user-dropdown-logout:hover {
+    color: #ff3333;
+    background-color: #ffffff;
+  }
+
+  .user-dropdown-logout:hover i {
+    color: #ff3333;
   }
 `;
 

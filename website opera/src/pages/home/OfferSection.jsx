@@ -2,17 +2,35 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+const offerData = [
+  {
+    id: 1,
+    title: "E Emeher Mme",
+    price: 85.0,
+    background: "/assets/img/bg/offer-bg1.jpg",
+    image: "/assets/img/offer/offer-img1.png",
+    shape: "/assets/img/shapes/offer-shape1.png",
+  },
+  {
+    id: 2,
+    title: "Viving Moneme",
+    price: 85.0,
+    background: "/assets/img/bg/offer-bg2.jpg",
+    image: "/assets/img/offer/offer-img1.png",
+    shape: "/assets/img/shapes/offer-shape2.png",
+  },
+];
+
 const OfferSection = () => {
   return (
     <Wrapper>
       <div className="offer-layout1 space-top">
         <div className="container">
-          <div className="row g-4">
+          {/* <div className="row g-4">
             <div className="col-xl-6 col-lg-6">
               <div
                 className="offer-style1 wow animate__fadeInLeft"
                 data-wow-delay="0.30s"
-                // data-bg-src="assets/img/bg/offer-bg1.jpg"
                 style={{
                   backgroundImage: `url("/assets/img/bg/offer-bg1.jpg")`,
                 }}
@@ -38,7 +56,7 @@ const OfferSection = () => {
                       ৳85.00
                     </span>
                   </p>
-                  <Link className="vs-btn fw-normal" to="/shop">
+                  <Link className="vs-btn fw-normal" to="/book">
                     Shop Now
                   </Link>
                 </div>
@@ -59,7 +77,6 @@ const OfferSection = () => {
               <div
                 className="offer-style1 white-style wow animate__fadeInRight"
                 data-wow-delay="0.30s"
-                // data-bg-src="assets/img/bg/offer-bg2.jpg"
                 style={{
                   backgroundImage: `url("/assets/img/bg/offer-bg2.jpg")`,
                 }}
@@ -82,7 +99,7 @@ const OfferSection = () => {
                   <p className="offer-price fw-normal">
                     Only From <span className="fw-normal">৳85.00</span>
                   </p>
-                  <Link className="vs-btn fw-normal" to="/shop">
+                  <Link className="vs-btn fw-normal" to="/book">
                     Shop Now
                   </Link>
                 </div>
@@ -98,6 +115,59 @@ const OfferSection = () => {
                 </span>
               </div>
             </div>
+          </div> */}
+
+          <div className="row g-4">
+            {offerData.map((offer, index) => (
+              <div key={offer.id} className="col-xl-6 col-lg-6">
+                <div
+                  className={`offer-style1 ${
+                    index === 1 ? "white-style" : ""
+                  } wow ${
+                    index % 2 === 0
+                      ? "animate__fadeInLeft"
+                      : "animate__fadeInRight"
+                  }`}
+                  data-wow-delay="0.30s"
+                  style={{
+                    backgroundImage: `url(${offer.background})`,
+                  }}
+                >
+                  <div className="offer-img">
+                    <img src={offer.image} alt={offer.title} />
+                  </div>
+                  <div className="offer-content">
+                    <div className="star-rating">
+                      {[...Array(5)].map((_, index) => (
+                        <i key={index} className="fa-solid fa-star"></i>
+                      ))}
+                    </div>
+                    <h2 className="offer-title fw-normal">{offer.title}</h2>
+                    <p className="offer-price fw-normal">
+                      Only From{" "}
+                      <span
+                        className="fw-normal"
+                        style={{
+                          color: index === 0 ? "#FF3333" : "inherit",
+                        }}
+                      >
+                        ৳{offer.price.toFixed(2)}
+                      </span>
+                    </p>
+                    <Link className="vs-btn fw-normal" to="/book">
+                      Shop Now
+                    </Link>
+                  </div>
+                  <span
+                    className="shape-mockup element1 z-index1 d-xxl-block d-none"
+                    data-wow-delay="0.80s"
+                    style={{ right: "0px", bottom: "-5px" }}
+                  >
+                    <img src={offer.shape} alt="offer shape" />
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

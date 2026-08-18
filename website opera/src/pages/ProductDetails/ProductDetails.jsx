@@ -1,12 +1,12 @@
 import React from "react";
 import ProductInfo from "./ProductInfo";
-import ProductMonth from "./ProductMonth";
+import NewArrivalProduct from "./NewArrivalProduct";
 
 const ProductDetails = () => {
   return (
     <div>
       <ProductInfo />
-      <ProductMonth />
+      <NewArrivalProduct />
     </div>
   );
 };

@@ -1,15 +1,13 @@
 import React from "react";
 import HeroArea from "./HeroArea";
 import Product from "./Product";
+import UpComingProduct from "./UpComingProduct";
 import OfferSection from "./OfferSection";
 import Categories from "./Categories";
-import BestSelling from "./BestSelling";
+// import BestSelling from "./BestSelling";
 import RomanceProduct from "./RomanceProduct";
-// import KidsProduct from "./KidsProduct";
-// import Testimonial from "./Testimonial";
 import Blog from "./Blog";
-import FeaturedAuthors from "./Authors";
-// import ProductMonth from "./ProductMonth";
+import Authors from "./Authors";
 import FeatureArea from "./FeatureArea";
 
 const Home = () => {
@@ -19,12 +17,10 @@ const Home = () => {
       <OfferSection />
       <Categories />
       <Product />
-      <FeaturedAuthors />
+      <UpComingProduct />
       <RomanceProduct />
-      {/* <KidsProduct /> */}
-      <BestSelling />
-      {/* <ProductMonth /> */}
-      {/* <Testimonial /> */}
+      <Authors />
+      {/* <BestSelling /> */}
       <Blog />
       <FeatureArea />
     </div>

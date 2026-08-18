@@ -102,13 +102,15 @@ const Blog = () => {
                     </div>
 
                     <h2 className="blog-title mb-3 fw-normal">
-                      <Link to={`/blog-details/${blog.id}`}>{blog.title}</Link>
+                      <Link to={`/blog/blog-details/${blog.id}`}>
+                        {blog.title}
+                      </Link>
                     </h2>
 
                     <div className="btn-area d-flex justify-content-between align-items-center">
                       <Link
                         className="vs-btn fw-normal"
-                        to={`/blog-details/${blog.id}`}
+                        to={`/blog/blog-details/${blog.id}`}
                       >
                         আরও দেখুন <i className="fa-regular fa-arrow-right"></i>
                       </Link>

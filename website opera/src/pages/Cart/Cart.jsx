@@ -1,317 +1,23 @@
-// import React from "react";
-// import styled from "styled-components";
-// import { Link } from "react-router-dom";
-
-// const cartData = [
-//   {
-//     id: 1,
-//     name: "The Muke Guy",
-//     img: "/assets/img/shop/product-1-1.jpg",
-//     price: 200.0,
-//     quantity: "01",
-//     total: 200.0,
-//   },
-//   {
-//     id: 2,
-//     name: "Neglected Solitary Life",
-//     img: "/assets/img/shop/product-1-2.jpg",
-//     price: 200.0,
-//     quantity: "01",
-//     total: 200.0,
-//   },
-//   {
-//     id: 3,
-//     name: "Green Journey",
-//     img: "/assets/img/shop/product-1-3.jpg",
-//     price: 200.0,
-//     quantity: "01",
-//     total: 200.0,
-//   },
-// ];
-
-// const Cart = () => {
-//   return (
-//     <Wrapper>
-//       <div
-//         className="breadcumb-wrapper"
-//         style={{
-//           backgroundImage: "url('/assets/img/bg/breadcumb-bg.png')",
-//           padding: "30px 0",
-//         }}
-//       >
-//         <div className="container z-index-common">
-//           <div className="breadcumb-content">
-//             <h1 className="breadcumb-title fs-4 fw-normal">কার্ট</h1>
-//             <div className="breadcumb-menu-wrap">
-//               <div className="breadcumb-menu">
-//                 <span>
-//                   <Link className="fw-normal" to="/">
-//                     হোম
-//                   </Link>
-//                 </span>
-//                 <span className="fw-normal" style={{ color: "#FF3333" }}>
-//                   কার্ট
-//                 </span>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="vs-cart-wrapper space-top space-extra-bottom">
-//         <div className="container">
-//           <div className="woocommerce-notices-wrapper">
-//             <div className="woocommerce-message">Shipping costs updated.</div>
-//           </div>
-//           <form className="woocommerce-cart-form">
-//             <table className="cart_table">
-//               <thead>
-//                 <tr>
-//                   <th className="cart-col-image fw-normal">Image</th>
-//                   <th className="cart-col-productname fw-normal">
-//                     Product Name
-//                   </th>
-//                   <th className="cart-col-price fw-normal">Price</th>
-//                   <th className="cart-col-quantity fw-normal">Quantity</th>
-//                   <th className="cart-col-total fw-normal">Total</th>
-//                   <th className="cart-col-remove fw-normal">Remove</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {cartData.map((item) => {
-//                   return (
-//                     <tr key={item.id} className="cart_item">
-//                       <td data-title="Product">
-//                         <Link className="cart-productimage" to="/shop">
-//                           <img
-//                             width="100"
-//                             height="95"
-//                             src={item.img}
-//                             alt={item.name}
-//                           />
-//                         </Link>
-//                       </td>
-//                       <td data-title="Name">
-//                         <Link className="cart-productname fw-normal" to="/shop">
-//                           {item.name}
-//                         </Link>
-//                       </td>
-//                       <td data-title="Price">
-//                         <span className="amount fw-normal">
-//                           <bdi>
-//                             <span>৳</span>
-//                             {item.price}
-//                           </bdi>
-//                         </span>
-//                       </td>
-//                       <td data-title="Quantity">
-//                         <div className="quantity style2">
-//                           <div className="quantity__field quantity-container">
-//                             <div className="quantity__buttons">
-//                               <button className="quantity-plus qty-btn">
-//                                 <i className="fal fa-plus"></i>
-//                               </button>
-//                               <input
-//                                 type="number"
-//                                 id="quantity"
-//                                 className="qty-input fw-normal"
-//                                 step="1"
-//                                 min="1"
-//                                 max="100"
-//                                 name="quantity"
-//                                 defaultValue="01"
-//                                 title="Qty"
-//                               />
-//                               <button className="quantity-minus qty-btn">
-//                                 <i className="fal fa-minus"></i>
-//                               </button>
-//                             </div>
-//                           </div>
-//                         </div>
-//                       </td>
-//                       <td data-title="Total">
-//                         <span className="amount fw-normal">
-//                           <bdi>
-//                             <span>৳</span>
-//                             {item.total}
-//                           </bdi>
-//                         </span>
-//                       </td>
-//                       <td data-title="Remove">
-//                         <Link to="#" className="remove">
-//                           <i
-//                             className="fal fa-trash-alt"
-//                             style={{ color: "#FF3333" }}
-//                           ></i>
-//                         </Link>
-//                       </td>
-//                     </tr>
-//                   );
-//                 })}
-//               </tbody>
-//             </table>
-//           </form>
-//           <div className="row justify-content-end">
-//             <div className="col-md-8 col-lg-7 col-xl-6">
-//               <h2 className="h4 summary-title fw-normal">Cart Totals</h2>
-//               <table className="cart_totals">
-//                 <tbody>
-//                   <tr className="fw-normal">
-//                     <td className="fw-normal">Cart Subtotal</td>
-//                     <td data-title="Cart Subtotal">
-//                       <span className="amount fw-normal">
-//                         <bdi>
-//                           <span className="fw-normal">৳</span>600.00
-//                         </bdi>
-//                       </span>
-//                     </td>
-//                   </tr>
-//                   <tr className="shipping fw-normal">
-//                     <th className="fw-normal">Shipping and Handling</th>
-//                     <td data-title="Shipping and Handling">
-//                       <ul className="woocommerce-shipping-methods list-unstyled">
-//                         <li>
-//                           <input
-//                             type="radio"
-//                             id="free_shipping"
-//                             name="shipping_method"
-//                             className="shipping_method"
-//                           />
-//                           <label for="free_shipping" className="fw-normal">
-//                             Free shipping
-//                           </label>
-//                         </li>
-//                         <li>
-//                           <input
-//                             type="radio"
-//                             id="flat_rate"
-//                             name="shipping_method"
-//                             className="shipping_method"
-//                             checked="checked"
-//                           />
-//                           <label for="flat_rate" className="fw-normal">
-//                             Flat rate
-//                           </label>
-//                         </li>
-//                       </ul>
-//                       <p className="woocommerce-shipping-destination fw-normal">
-//                         Shipping options will be updated during checkout.
-//                       </p>
-//                       <form action="#" method="post">
-//                         <Link
-//                           to="#"
-//                           className="shipping-calculator-button fw-normal"
-//                         >
-//                           Change address
-//                         </Link>
-//                         <div className="shipping-calculator-form">
-//                           <p className="form-row">
-//                             <select className="form-select">
-//                               <option defaultValue="AR">Argentina</option>
-//                               <option defaultValue="AM">Armenia</option>
-//                               <option defaultValue="BD" selected="selected">
-//                                 Bangladesh
-//                               </option>
-//                             </select>
-//                           </p>
-//                           <p>
-//                             <select className="form-select">
-//                               <option defaultValue="">Select an option…</option>
-//                               <option defaultValue="BD-05">Bagerhat</option>
-//                               <option defaultValue="BD-01">Bandarban</option>
-//                               <option defaultValue="BD-02">Barguna</option>
-//                               <option defaultValue="BD-06">Barishal</option>
-//                             </select>
-//                           </p>
-//                           <p className="form-row">
-//                             <input
-//                               type="text"
-//                               className="form-control"
-//                               placeholder="Town / City"
-//                             />
-//                           </p>
-//                           <p className="form-row">
-//                             <input
-//                               type="text"
-//                               className="form-control"
-//                               placeholder="Postcode / ZIP"
-//                             />
-//                           </p>
-//                           <p>
-//                             <button className="vs-btn fw-normal">Update</button>
-//                           </p>
-//                         </div>
-//                       </form>
-//                     </td>
-//                   </tr>
-//                 </tbody>
-//                 <tfoot>
-//                   <tr className="order-total">
-//                     <td className="fw-normal">Order Total</td>
-//                     <td data-title="Total">
-//                       <strong>
-//                         <span className="amount fw-normal">
-//                           <bdi style={{ color: "#FF3333" }}>
-//                             <span>৳</span>600.00
-//                           </bdi>
-//                         </span>
-//                       </strong>
-//                     </td>
-//                   </tr>
-//                 </tfoot>
-//               </table>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </Wrapper>
-//   );
-// };
-
-// const Wrapper = styled.section`
-//   .woocommerce-notices-wrapper .woocommerce-message {
-//     background-color: #ff3333 !important;
-//   }
-//   .cart_table .cart-productname:hover {
-//     color: #ff3333 !important;
-//   }
-//   .quantity.style2 .qty-btn {
-//     border: 1px solid #ff3333 !important;
-//     /* background-color: #ff3333 !important; */
-//   }
-//   .quantity.style2 .qty-btn:hover {
-//     background-color: #ff3333 !important;
-//   }
-
-//   .cart_table .qty-input {
-//     border: 1px solid #ff3333 !important;
-//     /* color: var(--title-color); */
-//   }
-
-//   .quantity .qty-input:focus {
-//     background-color: #ff3333;
-//     color: #ffffff;
-//     border-color: #ff3333;
-//     outline: none;
-//   }
-
-//   .cart_totals .shipping-calculator-button {
-//     color: #ff3333;
-//   }
-//   input[type="radio"]:checked ~ label::before {
-//     border: 5px solid #ff3333;
-//   }
-// `;
-
-// export default Cart;
-
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../context/CartContext";
+import convertToBanglaNumber from "../../components/banglaConvert/convertToBanglaNumber";
 
 const Cart = () => {
-  const { cart, removeItem, setIncrement, setDecrement } = useCartContext();
+  const { cart, removeCart, clearCart, setIncrement, setDecrement } =
+    useCartContext();
+
+  const [shippingCost, setShippingCost] = useState(60);
+  const [showOrderModal, setShowOrderModal] = useState(false);
+
+  // For Modal
+  const bookTotal = cart.reduce(
+    (acc, item) => acc + Number(item.sPrice || 0) * Number(item.amount || 0),
+    0,
+  );
+
+  const orderTotal = bookTotal + shippingCost;
 
   return (
     <Wrapper>
@@ -342,299 +48,271 @@ const Cart = () => {
       </div>
 
       <div className="vs-cart-wrapper space-top space-extra-bottom">
-        <div className="container">
+        {/* <div className="container"> */}
+        <div className="container-fluid">
           <div className="woocommerce-notices-wrapper">
             <div className="woocommerce-message">Shipping costs updated.</div>
           </div>
 
-          <form className="woocommerce-cart-form">
-            <table className="cart_table">
-              <thead>
-                <tr>
-                  <th className="cart-col-image fw-normal">Image</th>
-                  <th className="cart-col-productname fw-normal">
-                    Product Name
-                  </th>
-                  <th className="cart-col-price fw-normal">Price</th>
-                  <th className="cart-col-quantity fw-normal">Quantity</th>
-                  <th className="cart-col-total fw-normal">Total</th>
-                  <th className="cart-col-remove fw-normal">Remove</th>
-                </tr>
-              </thead>
-
-              {/* ================= BODY ================= */}
-              <tbody>
-                {cart.length > 0 ? (
-                  cart.map((item) => (
-                    <tr key={item.id} className="cart_item">
-                      {/* IMAGE */}
-                      <td data-title="Product">
-                        <Link className="cart-productimage" to="/shop">
-                          <img
-                            width="100"
-                            height="95"
-                            src={item.image}
-                            alt={item.name}
-                          />
-                        </Link>
-                      </td>
-
-                      {/* NAME */}
-                      <td data-title="Name">
-                        <Link className="cart-productname fw-normal" to="/shop">
-                          {item.name}
-                        </Link>
-                      </td>
-
-                      {/* PRICE */}
-                      <td data-title="Price">
-                        <span className="amount fw-normal">
-                          <bdi>
-                            <span>৳</span>
-                            {Number(item.sPrice || 0).toLocaleString("bn-BD")}
-                          </bdi>
-                        </span>
-                      </td>
-
-                      {/* QUANTITY */}
-                      <td data-title="Quantity">
-                        <div className="quantity style2">
-                          <div className="quantity__field quantity-container">
-                            <div className="quantity__buttons">
-                              <button
-                                type="button"
-                                className="quantity-plus qty-btn"
-                                onClick={() => setIncrement(item.id)}
-                              >
-                                <i className="fal fa-plus"></i>
-                              </button>
-
-                              <input
-                                type="number"
-                                className="qty-input fw-normal"
-                                value={item.amount}
-                                readOnly
-                              />
-
-                              <button
-                                type="button"
-                                className="quantity-minus qty-btn"
-                                onClick={() => setDecrement(item.id)}
-                              >
-                                <i className="fal fa-minus"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-
-                      {/* TOTAL */}
-                      <td data-title="Total">
-                        <span className="amount fw-normal">
-                          <bdi>
-                            <span>৳</span>
-                            {Number(
-                              item.sPrice * item.amount || 0,
-                            ).toLocaleString("bn-BD")}
-                          </bdi>
-                        </span>
-                      </td>
-
-                      {/* REMOVE */}
-                      <td data-title="Remove">
-                        <button
-                          type="button"
-                          onClick={() => removeItem(item.id)}
-                          className="remove border-0 bg-transparent"
-                        >
-                          <i
-                            className="fal fa-trash-alt"
-                            style={{ color: "#FF3333" }}
-                          ></i>
-                        </button>
-                      </td>
+          <div className="row">
+            <div className="col-lg-7 col-md-12 cl-sm-12">
+              <form className="woocommerce-cart-form">
+                <table className="cart_table">
+                  <thead>
+                    <tr>
+                      <th className="cart-col-image fw-normal">Image</th>
+                      <th className="cart-col-productname fw-normal">
+                        Book Name
+                      </th>
+                      <th className="cart-col-price fw-normal">Price</th>
+                      <th className="cart-col-quantity fw-normal">Quantity</th>
+                      <th className="cart-col-total fw-normal">Total</th>
+                      <th
+                        className="cart-col-remove fw-normal text-danger"
+                        style={{ cursor: "pointer" }}
+                        onClick={clearCart}
+                      >
+                        Remove Cart
+                      </th>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="6"
-                      className="text-center py-4 fs-2 text-danger"
-                    >
-                      Cart is empty
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </form>
+                  </thead>
 
-          {/* ================= TOTAL ================= */}
-          {/* <div className="row justify-content-end">
-            <div className="col-md-8 col-lg-7 col-xl-6">
+                  <tbody>
+                    {cart.length > 0 ? (
+                      cart.map((item) => (
+                        <tr key={item.id} className="cart_item">
+                          {/* IMAGE */}
+                          <td data-title="Product">
+                            <Link className="cart-productimage" to="/shop">
+                              <img
+                                width="100"
+                                height="95"
+                                src={item.image}
+                                alt={item.name}
+                              />
+                            </Link>
+                          </td>
 
-              <h2 className="h4 summary-title fw-normal">
-                Cart Totals
-              </h2>
+                          {/* NAME */}
+                          <td data-title="Name">
+                            <Link
+                              className="cart-productname fw-normal"
+                              to="/shop"
+                            >
+                              {item.name}
+                            </Link>
+                          </td>
 
-              <table className="cart_totals">
-                <tbody>
-                  <tr>
-                    <td>Cart Subtotal</td>
-                    <td>
-                      <span className="amount fw-normal">
-                        <bdi>
-                          <span>৳</span>
-                          {Number(
-                            cart.reduce(
-                              (acc, item) =>
-                                acc +
-                                item.sPrice * item.amount,
-                              0
-                            ) || 0
-                          ).toLocaleString("bn-BD")}
-                        </bdi>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
+                          {/* PRICE */}
+                          <td data-title="Price">
+                            <span className="amount fw-normal">
+                              <bdi>
+                                <span>৳</span>
+                                {Number(item.sPrice || 0).toLocaleString(
+                                  "bn-BD",
+                                )}
+                              </bdi>
+                            </span>
+                          </td>
 
-                <tfoot>
-                  <tr className="order-total">
-                    <td className="fw-normal">Order Total</td>
-                    <td>
-                      <strong>
-                        <span className="amount fw-normal">
-                          <bdi style={{ color: "#FF3333" }}>
-                            <span>৳</span>
-                            {Number(
-                              cart.reduce(
-                                (acc, item) =>
-                                  acc +
-                                  item.sPrice *
-                                    item.amount,
-                                0
-                              ) || 0
-                            ).toLocaleString("bn-BD")}
-                          </bdi>
-                        </span>
-                      </strong>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+                          {/* QUANTITY */}
+                          <td data-title="Quantity">
+                            <div className="quantity style2">
+                              <div className="quantity__field quantity-container">
+                                <div className="quantity__buttons">
+                                  <button
+                                    type="button"
+                                    className="quantity-plus qty-btn"
+                                    onClick={() => setIncrement(item.id)}
+                                  >
+                                    <i className="fal fa-plus"></i>
+                                  </button>
 
+                                  <input
+                                    type="text"
+                                    className="qty-input fw-normal"
+                                    // value={item.amount}
+                                    value={convertToBanglaNumber(item.amount)}
+                                    readOnly
+                                  />
+
+                                  <button
+                                    type="button"
+                                    className="quantity-minus qty-btn"
+                                    onClick={() => setDecrement(item.id)}
+                                  >
+                                    <i className="fal fa-minus"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+
+                          {/* TOTAL */}
+                          <td data-title="Total">
+                            <span className="amount fw-normal">
+                              <bdi>
+                                <span>৳</span>
+                                {Number(
+                                  item.sPrice * item.amount || 0,
+                                ).toLocaleString("bn-BD")}
+                              </bdi>
+                            </span>
+                          </td>
+
+                          {/* REMOVE */}
+                          <td data-title="Remove">
+                            <button
+                              type="button"
+                              onClick={() => removeCart(item.id)}
+                              className="remove border-0 bg-transparent"
+                            >
+                              <i
+                                className="fal fa-trash-alt"
+                                style={{ color: "#FF3333" }}
+                              ></i>
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="6"
+                          className="text-center py-4 fs-2 text-danger"
+                        >
+                          Cart is empty
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </form>
             </div>
-          </div> */}
 
-          <div className="row justify-content-end">
-            <div className="col-md-8 col-lg-7 col-xl-6">
-              <h2 className="h4 summary-title fw-normal">Cart Totals</h2>
+            <div className="col-lg-5 col-md-12 cl-sm-12">
+              {/* <h2 className="h4 summary-title fw-normal text-center fs-4">
+                Cart Totals
+                কার্টের মোট মূল্য
+              </h2> */}
               <table className="cart_totals">
                 <tbody>
-                  <tr className="fw-normal">
-                    <td className="fw-normal">Cart Subtotal</td>
-                    <td data-title="Cart Subtotal">
-                      <span className="amount fw-normal">
-                        <bdi>
-                          <span className="fw-normal">৳</span>{" "}
-                          {Number(
-                            cart.reduce(
-                              (acc, item) => acc + item.sPrice * item.amount,
-                              0,
-                            ) || 0,
-                          ).toLocaleString("bn-BD")}
-                        </bdi>
-                      </span>
-                    </td>
-                  </tr>
                   <tr className="shipping fw-normal">
-                    <th className="fw-normal">Shipping and Handling</th>
-                    <td data-title="Shipping and Handling">
+                    <th className="fw-normal">
                       <ul className="woocommerce-shipping-methods list-unstyled">
+                        {/* Inside Dhaka */}
                         <li>
                           <input
                             type="radio"
-                            id="free_shipping"
+                            id="inside_dhaka"
                             name="shipping_method"
                             className="shipping_method"
+                            checked={shippingCost === 60}
+                            onChange={() => setShippingCost(60)}
                           />
-                          <label for="free_shipping" className="fw-normal">
-                            Free shipping
+
+                          <label htmlFor="inside_dhaka" className="fw-normal">
+                            Inside Dhaka
                           </label>
                         </li>
+
+                        {/* Outside Dhaka */}
                         <li>
                           <input
                             type="radio"
-                            id="flat_rate"
+                            id="outside_dhaka"
                             name="shipping_method"
                             className="shipping_method"
-                            checked="checked"
+                            checked={shippingCost === 120}
+                            onChange={() => setShippingCost(120)}
                           />
-                          <label for="flat_rate" className="fw-normal">
-                            Flat rate
+
+                          <label htmlFor="outside_dhaka" className="fw-normal">
+                            Outside Dhaka
                           </label>
                         </li>
                       </ul>
+                    </th>
+
+                    <td data-title="Shipping and Handling">
                       <p className="woocommerce-shipping-destination fw-normal">
                         Shipping options will be updated during checkout.
                       </p>
+
                       <form>
                         <Link
                           to="#"
                           className="shipping-calculator-button fw-normal"
                         >
-                          Change address
+                          বিলিং তথ্য
                         </Link>
+
                         <div className="shipping-calculator-form">
-                          <p className="form-row">
-                            <select className="form-select">
-                              <option defaultValue="AR">Argentina</option>
-                              <option defaultValue="AM">Armenia</option>
-                              <option defaultValue="BD" selected="selected">
-                                Bangladesh
-                              </option>
-                            </select>
-                          </p>
-                          <p>
-                            <select className="form-select">
-                              <option defaultValue="">Select an option…</option>
-                              <option defaultValue="BD-05">Bagerhat</option>
-                              <option defaultValue="BD-01">Bandarban</option>
-                              <option defaultValue="BD-02">Barguna</option>
-                              <option defaultValue="BD-06">Barishal</option>
-                            </select>
-                          </p>
-                          <p className="form-row">
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Town / City"
-                            />
-                          </p>
-                          <p className="form-row">
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Postcode / ZIP"
-                            />
-                          </p>
-                          <p>
-                            <button className="vs-btn fw-normal">Update</button>
-                          </p>
+                          {/* Name */}
+                          <div className="row">
+                            <div className="col-md-12 mb-0">
+                              <p className="form-row">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="নাম"
+                                />
+                              </p>
+                            </div>
+
+                            {/* Phone */}
+                            <div className="col-md-12 mb-0">
+                              <p className="form-row">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="ফোন"
+                                />
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* District + Upazila */}
+                          <div className="row mb-4">
+                            <div className="col-md-6">
+                              <p className="form-row">
+                                <select className="form-select">
+                                  <option value="">সিলেক্ট জেলা</option>
+                                  <option value="dhaka">Dhaka</option>
+                                  <option value="mymensingh">Mymensingh</option>
+                                </select>
+                              </p>
+                            </div>
+
+                            <div className="col-md-6">
+                              <p className="form-row">
+                                <select className="form-select">
+                                  <option value="">সিলেক্ট উপজেলা</option>
+                                  <option value="gulshan">Gulshan</option>
+                                  <option value="gazipur">Gazipur</option>
+                                  <option value="mymensingh-sadar">
+                                    Mymensingh Sadar
+                                  </option>
+                                </select>
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </form>
                     </td>
                   </tr>
                 </tbody>
+
                 <tfoot>
+                  {/* Book Total */}
                   <tr className="order-total">
-                    <td className="fw-normal">Order Total</td>
+                    <td className="fw-normal">বইয়ের মোট মূল্য</td>
+
                     <td data-title="Total">
                       <strong>
                         <span className="amount fw-normal">
                           <bdi style={{ color: "#FF3333" }}>
-                            <span>৳</span>
+                            <span>৳</span>{" "}
                             {Number(
                               cart.reduce(
                                 (acc, item) => acc + item.sPrice * item.amount,
@@ -646,14 +324,161 @@ const Cart = () => {
                       </strong>
                     </td>
                   </tr>
+
+                  {/* Shipping Charge */}
+                  <tr className="shipping-total">
+                    <td className="fw-normal">ডেলিভারি চার্জ</td>
+
+                    <td data-title="Shipping">
+                      <strong>
+                        <span className="amount fw-normal">
+                          <bdi style={{ color: "#FF3333" }}>
+                            <span>৳</span>{" "}
+                            {shippingCost.toLocaleString("bn-BD")}
+                          </bdi>
+                        </span>
+                      </strong>
+                    </td>
+                  </tr>
+
+                  {/* Order Total */}
+                  <tr className="order-total">
+                    <td className="fw-normal">অর্ডার টোটাল</td>
+
+                    <td data-title="Total">
+                      <strong>
+                        <span className="amount fw-normal">
+                          <bdi style={{ color: "#FF3333" }}>
+                            <span>৳</span>{" "}
+                            {Number(
+                              (cart.reduce(
+                                (acc, item) => acc + item.sPrice * item.amount,
+                                0,
+                              ) || 0) + shippingCost,
+                            ).toLocaleString("bn-BD")}
+                          </bdi>
+                        </span>
+                      </strong>
+                    </td>
+                  </tr>
                 </tfoot>
               </table>
             </div>
           </div>
 
-          <Link to="/checkout" className="vs-btn w-100">
-            Checkout
-          </Link>
+          {/* <div className="d-flex justify-content-end mt-3">
+            <Link
+              to="/checkout"
+              className="vs-btn fw-normal fs-5"
+              onClick={() => setShowOrderModal(true)}
+            >
+              চেকআউট
+            </Link>
+          </div> */}
+
+          <div className="d-flex justify-content-end mt-3">
+            <button
+              type="button"
+              className="vs-btn fw-normal fs-5 border-0"
+              onClick={() => setShowOrderModal(true)}
+            >
+              চেকআউট
+            </button>
+          </div>
+
+          {/* ================= ORDER SUMMARY MODAL ================= */}
+          {showOrderModal && (
+            <div
+              className="order-modal-overlay"
+              onClick={() => setShowOrderModal(false)}
+            >
+              <div className="order-modal" onClick={(e) => e.stopPropagation()}>
+                <button
+                  type="button"
+                  className="order-modal-close"
+                  onClick={() => setShowOrderModal(false)}
+                >
+                  ×
+                </button>
+
+                <div className="order-modal-icon">
+                  <i className="fas fa-check"></i>
+                </div>
+
+                <h2>Order Summary</h2>
+
+                <p className="order-success-message">
+                  Thank you for your order!
+                </p>
+
+                {/* ================= BOOK LIST ================= */}
+                <div className="order-summary-list">
+                  {cart.length > 0 ? (
+                    cart.map((item) => (
+                      <div className="order-summary-item" key={item.id}>
+                        {/* Image */}
+                        <div className="order-item-image">
+                          <img src={item.image} alt={item.name} />
+                        </div>
+
+                        {/* Book Info */}
+                        <div className="order-item-info">
+                          <h4>{item.name}</h4>
+
+                          <span>
+                            {convertToBanglaNumber(item.amount)} × ৳
+                            {Number(item.sPrice || 0).toLocaleString("bn-BD")}
+                          </span>
+                        </div>
+
+                        {/* Item Total */}
+                        <div className="order-item-total">
+                          ৳
+                          {Number(
+                            Number(item.sPrice || 0) * Number(item.amount || 0),
+                          ).toLocaleString("bn-BD")}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-danger text-center">আপনার কার্ট খালি।</p>
+                  )}
+                </div>
+
+                {/* ================= TOTALS ================= */}
+                <div className="order-summary-totals">
+                  {/* Book Total */}
+                  <div className="summary-row">
+                    <span>বইয়ের মোট মূল্য</span>
+
+                    <strong>৳{bookTotal.toLocaleString("bn-BD")}</strong>
+                  </div>
+
+                  {/* Delivery */}
+                  <div className="summary-row">
+                    <span>ডেলিভারি চার্জ</span>
+
+                    <strong>৳{shippingCost.toLocaleString("bn-BD")}</strong>
+                  </div>
+
+                  {/* Order Total */}
+                  <div className="summary-row summary-grand-total">
+                    <span>অর্ডার টোটাল</span>
+
+                    <strong>৳{orderTotal.toLocaleString("bn-BD")}</strong>
+                  </div>
+                </div>
+
+                <Link
+                  to="/profile"
+                  className="vs-btn order-ok-button border-0"
+                  onClick={() => setShowOrderModal(false)}
+                >
+                  Okay
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>
@@ -688,6 +513,444 @@ const Wrapper = styled.section`
 
   .cart_totals .shipping-calculator-button {
     color: #ff3333;
+  }
+
+  .cart_totals th:first-child,
+  .cart_totals td:first-child {
+    width: 25% !important;
+    /* background-color: var(--body-color);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--title-color); */
+  }
+  .shipping-calculator-form .form-select {
+    border: 1px solid #ff3333 !important;
+    box-shadow: none !important;
+    background-color: #f8ebe5 !important;
+    color: #333;
+    cursor: pointer;
+  }
+
+  /* Hover */
+  .shipping-calculator-form .form-select:hover {
+    border: 1px solid #ff3333 !important;
+    box-shadow: none !important;
+    background-color: #f8ebe5 !important;
+  }
+
+  /* Focus */
+  .shipping-calculator-form .form-select:focus {
+    border: 1px solid #ff3333 !important;
+    box-shadow: none !important;
+    background-color: #f8ebe5 !important;
+  }
+
+  /* Active */
+  .shipping-calculator-form .form-select:active {
+    border: 1px solid #ff3333 !important;
+    box-shadow: none !important;
+    background-color: #f8ebe5 !important;
+  }
+
+  /* =========================================
+   ORDER SUMMARY MODAL
+========================================= */
+
+  .order-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 999999;
+
+    overflow-y: auto;
+  }
+
+  /* =========================================
+   MODAL
+========================================= */
+
+  .order-modal {
+    position: relative;
+
+    width: 520px;
+    max-width: 100%;
+
+    max-height: 90vh;
+
+    background: #ffffff;
+
+    border-radius: 15px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+    overflow-y: auto;
+
+    animation: orderModalShow 0.3s ease;
+  }
+
+  /* =========================================
+   CLOSE BUTTON
+========================================= */
+
+  .order-modal-close {
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #555;
+
+    font-size: 30px;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+  }
+
+  .order-modal-close:hover {
+    color: #ff3333;
+
+    transform: rotate(90deg);
+  }
+
+  /* =========================================
+   SUCCESS ICON
+========================================= */
+
+  .order-modal-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #ff3333;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+  }
+
+  .order-modal-icon i {
+    font-size: 28px;
+
+    color: #ffffff;
+  }
+
+  /* =========================================
+   TITLE
+========================================= */
+
+  .order-modal h2 {
+    margin: 0;
+
+    margin-bottom: 5px;
+
+    font-size: 27px;
+
+    font-weight: 500;
+
+    color: #222;
+  }
+
+  .order-success-message {
+    margin: 0 0 20px;
+
+    color: #777;
+
+    font-size: 16px;
+  }
+
+  /* =========================================
+   BOOK LIST
+========================================= */
+
+  .order-summary-list {
+    width: 100%;
+
+    margin-top: 15px;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    text-align: left;
+  }
+
+  /* =========================================
+   SINGLE BOOK
+========================================= */
+
+  .order-summary-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .order-summary-item:last-child {
+    border-bottom: none;
+  }
+
+  /* =========================================
+   BOOK IMAGE
+========================================= */
+
+  .order-item-image {
+    width: 55px;
+    min-width: 55px;
+
+    height: 65px;
+
+    overflow: hidden;
+
+    border-radius: 5px;
+  }
+
+  .order-item-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  /* =========================================
+   BOOK INFO
+========================================= */
+
+  .order-item-info {
+    flex: 1;
+
+    min-width: 0;
+  }
+
+  .order-item-info h4 {
+    margin: 0 0 5px;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    color: #222;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+
+  .order-item-info span {
+    font-size: 14px;
+
+    color: #777;
+  }
+
+  /* =========================================
+   ITEM TOTAL
+========================================= */
+
+  .order-item-total {
+    font-size: 15px;
+
+    font-weight: 500;
+
+    color: #ff3333;
+
+    white-space: nowrap;
+  }
+
+  /* =========================================
+   TOTAL SECTION
+========================================= */
+
+  .order-summary-totals {
+    margin-top: 20px;
+
+    border-top: 1px solid #eeeeee;
+
+    padding-top: 10px;
+  }
+
+  /* =========================================
+   SUMMARY ROW
+========================================= */
+
+  .summary-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 8px 0;
+
+    font-size: 15px;
+
+    color: #555;
+  }
+
+  .summary-row strong {
+    color: #ff3333;
+
+    font-weight: 500;
+  }
+
+  /* =========================================
+   GRAND TOTAL
+========================================= */
+
+  .summary-grand-total {
+    margin-top: 5px;
+
+    padding-top: 12px;
+
+    border-top: 1px dashed #dddddd;
+
+    font-size: 18px;
+
+    color: #222;
+  }
+
+  .summary-grand-total strong {
+    font-size: 20px;
+
+    color: #ff3333;
+  }
+
+  /* =========================================
+   OKAY BUTTON
+========================================= */
+
+  .order-ok-button {
+    margin-top: 20px;
+
+    min-width: 120px;
+
+    border-radius: 5px;
+
+    background: #ff3333;
+
+    color: #ffffff;
+
+    padding: 10px 25px;
+
+    transition: all 0.3s ease;
+  }
+
+  .order-ok-button:hover {
+    background: #222;
+
+    color: #ffffff;
+  }
+
+  /* =========================================
+   ANIMATION
+========================================= */
+
+  @keyframes orderModalShow {
+    from {
+      opacity: 0;
+
+      transform: translateY(-20px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* =========================================
+   MOBILE
+========================================= */
+
+  @media (max-width: 576px) {
+    .order-modal-overlay {
+      padding: 12px;
+    }
+
+    .order-modal {
+      width: 100%;
+
+      max-height: 92vh;
+
+      padding: 30px 18px 25px;
+    }
+
+    .order-modal h2 {
+      font-size: 23px;
+    }
+
+    .order-modal-icon {
+      width: 55px;
+      height: 55px;
+    }
+
+    .order-modal-icon i {
+      font-size: 24px;
+    }
+
+    .order-summary-item {
+      gap: 8px;
+
+      padding: 10px;
+    }
+
+    .order-item-image {
+      width: 48px;
+      min-width: 48px;
+
+      height: 58px;
+    }
+
+    .order-item-info h4 {
+      font-size: 14px;
+    }
+
+    .order-item-info span {
+      font-size: 12px;
+    }
+
+    .order-item-total {
+      font-size: 13px;
+    }
   }
 `;
 

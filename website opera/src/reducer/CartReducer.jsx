@@ -72,10 +72,21 @@ const CartReducer = (state, action) => {
   }
 
   // ===== TOTAL ITEMS (COUNT PRODUCTS ONLY) =====
+  // if (action.type === "CART_TOTAL_ITEM") {
+  //   return {
+  //     ...state,
+  //     total_item: state.cart.length,
+  //   };
+  // }
   if (action.type === "CART_TOTAL_ITEM") {
+    const totalItem = state.cart.reduce(
+      (acc, item) => acc + Number(item.amount || 0),
+      0,
+    );
+
     return {
       ...state,
-      total_item: state.cart.length,
+      total_item: totalItem,
     };
   }
 

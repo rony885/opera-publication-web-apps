@@ -17,7 +17,7 @@ const Categories = () => {
           <div className="title-area2 animation-style1 title-anime">
             {/* <h2 className="sec-title title-anime__title fw-normal">Top Categories</h2> */}
             <h2 className="sec-title title-anime__title fw-normal fs-1">
-              প্রধান ক্যাটাগরি
+              ক্যাটাগরি
             </h2>
             <Link
               className="vs-btn wow animate__flipInX fw-normal py-2 fs-5"
@@ -40,7 +40,27 @@ const Categories = () => {
                     <img src={category.img} alt="product imagee" />
                   </div>
                   <h2 className="product-title fs-5 fw-normal">
-                    <Link to="/shop">{category.name}</Link>
+                    <Link
+                      to="/book"
+                      onClick={() => {
+                        localStorage.setItem(
+                          "selectedCategory",
+                          String(category.id),
+                        );
+
+                        localStorage.setItem("selectedSubCategory", "all");
+
+                        window.dispatchEvent(
+                          new CustomEvent("localStorageChange", {
+                            detail: {
+                              category: String(category.id),
+                            },
+                          }),
+                        );
+                      }}
+                    >
+                      {category.name}
+                    </Link>
                   </h2>
                 </div>
               </div>
