@@ -35,15 +35,9 @@ const AccountDashboard = () => {
         </div>
       </div>
 
-      {/* ============================= */}
-      {/* ACCOUNT SECTION */}
-      {/* ============================= */}
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
           <div className="row">
-            {/* ============================= */}
-            {/* ACCOUNT CONTENT */}
-            {/* ============================= */}
             <div className="col-lg-12">
               <div className="my-account-content account-dashboard">
                 <div className="mb_60">
@@ -75,10 +69,6 @@ const AccountDashboard = () => {
 };
 
 const Wrapper = styled.section`
-  /* ============================= */
-  /* ACCOUNT SIDEBAR */
-  /* ============================= */
-
   .wrap-sidebar-account {
     /* border: 1px solid #e5e5e5; */
     border-radius: 6px;
@@ -117,7 +107,6 @@ const Wrapper = styled.section`
     cursor: pointer;
   }
 
-  /* Hover */
   .my-account-nav-item:hover {
     color: #ff3333;
     background: #fff7f7;
@@ -125,17 +114,12 @@ const Wrapper = styled.section`
     padding-left: 24px;
   }
 
-  /* Active */
   .my-account-nav-item.active {
     color: #ff3333;
     background: #fff7f7;
     font-weight: 600;
     border-left: 3px solid #ff3333;
   }
-
-  /* ============================= */
-  /* ACCOUNT CONTENT */
-  /* ============================= */
 
   .my-account-content {
     /* border: 1px solid #e5e5e5; */
@@ -166,10 +150,6 @@ const Wrapper = styled.section`
     color: #222;
     text-decoration: underline;
   }
-
-  /* ============================= */
-  /* MOBILE */
-  /* ============================= */
 
   @media (max-width: 991px) {
     .wrap-sidebar-account {

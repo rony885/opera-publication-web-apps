@@ -33,9 +33,6 @@ const Login = () => {
         </div>
       </div>
 
-      {/* ============================= */}
-      {/* REGISTRATION FORM */}
-      {/* ============================= */}
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
           <div className="registration-wrapper">

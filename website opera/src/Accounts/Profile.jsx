@@ -170,10 +170,6 @@ const Profile = () => {
 };
 
 const Wrapper = styled.section`
-  /* ================================
-     Profile Section
-  ================================= */
-
   .profile-section {
     display: flex;
     align-items: flex-start;

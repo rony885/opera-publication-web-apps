@@ -1,194 +1,3 @@
-// import React from "react";
-// import styled from "styled-components";
-// import { Link } from "react-router-dom";
-// import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-// import Tooltip from "react-bootstrap/Tooltip";
-
-// const SignUp = () => {
-
-//   return (
-//     <Wrapper>
-//       <div
-//         className="breadcumb-wrapper"
-//         style={{
-//           backgroundImage: "url('/assets/img/bg/breadcumb-bg.png')",
-//           padding: "30px 0",
-//         }}
-//       >
-//         <div className="container z-index-common">
-//           <div className="breadcumb-content">
-//             <h1 className="breadcumb-title fs-4 fw-normal">প্রোফাইল</h1>
-
-//             <div className="breadcumb-menu-wrap">
-//               <div className="breadcumb-menu">
-//                 <span>
-//                   <Link className="fw-normal" to="/">
-//                     হোম
-//                   </Link>
-//                 </span>
-
-//                 <span className="fw-normal" style={{ color: "#FF3333" }}>
-//                   প্রোফাইল
-//                 </span>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Profile & Orders */}
-//       <section className="vs-blog-wrapper space-top space-extra-bottom">
-//         <div className="container">
-//          <div class="form-container">
-//     <h2>Registraion</h2> <!-- Kept the exact spelling from the image -->
-//     <form action="#" method="POST">
-
-//         <div class="form-group">
-//             <label>Customer Name<span class="required">*</span></label>
-//             <input type="text" name="customer_name" required>
-//         </div>
-
-//         <div class="form-group">
-//             <label>District<span class="required">*</span></label>
-//             <select name="district" required>
-//                 <option value="">Select</option>
-//             </select>
-//         </div>
-
-//         <div class="form-group">
-//             <label>Upazila<span class="required">*</span></label>
-//             <select name="upazila" required>
-//                 <option value="">Select</option>
-//             </select>
-//         </div>
-
-//         <div class="form-group">
-//             <label>Customer Address<span class="required">*</span></label>
-//             <textarea name="customer_address" rows="3" required></textarea>
-//         </div>
-
-//         <div class="form-group">
-//             <label>Phone<span class="required">*</span></label>
-//             <input type="text" name="phone" class="autofill-bg" value="01609857822" required>
-//         </div>
-
-//         <div class="form-group">
-//             <label>Password<span class="required">*</span></label>
-//             <input type="password" name="password" class="autofill-bg" value="......" required>
-//         </div>
-
-//         <button type="submit">Register</button>
-
-//         <div class="footer-text">
-//             Already have an account? <a href="#">Please Login</a>
-//         </div>
-
-//     </form>
-// </div>
-//         </div>
-//       </section>
-//     </Wrapper>
-//   );
-// };
-
-// const Wrapper = styled.section`
-//  .form-container {
-//         background-color: #e2e4e7;
-//         padding: 30px 40px;
-//         border-radius: 4px;
-//         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-//         border: 1px solid #d1d4d8;
-//         width: 100%;
-//         max-width: 380px;
-//     }
-
-//     .form-container h2 {
-//         text-align: center;
-//         color: red;
-//         font-family: "Times New Roman", Times, serif;
-//         font-size: 26px;
-//         font-weight: normal;
-//         margin-top: 0;
-//         margin-bottom: 25px;
-//     }
-
-//     .form-group {
-//         margin-bottom: 15px;
-//     }
-
-//     label {
-//         display: block;
-//         margin-bottom: 5px;
-//         font-size: 13px;
-//         color: #333;
-//     }
-
-//     .required {
-//         color: red;
-//     }
-
-//     input[type="text"],
-//     input[type="password"],
-//     select,
-//     textarea {
-//         width: 100%;
-//         padding: 10px;
-//         border: 1px solid #ccc;
-//         border-radius: 4px;
-//         box-sizing: border-box;
-//         font-family: Arial, sans-serif;
-//         font-size: 14px;
-//         background-color: #fff;
-//         outline: none;
-//     }
-
-//     input:focus,
-//     select:focus,
-//     textarea:focus {
-//         border-color: #aaa;
-//     }
-
-//     /* Mimicking the browser autofill background color seen in the screenshot */
-//     .autofill-bg {
-//         background-color: #e8f0fe !important;
-//     }
-
-//     button[type="submit"] {
-//         width: 100%;
-//         padding: 12px;
-//         background-color: #ff0000;
-//         color: #fff;
-//         border: none;
-//         border-radius: 4px;
-//         font-size: 15px;
-//         font-weight: bold;
-//         cursor: pointer;
-//         margin-top: 10px;
-//     }
-
-//     button[type="submit"]:hover {
-//         background-color: #e60000;
-//     }
-
-//     .footer-text {
-//         text-align: center;
-//         margin-top: 15px;
-//         font-size: 13px;
-//         color: #333;
-//     }
-
-//     .footer-text a {
-//         color: red;
-//         text-decoration: none;
-//     }
-
-//     .footer-text a:hover {
-//         text-decoration: underline;
-//     }
-// `;
-
-// export default SignUp;
-
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -196,9 +5,6 @@ import { Link } from "react-router-dom";
 const SignUp = () => {
   return (
     <Wrapper>
-      {/* ============================= */}
-      {/* BREADCRUMB */}
-      {/* ============================= */}
       <div
         className="breadcumb-wrapper"
         style={{
@@ -227,9 +33,6 @@ const SignUp = () => {
         </div>
       </div>
 
-      {/* ============================= */}
-      {/* REGISTRATION FORM */}
-      {/* ============================= */}
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
           <div className="registration-wrapper">
@@ -506,7 +309,7 @@ const Wrapper = styled.section`
     margin-top: 15px;
     font-size: 13px;
     color: #333;
-    font-family: Arial, sans-serif; 
+    font-family: Arial, sans-serif;
   }
 
   .footer-text a {

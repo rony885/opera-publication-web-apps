@@ -33,15 +33,8 @@ const OrderView = () => {
         </div>
       </div>
 
-      {/* =========================
-          Main Content
-      ========================= */}
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
-          {/* =========================
-              1. Order Info
-          ========================= */}
-
           <div className="card">
             <div className="d-flex justify-content-between align-items-start">
               {/* Left Side */}
@@ -441,23 +434,23 @@ const Wrapper = styled.section`
     font-size: 11px;
   }
 
-.product-img {
-  width: 50px;
-  height: 60px;
-  background: #f8f8f8;
-  border: 1px solid #dddddd;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .product-img {
+    width: 50px;
+    height: 60px;
+    background: #f8f8f8;
+    border: 1px solid #dddddd;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.product-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+  .product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
   .product-code {
     color: #777777;

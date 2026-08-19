@@ -282,7 +282,6 @@
 
 // export default Accounts;
 
-
 import React from "react";
 import styled from "styled-components";
 import { Link, NavLink, Outlet } from "react-router-dom";
@@ -303,9 +302,7 @@ const Accounts = () => {
       >
         <div className="container z-index-common">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title fs-4 fw-normal">
-              My Account
-            </h1>
+            <h1 className="breadcumb-title fs-4 fw-normal">My Account</h1>
 
             <div className="breadcumb-menu-wrap">
               <div className="breadcumb-menu">
@@ -315,10 +312,7 @@ const Accounts = () => {
                   </Link>
                 </span>
 
-                <span
-                  className="fw-normal"
-                  style={{ color: "#FF3333" }}
-                >
+                <span className="fw-normal" style={{ color: "#FF3333" }}>
                   My Account
                 </span>
               </div>
@@ -327,14 +321,9 @@ const Accounts = () => {
         </div>
       </div>
 
-      {/* ============================= */}
-      {/* ACCOUNT */}
-      {/* ============================= */}
-
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
           <div className="row">
-
             {/* ============================= */}
             {/* SIDEBAR - NEVER CHANGES */}
             {/* ============================= */}
@@ -342,16 +331,13 @@ const Accounts = () => {
             <div className="col-lg-3">
               <div className="wrap-sidebar-account">
                 <ul className="my-account-nav">
-
                   {/* Dashboard */}
                   <li>
                     <NavLink
                       to="/accounts"
                       end
                       className={({ isActive }) =>
-                        `my-account-nav-item ${
-                          isActive ? "active" : ""
-                        }`
+                        `my-account-nav-item ${isActive ? "active" : ""}`
                       }
                     >
                       Dashboard
@@ -363,9 +349,7 @@ const Accounts = () => {
                     <NavLink
                       to="/accounts/profile"
                       className={({ isActive }) =>
-                        `my-account-nav-item ${
-                          isActive ? "active" : ""
-                        }`
+                        `my-account-nav-item ${isActive ? "active" : ""}`
                       }
                     >
                       Profile
@@ -377,9 +361,7 @@ const Accounts = () => {
                     <NavLink
                       to="/accounts/order-view"
                       className={({ isActive }) =>
-                        `my-account-nav-item ${
-                          isActive ? "active" : ""
-                        }`
+                        `my-account-nav-item ${isActive ? "active" : ""}`
                       }
                     >
                       Orders
@@ -391,9 +373,7 @@ const Accounts = () => {
                     <NavLink
                       to="/account/address"
                       className={({ isActive }) =>
-                        `my-account-nav-item ${
-                          isActive ? "active" : ""
-                        }`
+                        `my-account-nav-item ${isActive ? "active" : ""}`
                       }
                     >
                       Address
@@ -405,9 +385,7 @@ const Accounts = () => {
                     <NavLink
                       to="/account/edit"
                       className={({ isActive }) =>
-                        `my-account-nav-item ${
-                          isActive ? "active" : ""
-                        }`
+                        `my-account-nav-item ${isActive ? "active" : ""}`
                       }
                     >
                       Account Details
@@ -419,9 +397,7 @@ const Accounts = () => {
                     <NavLink
                       to="/wishlist"
                       className={({ isActive }) =>
-                        `my-account-nav-item ${
-                          isActive ? "active" : ""
-                        }`
+                        `my-account-nav-item ${isActive ? "active" : ""}`
                       }
                     >
                       Wishlist
@@ -430,14 +406,10 @@ const Accounts = () => {
 
                   {/* Logout */}
                   <li>
-                    <Link
-                      to="/login"
-                      className="my-account-nav-item"
-                    >
+                    <Link to="/login" className="my-account-nav-item">
                       Logout
                     </Link>
                   </li>
-
                 </ul>
               </div>
             </div>
@@ -451,7 +423,6 @@ const Accounts = () => {
                 <Outlet />
               </div>
             </div>
-
           </div>
         </div>
       </section>
