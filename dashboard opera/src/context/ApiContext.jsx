@@ -39,6 +39,8 @@ const initialState = {
   unpaginate_blog: [],
 
   // Opera Module
+  opera_section: {},
+  unpaginate_opera_section: {},
   opera_client: [],
   unpaginate_opera_client: [],
   writter_chirkut: [],
@@ -89,6 +91,8 @@ const ApiContext = ({ children }) => {
     unpaginateBlog: `${process.env.REACT_APP_BASE_URL}/blog_api/unpaginate_blog/`,
 
     // Opera Module
+    operaSection: `${process.env.REACT_APP_BASE_URL}/opera_api/opera_section/1`,
+    unpaginateOperaSection: `${process.env.REACT_APP_BASE_URL}/opera_api/unpaginate_opera_section/1`,
     operaClient: `${process.env.REACT_APP_BASE_URL}/opera_api/opera_clients/`,
     unpaginateOperaClient: `${process.env.REACT_APP_BASE_URL}/opera_api/unpaginate_opera_clients/`,
     writterChirkut: `${process.env.REACT_APP_BASE_URL}/opera_api/writter_chirkut/`,
@@ -211,6 +215,19 @@ const ApiContext = ({ children }) => {
   );
 
   // Opera Module
+  const fetchOperaSection = useCallback(
+    () => fetchData(urls.operaSection, "SET_API_OPERA_SECTION"),
+    [fetchData, urls.operaSection],
+  );
+  const fetchUnpaginateOperaSection = useCallback(
+    () =>
+      fetchData(
+        urls.unpaginateOperaSection,
+        "SET_API_UNPAGINATE_OPERA_CLIENT_SECTION",
+      ),
+    [fetchData, urls.unpaginateOperaSection],
+  );
+
   const fetchOperaClient = useCallback(
     () => fetchData(urls.operaClient, "SET_API_OPERA_CLIENT"),
     [fetchData, urls.operaClient],
@@ -323,6 +340,8 @@ const ApiContext = ({ children }) => {
         fetchBlog,
         fetchUnpaginateBlog,
 
+        fetchOperaSection,
+        fetchUnpaginateOperaSection,
         fetchOperaClient,
         fetchUnpaginateOperaClient,
         fetchWritterChirkut,

@@ -1,10 +1,114 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/Footer";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { Link } from "react-router-dom";
+import JoditEditor from "jodit-react";
+import { Formik, Form as FormikForm } from "formik";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import * as yup from "yup";
+import axios from "axios";
+
+const schema = yup.object().shape({
+  status: yup.boolean(),
+  title: yup.string().required("Title is a required field!"),
+  author: yup.string().required("Name is a required field!"),
+  comments: yup.string().required("Comments is a required field!"),
+  views: yup.string().required("Views is a required field!"),
+  description: yup.string(),
+  image: yup.mixed().required("Image is a required field!"),
+});
+
+const validate = (values) => {
+  let errors = {};
+  return errors;
+};
+
 
 const Opera = () => {
+   const editor = useRef(null);
+  const [content, setContent] = useState("");
+
+  const [message, setMessage] = useState();
+  const [item, setItem] = useState({});
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [showImage, setShowImage] = useState(null);
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setShowImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
+
+  // update
+  const updatedValues = {
+    status:
+      item.status === true ? "true" : item.status === false ? "false" : "",
+    title: item.title ? item.title : "",
+    author: item.author ? item.author : "",
+    comments: item.comments ? item.comments : "",
+    views: item.views ? item.views : "",
+    description: item.description ? item.description : "",
+    image: item.image ? item.image : "",
+  };
+
+  const UpdateBlogFunc = async (values) => {
+    let formfield = new FormData();
+
+    formfield.append("status", values.status === "true");
+    formfield.append("title", values.title);
+    formfield.append("author", values.author);
+    formfield.append("comments", values.comments);
+    formfield.append("views", values.views);
+    formfield.append("description", content);
+    if (values.image !== item.image) {
+      formfield.append("image", values.image);
+    }
+
+    await axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_BASE_URL}/blog_api/blog/${item.id}/`,
+      data: formfield,
+    })
+      .then((response) => {
+        setMessage(response.success, "Blog is successfully updated...");
+        // navigate("/blogs");
+        window.location.reload(false);
+      })
+      .catch((error) => {
+        setMessage(error.message, "Error");
+      });
+  };
+
+  const submitUpdateSliderForm = async (
+    values,
+    { setErrors, setSubmitting, resetForm },
+  ) => {
+    try {
+      setSubmitting(true);
+      await UpdateBlogFunc(values);
+      setSubmitting(false);
+      // resetForm();
+    } catch (error) {
+      setErrors({ error: error.message });
+      setSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+    const updateBlog = async (id) => {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/blog_api/blog/${id}/`,
+      );
+      setItem(data);
+      setShowImage(data.image);
+      setContent(data.description);
+    };
+    updateBlog(id);
+  }, [id]);
+
   return (
     <Wrapper>
       <div className="page-content">

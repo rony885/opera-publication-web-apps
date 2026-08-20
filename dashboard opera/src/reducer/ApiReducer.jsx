@@ -124,6 +124,22 @@ const ApiReducer = (state, action) => {
       };
 
     // Opera Module
+    case "SET_API_OPERA_SECTION":
+      return {
+        ...state,
+        isLoading: false,
+        opera_section: action.payload,
+        isError: false,
+      };
+
+    case "SET_API_UNPAGINATE_OPERA_SECTION":
+      return {
+        ...state,
+        isLoading: false,
+        unpaginate_opera_section: action.payload,
+        isError: false,
+      };
+
     case "SET_API_OPERA_CLIENT":
       return {
         ...state,
