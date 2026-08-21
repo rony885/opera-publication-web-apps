@@ -223,7 +223,7 @@ const ApiContext = ({ children }) => {
     () =>
       fetchData(
         urls.unpaginateOperaSection,
-        "SET_API_UNPAGINATE_OPERA_CLIENT_SECTION",
+        "SET_API_UNPAGINATE_OPERA_SECTION",
       ),
     [fetchData, urls.unpaginateOperaSection],
   );
