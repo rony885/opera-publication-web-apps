@@ -73,10 +73,9 @@ const CountOpera = () => {
                         <th className="text-start" style={{ width: "20px" }}>
                           #
                         </th>
-                        <th className="text-center">Image</th>
-                        <th className="text-center">Name</th>
-                        <th className="text-center">Designation</th>
-                        <th className="text-center">Description</th>
+                        <th className="text-center">Count</th>
+                        <th className="text-center">M/+</th>
+                        <th className="text-center">Label</th>
                         <th className="text-center">Status</th>
                         <th className="text-end">Action</th>
                       </tr>
@@ -87,24 +86,9 @@ const CountOpera = () => {
                           return (
                             <tr key={index}>
                               <td className="text-start">{index + 1}</td>
-                              <td>
-                                <div className="d-flex align-items-center justify-content-center gap-2">
-                                  <div className="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                                    <img
-                                      src={item.image}
-                                      alt="Imagee"
-                                      className="avatar-md"
-                                    />
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="text-center">{item.name}</td>
-                              <td className="text-center">
-                                {item.designation}
-                              </td>
-                              <td className="text-center">
-                                {item.description.slice(0, 50)}...
-                              </td>
+                              <td className="text-center">{item.count}</td>
+                              <td className="text-center">{item.label}</td>
+                              <td className="text-center">{item.suffix}</td>
                               <td className="text-center">
                                 {" "}
                                 <p>

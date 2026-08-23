@@ -425,50 +425,7 @@ const Opera = () => {
                             </Form.Group>
                           </div>
 
-                          {/* <div className="col-lg-3">
-                      <form>
-                        <div className="mb-3">
-                          <label htmlFor="layout" className="form-label">
-                            Count
-                          </label>
-                          <input
-                            type="text"
-                            id="meta-tag"
-                            className="form-control"
-                          />
-                        </div>
-                      </form>
-                    </div>
-
-                    <div className="col-lg-3">
-                      <form>
-                        <div className="mb-3">
-                          <label htmlFor="meta-tag" className="form-label">
-                            M/+
-                          </label>
-                          <input
-                            type="text"
-                            id="meta-tag"
-                            className="form-control"
-                          />
-                        </div>
-                      </form>
-                    </div>
-
-                    <div className="col-lg-3">
-                      <form>
-                        <div className="mb-3">
-                          <label htmlFor="layout" className="form-label">
-                            Label
-                          </label>
-                          <input
-                            type="text"
-                            id="meta-tag"
-                            className="form-control"
-                          />
-                        </div>
-                      </form>
-                    </div> */}
+                          
                         </div>
 
                         {/* <div className="d-flex justify-content-end gap-2 my-2">
