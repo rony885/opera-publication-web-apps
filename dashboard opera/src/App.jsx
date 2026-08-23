@@ -55,6 +55,7 @@ import Banner from "./pages/Home/Banner";
 import UpdateBanner from "./pages/Home/UpdateBanner";
 import Feature from "./pages/Home/Feature";
 import UpdateFeature from "./pages/Home/UpdateFeature";
+import CountOpera from "./pages/Opera/CountOpera";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -160,6 +161,7 @@ function App() {
               <Route path="/blog-update/:id" element={<UpdateBlog />}></Route>
 
               <Route path="/opera" element={<Opera />}></Route>
+              <Route path="/achievement" element={<CountOpera />}></Route>
               <Route path="/writer-chirkut" element={<WriterChirkut />}></Route>
               <Route
                 path="/add-writer-chirkut"

@@ -54,6 +54,7 @@ const UL = ({ handleTogglle }) => {
 
       // Opera
       "/opera": "opera",
+      "/achievement": "opera",
       "/writer-chirkut": "opera",
       "/add-writer-chirkut": "opera",
       "/writer-chirkut-update": "opera",
@@ -112,6 +113,7 @@ const UL = ({ handleTogglle }) => {
 
       // Opera
       "/opera": "opera",
+      "/achievement": "achievement",
       "/writer-chirkut": "writer-chirkut",
       "/add-writer-chirkut": "add-writer-chirkut",
       "/writer-chirkut-update": "writer-chirkut-update",
@@ -409,6 +411,19 @@ const UL = ({ handleTogglle }) => {
                   // style={{ fontSize: "12px" }}
                 >
                   অপেরা সেকশন
+                </Link>
+              </li>
+              <li className="sub-nav-item">
+                <Link
+                  className={`sub-nav-link  ${
+                    activeSubMenu === "achievement" ? "active" : ""
+                  }`}
+                  onClick={handleTogglle}
+                  to="/achievement"
+                  ref={activeSubMenu === "achievement" ? activeItemRef : null}
+                  // style={{ fontSize: "12px" }}
+                >
+                  অর্জন ও সম্মাননা
                 </Link>
               </li>
               <li className="sub-nav-item">
