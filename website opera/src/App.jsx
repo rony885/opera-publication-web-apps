@@ -134,9 +134,37 @@ import Login from "./Accounts/Login";
 import Accounts from "./Accounts/Accounts";
 import AccountDashboard from "./Accounts/AccountDashboard";
 
+import { useProductContext } from "./context/ProductContext.jsx";
+
 function App() {
+  const { c_user } = useProductContext();
+  const aT = localStorage.getItem("atoozAccessToken");
+  const rT = localStorage.getItem("atoozRefreshToken");
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/custom_user/logout/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${aT}`,
+          },
+          body: JSON.stringify({
+            refresh_token: rT,
+          }),
+        },
+      );
+      const data = await response.json();
+      console.log("Logout response:", data);
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -196,16 +224,12 @@ function App() {
             <Route path="/cart" element={<Cart />} />
 
             <Route path="/checkout" element={<Checkout />} />
-            {/* Normal Profile page */}
+
             <Route path="/profile" element={<Profile />} />
 
-            {/* Normal Order page */}
             <Route path="/order-view" element={<OrderView />} />
 
-            {/* ============================= */}
-            {/* ACCOUNT NESTED ROUTES */}
-            {/* ============================= */}
-
+            {/* ===== ACCOUNT NESTED ROUTES ===== */}
             <Route path="/accounts" element={<Accounts />}>
               {/* Dashboard */}
               <Route index element={<AccountDashboard />} />
@@ -223,13 +247,10 @@ function App() {
               <Route path="edit" element={<div>Account Details Page</div>} />
             </Route>
 
-            {/* Login */}
             <Route path="/login" element={<Login />} />
 
-            {/* Registration */}
             <Route path="/registration" element={<SignUp />} />
 
-            {/* 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Top />

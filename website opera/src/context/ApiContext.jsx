@@ -79,7 +79,7 @@ const ApiContext = ({ children }) => {
 
     // User / Customer module
     allUsers: `${process.env.REACT_APP_BASE_URL}/custom_user/all_users/`,
-    currentUser: `${process.env.REACT_APP_BASE_URL}/custom_user/ `,
+    currentUser: `${process.env.REACT_APP_BASE_URL}/custom_user/current_user/`,
   };
 
   // Fetch data function with useCallback
@@ -200,7 +200,7 @@ const ApiContext = ({ children }) => {
   );
 
   const fetchCurrentUser = useCallback(async () => {
-    const aT = localStorage.getItem("operaSuperuserandstaffAccessToken");
+    const aT = localStorage.getItem("operaPublicationAccessToken");
     if (aT) {
       try {
         const response = await fetch(urls.currentUser, {
@@ -245,7 +245,7 @@ const ApiContext = ({ children }) => {
         fetchContact,
         fetchUnpaginateContact,
 
-        fetchAllUsers,
+         fetchAllUsers,
       }}
     >
       {children}

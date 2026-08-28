@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     
     # Installed Apps
     'Address.apps.AddressConfig',
+    'CustomUser.apps.CustomUserConfig',
     'Home.apps.HomeConfig',
     'Books.apps.BooksConfig',
     'Author.apps.AuthorConfig',
@@ -143,6 +144,11 @@ USE_TZ = True
 CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'http://localhost:3001', ]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+
+# auth user
+# Replace 'your_app' with the name of your Django app and 'CustomUser' with the name of your custom user model
+AUTH_USER_MODEL = 'CustomUser.CustomUser'
 
 
 # Static files (CSS, JavaScript, Images)

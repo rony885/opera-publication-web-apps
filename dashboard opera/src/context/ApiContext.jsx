@@ -291,7 +291,9 @@ const ApiContext = ({ children }) => {
   );
 
   const fetchCurrentUser = useCallback(async () => {
-    const aT = localStorage.getItem("operaSuperuserandstaffAccessToken");
+    const aT = localStorage.getItem(
+      "operaPublicationSuperuserandstaffAccessToken",
+    );
     if (aT) {
       try {
         const response = await fetch(urls.currentUser, {
