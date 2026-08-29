@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import categoriesArray from "../../DataJS/categories.js";
 import { useCartContext } from "../../context/CartContext.jsx";
 import convertToBanglaNumber from "../banglaConvert/convertToBanglaNumber.jsx";
 
-const Header = ({ toggleMenu, closeMenu }) => {
+const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
   const {
     cart,
     total_item,
@@ -21,6 +21,7 @@ const Header = ({ toggleMenu, closeMenu }) => {
   const [categories, setCategories] = useState([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
 
   useEffect(() => {
     setCategories(categoriesArray);
@@ -43,6 +44,20 @@ const Header = ({ toggleMenu, closeMenu }) => {
 
     return () => {
       cart.removeEventListener("wheel", stopScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -100,82 +115,105 @@ const Header = ({ toggleMenu, closeMenu }) => {
                       <i className="fa-solid fa-user"></i>
                     </Link>
                   </div> */}
-
-                  <div className="user-login">
-                    <button
-                      type="button"
-                      className="user-login-btn"
-                      onClick={() => setIsUserMenuOpen((prev) => !prev)}
-                      aria-label="User menu"
-                    >
-                      <i className="fa-solid fa-user"></i>
-                    </button>
-
-                    <div
-                      className={`user-dropdown ${
-                        isUserMenuOpen ? "user-dropdown-active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="/account"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <i className="fa-solid fa-user-circle"></i>
-                        <span>Account Info</span>
-                      </Link>
-
-                      <Link
-                        to="/profile"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <i className="fa-solid fa-id-card"></i>
-                        <span>Profile</span>
-                      </Link>
-
-                      <Link
-                        to="/orders"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <i className="fa-solid fa-box"></i>
-                        <span>Order</span>
-                      </Link>
-
-                      <Link
-                        to="/settings"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <i className="fa-solid fa-gear"></i>
-                        <span>Settings</span>
-                      </Link>
-
-                      <Link
-                        to="/registration"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <i className="fa-solid fa-gear"></i>
-                        <span>Registration</span>
-                      </Link>
-                      <Link
-                        to="/accounts"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <i className="fa-solid fa-gear"></i>
-                        <span>Accounts</span>
-                      </Link>
-
+                  {aT ? (
+                    <div className="user-login" ref={userMenuRef}>
                       <button
                         type="button"
-                        className="user-dropdown-logout"
-                        onClick={() => {
-                          setIsUserMenuOpen(false);
-                          // logout function here
-                        }}
+                        className="user-login-btn"
+                        onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                        aria-label="User menu"
                       >
-                        <i className="fa-solid fa-right-from-bracket"></i>
-                        <span>Logout</span>
+                        <i className="fa-solid fa-user"></i>
                       </button>
+
+                      <div
+                        className={`user-dropdown ${
+                          isUserMenuOpen ? "user-dropdown-active" : ""
+                        }`}
+                      >
+                        <Link>
+                          <i className="fa-solid fa-user-circle"></i>
+                          <span>Welcome {c_user && c_user}</span>
+                        </Link>
+
+                        <Link
+                          to="/account"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-user-circle"></i>
+                          <span>Account Info</span>
+                        </Link>
+
+                        <Link
+                          to="/profile"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-id-card"></i>
+                          <span>Profile</span>
+                        </Link>
+
+                        <Link
+                          to="/orders"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-box"></i>
+                          <span>Order</span>
+                        </Link>
+
+                        <Link
+                          to="/settings"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-gear"></i>
+                          <span>Settings</span>
+                        </Link>
+
+                        <Link
+                          to="/registration"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-gear"></i>
+                          <span>Registration</span>
+                        </Link>
+                        <Link
+                          to="/accounts"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-gear"></i>
+                          <span>Accounts</span>
+                        </Link>
+
+                        <button
+                          type="button"
+                          className="user-dropdown-logout"
+                          onClick={() => {
+                            handleLogout();
+                            Navigate("/");
+                            localStorage.removeItem(
+                              "operaPublicationAccessToken",
+                            );
+                            localStorage.removeItem(
+                              "operaPublicationRefreshToken",
+                            );
+                            window.location.reload(false);
+                          }}
+                        >
+                          <i className="fa-solid fa-right-from-bracket"></i>
+                          <span>Logout</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <li className="">
+                      <Link
+                        to="/login"
+                        className=""
+                        style={{ color: "#fff" }}
+                      >
+                        Login
+                      </Link>
+                    </li>
+                  )}
                 </div>
               </div>
             </div>
@@ -786,31 +824,22 @@ const Wrapper = styled.section`
     color: #ff3333;
   }
 
-  /* Dropdown */
-
   .user-dropdown {
     position: absolute;
-    top: calc(100% + -2px);
+    top: calc(100% - 2px);
     right: 0;
-    width: 220px;
-    padding: 8px 0;
-
-    /* Main dropdown color */
+    width: 180px;
+    padding: 2px 0; /* Very small top-bottom padding */
     background: #f8ebe5;
-
-    border-radius: 6px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+    border-radius: 5px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     border: 1px solid #ff3333;
-
     z-index: 99999;
-
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-8px);
+    transform: translateY(-5px);
     transition: all 0.25s ease;
   }
-
-  /* Open */
 
   .user-dropdown-active {
     opacity: 1;
@@ -818,42 +847,33 @@ const Wrapper = styled.section`
     transform: translateY(0);
   }
 
-  /* Dropdown links */
-
   .user-dropdown a,
   .user-dropdown-logout {
     width: 100%;
-    min-height: 45px;
-    padding: 10px 16px;
-
+    height: 32px; /* Fixed small height */
+    min-height: 28px;
+    padding: 0 10px; /* No top-bottom padding */
     display: flex;
     align-items: center;
-    gap: 12px;
-
+    gap: 7px;
     border: none;
-    background: #f8ebe5 !important;
+    background: transparent !important;
     text-decoration: none;
-
     color: #ff3333;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
-
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
   }
-
-  /* Icons */
 
   .user-dropdown a i,
   .user-dropdown-logout i {
-    width: 22px;
+    width: 16px;
     text-align: center;
-    font-size: 16px;
+    font-size: 13px;
     color: #ff3333;
-    transition: all 0.25s ease;
   }
-
-  /* Text */
 
   .user-dropdown a span,
   .user-dropdown-logout span {
@@ -865,34 +885,13 @@ const Wrapper = styled.section`
 
   .user-dropdown a:hover,
   .user-dropdown-logout:hover {
-    background-color: #f8ebe5;
+    background: #ffffff !important;
     color: #ff3333;
   }
-  */ .user-dropdown a:hover i,
-  .user-dropdown-logout:hover i {
-    color: #ff3333;
-  }
-
-  /* Logout */
 
   .user-dropdown-logout {
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    margin-top: 5px;
-    padding-top: 12px;
-    color: #ff3333;
-  }
-
-  .user-dropdown-logout i {
-    color: #ff3333;
-  }
-
-  .user-dropdown-logout:hover {
-    color: #ff3333;
-    background-color: #ffffff;
-  }
-
-  .user-dropdown-logout:hover i {
-    color: #ff3333;
+    border-top: 1px solid rgba(255, 51, 51, 0.2);
+    margin-top: 1px;
   }
 `;
 
