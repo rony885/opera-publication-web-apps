@@ -29,6 +29,7 @@ import SignUp from "./Accounts/SignUp";
 import Login from "./Accounts/Login";
 import Accounts from "./Accounts/Accounts";
 import AccountDashboard from "./Accounts/AccountDashboard";
+
 import { useApiContext } from "./context/ApiContext";
 
 function App() {
@@ -38,6 +39,28 @@ function App() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  // const handleLogout = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.REACT_APP_BASE_URL}/custom_user/logout/`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${aT}`,
+  //         },
+  //         body: JSON.stringify({
+  //           refresh_token: rT,
+  //         }),
+  //       },
+  //     );
+  //     const data = await response.json();
+  //     console.log("Logout response:", data);
+  //   } catch (error) {
+  //     console.error("Error logging out:", error);
+  //   }
+  // };
 
   const handleLogout = async () => {
     try {
@@ -54,8 +77,13 @@ function App() {
           }),
         },
       );
-      const data = await response.json();
-      console.log("Logout response:", data);
+      if (response.ok) {
+        localStorage.removeItem("operaPublicationAccessToken");
+        localStorage.removeItem("operaPublicationRefreshToken");
+        window.location.reload(false);
+      } else {
+        console.error("Logout failed:", response.statusText);
+      }
     } catch (error) {
       console.error("Error logging out:", error);
     }

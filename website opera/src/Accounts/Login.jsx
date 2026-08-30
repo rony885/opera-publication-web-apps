@@ -74,12 +74,12 @@ const Login = () => {
                 <button type="submit" className="register-btn">
                   Sign In
                 </button>
-
-                {/* Login */}
-                <div className="footer-text">
-                  New here? Please <Link to="/registration">Sign Up</Link>
-                </div>
               </form>
+
+              {/* Login */}
+              <div className="footer-text">
+                New here? Please <Link to="/registration">Sign Up</Link>
+              </div>
             </div>
           </div>
         </div>

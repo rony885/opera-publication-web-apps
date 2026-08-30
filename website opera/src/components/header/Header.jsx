@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, Navigate, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import categoriesArray from "../../DataJS/categories.js";
 import { useCartContext } from "../../context/CartContext.jsx";
 import convertToBanglaNumber from "../banglaConvert/convertToBanglaNumber.jsx";
@@ -22,6 +22,17 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  const logoutUser = async () => {
+    await handleLogout();
+
+    setIsUserMenuOpen(false);
+
+    navigate("/");
+    window.location.reload();
+  };
 
   useEffect(() => {
     setCategories(categoriesArray);
@@ -186,17 +197,18 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                         <button
                           type="button"
                           className="user-dropdown-logout"
-                          onClick={() => {
-                            handleLogout();
-                            Navigate("/");
-                            localStorage.removeItem(
-                              "operaPublicationAccessToken",
-                            );
-                            localStorage.removeItem(
-                              "operaPublicationRefreshToken",
-                            );
-                            window.location.reload(false);
-                          }}
+                          // onClick={() => {
+                          //   handleLogout();
+                          //   Navigate("/");
+                          //   localStorage.removeItem(
+                          //     "operaPublicationAccessToken",
+                          //   );
+                          //   localStorage.removeItem(
+                          //     "operaPublicationRefreshToken",
+                          //   );
+                          //   window.location.reload(false);
+                          // }}
+                          onClick={logoutUser}
                         >
                           <i className="fa-solid fa-right-from-bracket"></i>
                           <span>Logout</span>
@@ -204,15 +216,15 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                       </div>
                     </div>
                   ) : (
-                    <li className="">
+                    <div className="header-login mt-2">
                       <Link
                         to="/login"
-                        className=""
-                        style={{ color: "#fff" }}
+                        className="btn btn-outline-danger d-flex align-items-center gap-2 px-3 "
                       >
-                        Login
+                        <i className="fa-solid fa-right-to-bracket"></i>
+                        <span>Login</span>
                       </Link>
-                    </li>
+                    </div>
                   )}
                 </div>
               </div>
