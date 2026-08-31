@@ -245,7 +245,8 @@ const ApiContext = ({ children }) => {
         fetchContact,
         fetchUnpaginateContact,
 
-         fetchAllUsers,
+        fetchAllUsers,
+        fetchCurrentUser,
       }}
     >
       {children}

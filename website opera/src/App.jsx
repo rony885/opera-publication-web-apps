@@ -23,14 +23,15 @@ import Contact from "./pages/contact/Contact";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
-import Profile from "./Accounts/Profile";
-import OrderView from "./Accounts/OrderView";
-import SignUp from "./Accounts/SignUp";
-import Login from "./Accounts/Login";
-import Accounts from "./Accounts/Accounts";
-import AccountDashboard from "./Accounts/AccountDashboard";
+import Profile from "./pages//Accounts/Profile";
+import OrderView from "./pages/Accounts/OrderView";
+import SignUp from "./pages/Accounts/SignUp";
+import Login from "./pages/Accounts/Login";
+import Accounts from "./pages/Accounts/Accounts";
+import AccountDashboard from "./pages/Accounts/AccountDashboard";
 
 import { useApiContext } from "./context/ApiContext";
+import UpdateProfile from "./pages/Accounts/UpdateProfile";
 
 function App() {
   const { c_user } = useApiContext();
@@ -146,10 +147,11 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
 
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile c_user={c_user} />} />
+            <Route path="/update-profile/:id" element={<UpdateProfile />} />
             <Route path="/order-view" element={<OrderView />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/login" element={<SignUp />} />
+            <Route path="/registration" element={<SignUp />} />
 
             {/* ===== ACCOUNT NESTED ROUTES ===== */}
             <Route path="/accounts" element={<Accounts />}>
@@ -157,7 +159,7 @@ function App() {
               <Route index element={<AccountDashboard />} />
 
               {/* Profile */}
-              <Route path="profile" element={<Profile />} />
+              <Route path="profile" element={<Profile c_user={c_user} />} />
 
               {/* Orders */}
               <Route path="order-view" element={<OrderView />} />

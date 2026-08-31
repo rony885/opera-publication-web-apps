@@ -4,75 +4,75 @@ import { Link } from "react-router-dom";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
-const Profile = () => {
-  const orders = [
-    {
-      id: "O-260800001",
-      date: "2026-08-17",
-      price: "540.00 BDT",
-    },
-    {
-      id: "O-260800002",
-      date: "2026-08-17",
-      price: "540.00 BDT",
-    },
-    {
-      id: "O-260800003",
-      date: "2026-08-17",
-      price: "540.00 BDT",
-    },
-    {
-      id: "O-260800004",
-      date: "2026-08-17",
-      price: "540.00 BDT",
-    },
-    {
-      id: "O-260800005",
-      date: "2026-08-18",
-      price: "540.00 BDT",
-    },
-    {
-      id: "O-260800006",
-      date: "2026-08-18",
-      price: "540.00 BDT",
-    },
-    {
-      id: "O-260800007",
-      date: "2026-08-18",
-      price: "1120.00 BDT",
-    },
-    {
-      id: "O-260800008",
-      date: "2026-08-18",
-      price: "1120.00 BDT",
-    },
-    {
-      id: "O-260800009",
-      date: "2026-08-18",
-      price: "1120.00 BDT",
-    },
-    {
-      id: "O-260800010",
-      date: "2026-08-18",
-      price: "1120.00 BDT",
-    },
-    {
-      id: "O-260800011",
-      date: "2026-08-18",
-      price: "1120.00 BDT",
-    },
-    {
-      id: "O-260800012",
-      date: "2026-08-18",
-      price: "1120.00 BDT",
-    },
-    {
-      id: "O-260800013",
-      date: "2026-08-18",
-      price: "1120.00 BDT",
-    },
-  ];
+const orders = [
+  {
+    id: "O-260800001",
+    date: "2026-08-17",
+    price: "540.00 BDT",
+  },
+  {
+    id: "O-260800002",
+    date: "2026-08-17",
+    price: "540.00 BDT",
+  },
+  {
+    id: "O-260800003",
+    date: "2026-08-17",
+    price: "540.00 BDT",
+  },
+  {
+    id: "O-260800004",
+    date: "2026-08-17",
+    price: "540.00 BDT",
+  },
+  {
+    id: "O-260800005",
+    date: "2026-08-18",
+    price: "540.00 BDT",
+  },
+  {
+    id: "O-260800006",
+    date: "2026-08-18",
+    price: "540.00 BDT",
+  },
+  {
+    id: "O-260800007",
+    date: "2026-08-18",
+    price: "1120.00 BDT",
+  },
+  {
+    id: "O-260800008",
+    date: "2026-08-18",
+    price: "1120.00 BDT",
+  },
+  {
+    id: "O-260800009",
+    date: "2026-08-18",
+    price: "1120.00 BDT",
+  },
+  {
+    id: "O-260800010",
+    date: "2026-08-18",
+    price: "1120.00 BDT",
+  },
+  {
+    id: "O-260800011",
+    date: "2026-08-18",
+    price: "1120.00 BDT",
+  },
+  {
+    id: "O-260800012",
+    date: "2026-08-18",
+    price: "1120.00 BDT",
+  },
+  {
+    id: "O-260800013",
+    date: "2026-08-18",
+    price: "1120.00 BDT",
+  },
+];
 
+const Profile = ({ c_user }) => {
   return (
     <Wrapper>
       <div
@@ -110,19 +110,30 @@ const Profile = () => {
           <div className="profile-section">
             <div className="profile-avatar">
               <img
-                src="https://i.pravatar.cc/150?img=12"
+                // src="https://i.pravatar.cc/150?img=12"
+                // src={c_user && c_user.image}
+                src={
+                  c_user.image &&
+                  `${process.env.REACT_APP_BASE_URL}${c_user.image.replace(
+                    "server/",
+                    "",
+                  )}`
+                }
                 alt="Rony71 Profile"
               />
             </div>
 
             <div className="profile-info">
-              <h2>Rony71</h2>
+              <h2>{c_user && c_user.name}</h2>
 
-              <p>01609857822</p>
+              <p>{c_user && c_user.email}</p>
 
-              <button type="button" className="btn-profile-update">
+              <Link
+                to={`/update-profile/${c_user.id}`}
+                className="btn-profile-update"
+              >
                 Profile update
-              </button>
+              </Link>
             </div>
           </div>
 

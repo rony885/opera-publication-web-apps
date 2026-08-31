@@ -25,14 +25,14 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
 
   const navigate = useNavigate();
 
-  const logoutUser = async () => {
-    await handleLogout();
+  // const logoutUser = async () => {
+  //   await handleLogout();
 
-    setIsUserMenuOpen(false);
+  //   setIsUserMenuOpen(false);
 
-    navigate("/");
-    window.location.reload();
-  };
+  //   navigate("/");
+  //   window.location.reload();
+  // };
 
   useEffect(() => {
     setCategories(categoriesArray);
@@ -208,7 +208,11 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                           //   );
                           //   window.location.reload(false);
                           // }}
-                          onClick={logoutUser}
+                          // onClick={logoutUser}
+                          onClick={() => {
+                            handleLogout();
+                            navigate("/");
+                          }}
                         >
                           <i className="fa-solid fa-right-from-bracket"></i>
                           <span>Logout</span>
