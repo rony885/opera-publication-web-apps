@@ -148,6 +148,8 @@ function App() {
 
             <Route path="/profile" element={<Profile />} />
             <Route path="/order-view" element={<OrderView />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<SignUp />} />
 
             {/* ===== ACCOUNT NESTED ROUTES ===== */}
             <Route path="/accounts" element={<Accounts />}>
@@ -166,10 +168,6 @@ function App() {
               {/* Account Details */}
               <Route path="edit" element={<div>Account Details Page</div>} />
             </Route>
-
-            <Route path="/login" element={<Login />} />
-
-            <Route path="/registration" element={<SignUp />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
