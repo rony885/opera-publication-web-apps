@@ -32,6 +32,7 @@ import AccountDashboard from "./pages/Accounts/AccountDashboard";
 
 import { useApiContext } from "./context/ApiContext";
 import UpdateProfile from "./pages/Accounts/UpdateProfile";
+import ForgotPassword from "./pages/Accounts/ForgotPassword";
 
 function App() {
   const { c_user } = useApiContext();
@@ -152,6 +153,7 @@ function App() {
             <Route path="/order-view" element={<OrderView />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registration" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
             {/* ===== ACCOUNT NESTED ROUTES ===== */}
             <Route path="/accounts" element={<Accounts />}>

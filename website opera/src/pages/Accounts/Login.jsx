@@ -241,9 +241,19 @@ const Login = () => {
                 )}
               </Formik>
 
-              {/* Login */}
-              <div className="footer-text">
-                New here? Please <Link to="/registration">Sign Up</Link>
+              <div className="d-flex justify-content-between align-items-center mt-3">
+                <div className="footer-text">
+                  New here? Please <Link to="/registration">Sign Up</Link>
+                </div>
+
+                <div className="footer-text">
+                  <Link
+                    to="/forgot-password"
+                    className="text-decoration-underline"
+                  >
+                    Forgotten Password?
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -414,6 +424,3 @@ const Wrapper = styled.section`
 `;
 
 export default Login;
-
-
-
