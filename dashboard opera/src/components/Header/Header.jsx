@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "@iconify-icon/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Header = ({ handleTogglle }) => {
+const Header = ({ handleTogglle, c_user, dhandleLogout }) => {
   // const [theme, setTheme] = useState("light"); // Default theme is 'light'
 
   // // Function to toggle theme
@@ -15,7 +15,7 @@ const Header = ({ handleTogglle }) => {
   // useEffect(() => {
   //   document.documentElement.setAttribute("data-bs-theme", theme); // Set 'data-bs-theme' on <html> element
   // }, [theme]);
-
+  const navigate = useNavigate();
   const [theme, setTheme] = useState(() => {
     // Get the theme from localStorage if available, else default to "light"
     return localStorage.getItem("theme") || "light";
@@ -288,14 +288,17 @@ const Header = ({ handleTogglle }) => {
                   <img
                     className="rounded-circle"
                     width="32"
-                    src="/assets/images/users/avatar-1.jpg"
+                    // src="/assets/images/users/avatar-1.jpg"
+                    src={`${process.env.REACT_APP_BASE_URL_2}${c_user.image}`}
                     alt="avatar-3"
                   />
                 </span>
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
                 {/* <!-- item--> */}
-                <h6 className="dropdown-header">Welcome Gaston!</h6>
+                <h6 className="dropdown-header">
+                  Welcome {c_user && c_user.name}!
+                </h6>
                 <Link className="dropdown-item" to="/profile">
                   <i className="bx bx-user-circle text-muted fs-18 align-middle me-1"></i>
                   <span className="align-middle">Profile</span>
@@ -320,7 +323,20 @@ const Header = ({ handleTogglle }) => {
 
                 <div className="dropdown-divider my-1"></div>
 
-                <Link className="dropdown-item text-danger" to="/auth-signin">
+                <Link
+                  className="dropdown-item text-danger"
+                  onClick={() => {
+                    dhandleLogout();
+                    localStorage.removeItem(
+                      "atoozSuperuserandstaffAccessToken",
+                    );
+                    localStorage.removeItem(
+                      "atoozSuperuserandstaffRefreshToken",
+                    );
+                    navigate("/");
+                    window.location.reload(false);
+                  }}
+                >
                   <i className="bx bx-log-out fs-18 align-middle me-1"></i>
                   <span className="align-middle">Logout</span>
                 </Link>

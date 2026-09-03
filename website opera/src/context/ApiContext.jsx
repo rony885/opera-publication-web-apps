@@ -18,6 +18,8 @@ const initialState = {
   // Address Module
   district: [],
   upazila: [],
+  upazilas: [],
+  unions: [],
 
   // Product module
   category: [],

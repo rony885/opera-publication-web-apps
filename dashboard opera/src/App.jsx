@@ -57,10 +57,41 @@ import Feature from "./pages/Home/Feature";
 import UpdateFeature from "./pages/Home/UpdateFeature";
 import CountOpera from "./pages/Opera/CountOpera";
 import AddCountOpera from "./pages/Opera/AddCountOpera";
+import { useApiContext } from "./context/ApiContext";
 
 function App() {
+  const { c_user } = useApiContext();
+  const aT = localStorage.getItem(
+    "operaPublicationSuperuserandstaffAccessToken",
+  );
+  const rT = localStorage.getItem(
+    "operaPublicationSuperuserandstaffRefreshToken",
+  );
+
   const [isLoading, setIsLoading] = useState(true);
   const [isSidebarEnabled, setIsSidebarEnabled] = useState(false);
+
+  const dhandleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/custom_user/logout/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${aT}`,
+          },
+          body: JSON.stringify({
+            refresh_token: rT,
+          }),
+        },
+      );
+      const data = await response.json();
+      console.log("Logout response:", data);
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -117,6 +148,17 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  if (!aT) {
+    return (
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<SignIn />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </BrowserRouter>
+    );
+  }
+
   return (
     <>
       <BrowserRouter>
@@ -124,7 +166,11 @@ function App() {
           <Loader />
         ) : (
           <div className="wrapper">
-            <Header handleTogglle={handleToggle} />
+            <Header
+              handleTogglle={handleToggle}
+              c_user={c_user}
+              dhandleLogout={dhandleLogout}
+            />
             <ActivityTimeline />
             <SidebarTheme />
             <SidebarMenu handleTogglle={handleToggle} />
@@ -163,8 +209,14 @@ function App() {
 
               <Route path="/opera" element={<Opera />}></Route>
               <Route path="/achievement" element={<CountOpera />}></Route>
-              <Route path="/add-achievement" element={<AddCountOpera />}></Route>
-              <Route path="/achievement-update/:id" element={<AddCountOpera />}></Route>
+              <Route
+                path="/add-achievement"
+                element={<AddCountOpera />}
+              ></Route>
+              <Route
+                path="/achievement-update/:id"
+                element={<AddCountOpera />}
+              ></Route>
               <Route path="/writer-chirkut" element={<WriterChirkut />}></Route>
               <Route
                 path="/add-writer-chirkut"

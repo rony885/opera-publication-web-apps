@@ -18,6 +18,8 @@ const initialState = {
   // Address Module
   district: [],
   upazila: [],
+  upazilas: [],
+  unions: [],
 
   // Home module
   home: [],
@@ -353,6 +355,7 @@ const ApiContext = ({ children }) => {
         fetchUnpaginateContact,
 
         fetchAllUsers,
+        fetchCurrentUser,
       }}
     >
       {children}
