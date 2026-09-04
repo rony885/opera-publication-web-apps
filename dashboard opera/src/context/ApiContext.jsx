@@ -113,7 +113,8 @@ const ApiContext = ({ children }) => {
 
     // User / Customer module
     allUsers: `${process.env.REACT_APP_BASE_URL}/custom_user/all_users/`,
-    currentUser: `${process.env.REACT_APP_BASE_URL}/custom_user/ `,
+    // currentUser: `${process.env.REACT_APP_BASE_URL}/custom_user/ `,
+    currentUser: `${process.env.REACT_APP_BASE_URL}/custom_user/current_user/`,
   };
 
   // Fetch data function with useCallback

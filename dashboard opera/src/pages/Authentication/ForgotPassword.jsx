@@ -61,7 +61,7 @@ const ForgotPassword = () => {
 
                   <p className="text-danger text-center">
                     Not you? return
-                    <Link to="/auth-signup" className="text-dark fw-bold ms-1">
+                    <Link to="/register" className="text-dark fw-bold ms-1">
                       Sign Up
                     </Link>
                   </p>

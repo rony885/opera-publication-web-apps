@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "@iconify-icon/react";
 import { Link, useNavigate } from "react-router-dom";
+import { BsPersonCircle } from "react-icons/bs";
+import "@iconify-icon/react";
 
 const Header = ({ handleTogglle, c_user, dhandleLogout }) => {
-  // const [theme, setTheme] = useState("light"); // Default theme is 'light'
-
-  // // Function to toggle theme
-  // const toggleTheme = () => {
-  //   const newTheme = theme === "light" ? "dark" : "light"; // Toggle theme between 'light' and 'dark'
-  //   setTheme(newTheme); // Update state
-  // };
-
-  // // Effect to update HTML 'data-bs-theme' attribute when theme changes
-  // useEffect(() => {
-  //   document.documentElement.setAttribute("data-bs-theme", theme); // Set 'data-bs-theme' on <html> element
-  // }, [theme]);
   const navigate = useNavigate();
   const [theme, setTheme] = useState(() => {
     // Get the theme from localStorage if available, else default to "light"
@@ -284,7 +273,7 @@ const Header = ({ handleTogglle, c_user, dhandleLogout }) => {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <span className="d-flex align-items-center">
+                {/* <span className="d-flex align-items-center">
                   <img
                     className="rounded-circle"
                     width="32"
@@ -292,10 +281,34 @@ const Header = ({ handleTogglle, c_user, dhandleLogout }) => {
                     src={`${process.env.REACT_APP_BASE_URL_2}${c_user.image}`}
                     alt="avatar-3"
                   />
+                </span> */}
+                <span className="d-flex align-items-center">
+                  {c_user.image ? (
+                    <img
+                      className="rounded-circle"
+                      width="32"
+                      height="32"
+                      // src={`${process.env.REACT_APP_BASE_URL_2}${c_user.image}`}
+                      src={
+                        c_user.image &&
+                        `${process.env.REACT_APP_BASE_URL}${c_user.image.replace(
+                          "server/",
+                          "",
+                        )}`
+                      }
+                      alt="avatar"
+                    />
+                  ) : (
+                    <BsPersonCircle size={32} />
+                  )}
+                  &nbsp;&nbsp;
+                  <h6 className="dropdown-header">
+                    {c_user && c_user.name} <br />
+                    Admin&nbsp;/&nbsp;Staff
+                  </h6>
                 </span>
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
-                {/* <!-- item--> */}
                 <h6 className="dropdown-header">
                   Welcome {c_user && c_user.name}!
                 </h6>
@@ -328,10 +341,10 @@ const Header = ({ handleTogglle, c_user, dhandleLogout }) => {
                   onClick={() => {
                     dhandleLogout();
                     localStorage.removeItem(
-                      "atoozSuperuserandstaffAccessToken",
+                      "operaPublicationSuperuserandstaffAccessToken",
                     );
                     localStorage.removeItem(
-                      "atoozSuperuserandstaffRefreshToken",
+                      "operaPublicationSuperuserandstaffRefreshToken",
                     );
                     navigate("/");
                     window.location.reload(false);

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import * as yup from "yup";
 import axios from "axios";
@@ -25,10 +26,11 @@ const validate = (values) => {
 };
 
 const SignIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [message, setMessage] = useState();
 
-  const LoginFunc = async (values) => {
+  const AddLoginFunc = async (values) => {
     let formfield = new FormData();
 
     // Append individual fields
@@ -65,16 +67,32 @@ const SignIn = () => {
       });
   };
 
+  // const submitLoginForm = async (
+  //   values,
+  //   { setErrors, setSubmitting, resetForm },
+  // ) => {
+  //   try {
+  //     LoginFunc(values);
+  //     setSubmitting(false);
+  //     // resetForm();
+  //   } catch (error) {
+  //     setErrors({ error: error.message });
+  //   }
+  // };
+
+  
   const submitLoginForm = async (
     values,
     { setErrors, setSubmitting, resetForm },
   ) => {
     try {
-      LoginFunc(values);
-      setSubmitting(false);
-      // resetForm();
+      setSubmitting(true); // Disable button during submission
+      await AddLoginFunc(values); // Ensure this function returns a promise
+      setSubmitting(false); // Re-enable button if necessary after submission
+      // resetForm(); // Uncomment if you want to reset the form after submission
     } catch (error) {
       setErrors({ error: error.message });
+      setSubmitting(false); // Re-enable button in case of an error
     }
   };
 
@@ -127,95 +145,73 @@ const SignIn = () => {
                       }) => (
                         <FormikForm noValidate onSubmit={handleSubmit}>
                           <div className="authentication-form">
-                            {/* <div className="mb-3">
-                              <label
-                                className="form-label"
-                                htmlFor="example-email"
-                              >
-                                Email
-                              </label>
-                              <input
-                                type="email"
-                                id="example-email"
-                                name="example-email"
-                                className="form-control bg-"
-                              />
-                            </div> */}
-                            <Form.Group className="mb-3">
-                              <Form.Label>Username</Form.Label>
-                              <InputGroup hasValidation>
-                                <Form.Control
-                                  type="email"
-                                  name="email"
-                                  value={values.email}
-                                  onChange={handleChange}
-                                  isInvalid={touched.email && !!errors.email}
-                                  placeholder="Enter username"
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  {errors.email}
-                                </Form.Control.Feedback>
-                              </InputGroup>
-                            </Form.Group>
+                            <div className="mb-2">
+                              <Form.Group className="form-outline">
+                                <Form.Label>
+                                  Username<span className="text-danger">*</span>
+                                </Form.Label>
+                                <InputGroup hasValidation>
+                                  {/* <InputGroup.Text>@</InputGroup.Text> */}
+                                  <Form.Control
+                                    type="text"
+                                    name="email"
+                                    id="email"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    isInvalid={
+                                      !!touched.email && !!errors.email
+                                    }
+                                    isValid={touched.email && !errors.email}
+                                    className="form-control"
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                    {errors.email}
+                                  </Form.Control.Feedback>
+                                </InputGroup>
+                              </Form.Group>
+                            </div>
 
-                            {/* <div className="mb-3">
+                            <div className="mb-4">
                               <Link
                                 to="/forgot-password"
                                 className="float-end text-muted text-unline-dashed ms-1"
                               >
                                 Forgot password
                               </Link>
-                              <label
-                                className="form-label"
-                                htmlFor="example-password"
-                              >
-                                Password
-                              </label>
-                              <input
-                                type="password"
-                                id="example-password"
-                                className="form-control"
-                              />
-                            </div> */}
-                            <Form.Group className="mb-3">
-                              {" "}
-                              <Link
-                                to="/forgot-password"
-                                className="float-end text-muted text-unline-dashed ms-1"
-                              >
-                                Forgot password
-                              </Link>
-                              <Form.Label>Password</Form.Label>
-                              <InputGroup hasValidation>
-                                <Form.Control
-                                  type="password"
-                                  name="password"
-                                  value={values.password}
-                                  onChange={handleChange}
-                                  isInvalid={
-                                    touched.password && !!errors.password
-                                  }
-                                  placeholder="Enter password"
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  {errors.password}
-                                </Form.Control.Feedback>
-                              </InputGroup>
-                            </Form.Group>
-                            <div className="mb-3">
-                              <div className="form-check">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  id="checkbox-signin"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="checkbox-signin"
-                                >
-                                  Remember me
-                                </label>
-                              </div>
+
+                              <Form.Group className="form-outline">
+                                <Form.Label>
+                                  Password<span className="text-danger">*</span>
+                                </Form.Label>
+
+                                <InputGroup hasValidation>
+                                  <Form.Control
+                                    type={showPassword ? "text" : "password"} // toggle between text and password
+                                    name="password"
+                                    id="password"
+                                    value={values.password}
+                                    onChange={handleChange}
+                                    isInvalid={
+                                      !!touched.password && !!errors.password
+                                    }
+                                    isValid={
+                                      touched.password && !errors.password
+                                    }
+                                    className="form-control"
+                                  />
+                                  <InputGroup.Text
+                                    onClick={() =>
+                                      setShowPassword((prev) => !prev)
+                                    }
+                                    style={{ cursor: "pointer" }}
+                                  >
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                  </InputGroup.Text>
+                                  <Form.Control.Feedback type="invalid">
+                                    {errors.password}
+                                  </Form.Control.Feedback>
+                                </InputGroup>
+                              </Form.Group>
                             </div>
 
                             <div className="mb-1 text-center d-grid">
@@ -224,7 +220,8 @@ const SignIn = () => {
                                 type="submit"
                                 disabled={isSubmitting}
                               >
-                                Sign In
+                                {/* Sign In */}
+                                 {isSubmitting ? "Signing..." : "Login"}
                               </button>
                             </div>
                           </div>

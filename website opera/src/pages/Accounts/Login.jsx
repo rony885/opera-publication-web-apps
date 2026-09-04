@@ -162,28 +162,6 @@ const Login = () => {
                         </InputGroup>
                       </Form.Group>
 
-                      {/* <Form.Group className="form-group mb-3">
-                        <Form.Label>
-                          Password<span className="text-danger">*</span>
-                        </Form.Label>
-                        <InputGroup hasValidation>
-                          <Form.Control
-                            type="password"
-                            name="password"
-                            id="password"
-                            value={values.password}
-                            onChange={handleChange}
-                            isInvalid={!!touched.password && !!errors.password}
-                            isValid={touched.password && !errors.password}
-                            className="form-control my-0"
-                            autoComplete="on"
-                          />
-
-                          <Form.Control.Feedback type="invalid">
-                            {errors.password}
-                          </Form.Control.Feedback>
-                        </InputGroup>
-                      </Form.Group> */}
                       <Form.Group className="form-group mb-3">
                         <Form.Label>
                           Password<span className="text-danger">*</span>

@@ -153,6 +153,9 @@ function App() {
       <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<SignIn />}></Route>
+          <Route path="/register" element={<SignUp />}></Route>
+          <Route path="/reset-password" element={<ResetPassword />}></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
@@ -242,13 +245,13 @@ function App() {
                 element={<ChangePassword />}
               ></Route>
 
-              <Route path="/sign-in" element={<SignIn />}></Route>
+              {/* <Route path="/sign-in" element={<SignIn />}></Route>
               <Route path="/register" element={<SignUp />}></Route>
               <Route path="/reset-password" element={<ResetPassword />}></Route>
               <Route
                 path="/forgot-password"
                 element={<ForgotPassword />}
-              ></Route>
+              ></Route> */}
 
               <Route path="/company-info" element={<CompanySettings />}></Route>
               <Route path="/utilities" element={<Utilities />}></Route>

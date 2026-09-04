@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import categoriesArray from "../../DataJS/categories.js";
 import { useCartContext } from "../../context/CartContext.jsx";
 import convertToBanglaNumber from "../banglaConvert/convertToBanglaNumber.jsx";
