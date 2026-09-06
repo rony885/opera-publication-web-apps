@@ -208,26 +208,14 @@ CACHES = {
     }
 }
 
+
+# OTP Settings
 OTP_EXPIRY_SECONDS = 300 # 5 minutes
 
-SMS_API_URL = os.environ.get(
-    "SMS_API_URL",
-    ""
-)
-
-SMS_API_KEY = os.environ.get(
-    "SMS_API_KEY",
-    ""
-)
-
-SMS_SENDER_ID = os.environ.get(
-    "SMS_SENDER_ID",
-    ""
-)
-
-SMS_API_URL = "YOUR_SMS_PROVIDER_API_URL"
-SMS_API_KEY = "YOUR_API_KEY"
-SMS_SENDER_ID = "YOUR_SENDER_ID"
+# SMS Settings
+SMS_API_URL = os.environ.get("SMS_API_URL", "")
+SMS_API_KEY = os.environ.get("SMS_API_KEY", "")
+SMS_SENDER_ID = os.environ.get("SMS_SENDER_ID", "")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

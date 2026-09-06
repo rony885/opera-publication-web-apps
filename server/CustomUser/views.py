@@ -29,6 +29,7 @@ from .utils import (
 from django.db import transaction
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
+from .sms_service import send_sms
 
 
 def authenticate_user(email=None, password=None):
@@ -178,6 +179,56 @@ class ChangePasswordAPIView(APIView):
         )
 
 # ==== Forgot Password — Send OTP ====
+# class SendResetOTPAPIView(APIView):
+
+#     permission_classes = [AllowAny]
+
+#     def post(self, request):
+
+#         serializer = SendResetOTPSerializer(
+#             data=request.data
+#         )
+
+#         if not serializer.is_valid():
+
+#             return Response(
+#                 serializer.errors,
+#                 status=status.HTTP_400_BAD_REQUEST
+#             )
+
+#         email = serializer.validated_data['email']
+
+#         user = CustomUser.objects.get(
+#             email=email,
+#             is_active=True
+#         )
+
+#         # Generate OTP
+#         otp = generate_otp()
+
+#         # Save OTP for 5 minutes
+#         save_otp(
+#             email,
+#             otp
+#         )
+
+#         # ==================================================
+#         # DEVELOPMENT
+#         # ==================================================
+
+#         print(
+#             f"Password reset OTP for {email}: {otp}"
+#         )
+
+#         return Response(
+#             {
+#                 'success': True,
+#                 'message':
+#                     'OTP sent successfully.',
+#             },
+#             status=status.HTTP_200_OK
+#         )
+
 class SendResetOTPAPIView(APIView):
 
     permission_classes = [AllowAny]
@@ -189,46 +240,91 @@ class SendResetOTPAPIView(APIView):
         )
 
         if not serializer.is_valid():
-
             return Response(
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        email = serializer.validated_data['email']
-
-        user = CustomUser.objects.get(
-            email=email,
-            is_active=True
-        )
+        phone = serializer.validated_data['email']
 
         # Generate OTP
         otp = generate_otp()
 
-        # Save OTP for 5 minutes
+        # Save OTP
         save_otp(
-            email,
+            phone,
             otp
         )
 
-        # ==================================================
-        # DEVELOPMENT
-        # ==================================================
-
-        print(
-            f"Password reset OTP for {email}: {otp}"
-        )
+        # Development testing
+        print("\n")
+        print("=" * 50)
+        print(f"PHONE NUMBER: {phone}")
+        print(f"PASSWORD RESET OTP: {otp}")
+        print("=" * 50)
+        print("\n")
 
         return Response(
             {
-                'success': True,
-                'message':
-                    'OTP sent successfully.',
+                "success": True,
+                "message": "OTP generated successfully.",
+                # Remove this in production!
+                "otp": otp
             },
             status=status.HTTP_200_OK
         )
 
 # ==== Reset Password API ====
+# class ResetPasswordAPIView(APIView):
+
+#     permission_classes = [AllowAny]
+
+#     def post(self, request):
+
+#         serializer = ResetPasswordSerializer(
+#             data=request.data
+#         )
+
+#         if not serializer.is_valid():
+
+#             return Response(
+#                 serializer.errors,
+#                 status=status.HTTP_400_BAD_REQUEST
+#             )
+
+#         email = serializer.validated_data['email']
+
+#         new_password = serializer.validated_data[
+#             'new_password'
+#         ]
+
+#         user = CustomUser.objects.get(
+#             email=email,
+#             is_active=True
+#         )
+
+#         # Set new password
+#         user.set_password(new_password)
+
+#         user.save(
+#             update_fields=[
+#                 'password',
+#                 'updated_at'
+#             ]
+#         )
+
+#         # OTP can no longer be reused
+#         delete_otp(email)
+
+#         return Response(
+#             {
+#                 'success': True,
+#                 'message':
+#                     'Password reset successfully.'
+#             },
+#             status=status.HTTP_200_OK
+#         )
+
 class ResetPasswordAPIView(APIView):
 
     permission_classes = [AllowAny]
@@ -246,35 +342,47 @@ class ResetPasswordAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        email = serializer.validated_data['email']
+        phone = serializer.validated_data["email"]
 
         new_password = serializer.validated_data[
-            'new_password'
+            "new_password"
         ]
 
-        user = CustomUser.objects.get(
-            email=email,
-            is_active=True
-        )
+        try:
 
-        # Set new password
-        user.set_password(new_password)
+            user = CustomUser.objects.get(
+                email=phone,
+                is_active=True
+            )
 
-        user.save(
-            update_fields=[
-                'password',
-                'updated_at'
-            ]
-        )
+            # Set new password
+            user.set_password(new_password)
 
-        # OTP can no longer be reused
-        delete_otp(email)
+            user.save(
+                update_fields=[
+                    "password",
+                    "updated_at"
+                ]
+            )
 
-        return Response(
-            {
-                'success': True,
-                'message':
-                    'Password reset successfully.'
-            },
-            status=status.HTTP_200_OK
-        )
+            # Delete OTP after successful reset
+            delete_otp(phone)
+
+            return Response(
+                {
+                    "success": True,
+                    "message":
+                    "Password reset successfully."
+                },
+                status=status.HTTP_200_OK
+            )
+
+        except CustomUser.DoesNotExist:
+
+            return Response(
+                {
+                    "error":
+                    "User not found."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )

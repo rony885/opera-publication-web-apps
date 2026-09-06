@@ -152,11 +152,89 @@ class SendResetOTPSerializer(serializers.Serializer):
 
 # ==== RESET PASSWORD ====
 
+# class ResetPasswordSerializer(serializers.Serializer):
+
+#     email = serializers.CharField()
+
+#     otp = serializers.CharField()
+
+#     new_password = serializers.CharField(
+#         write_only=True,
+#         min_length=4
+#     )
+
+#     confirm_password = serializers.CharField(
+#         write_only=True
+#     )
+
+#     def validate_email(self, value):
+
+#         value = value.strip()
+
+#         if not value.isdigit():
+#             raise serializers.ValidationError(
+#                 'Phone number must contain only numbers.'
+#             )
+
+#         if len(value) != 11:
+#             raise serializers.ValidationError(
+#                 'Phone number must contain 11 digits.'
+#             )
+
+#         try:
+#             CustomUser.objects.get(
+#                 email=value,
+#                 is_active=True
+#             )
+#         except CustomUser.DoesNotExist:
+
+#             raise serializers.ValidationError(
+#                 'No active account found with this phone number.'
+#             )
+
+#         return value
+
+#     def validate(self, attrs):
+
+#         email = attrs.get('email')
+#         otp = attrs.get('otp')
+#         new_password = attrs.get('new_password')
+#         confirm_password = attrs.get(
+#             'confirm_password'
+#         )
+
+#         # OTP validation
+#         from .utils import get_otp
+
+#         saved_otp = get_otp(email)
+
+#         if not saved_otp:
+#             raise serializers.ValidationError({
+#                 'otp': 'OTP has expired. Please request a new OTP.'
+#             })
+
+#         if str(otp) != str(saved_otp):
+#             raise serializers.ValidationError({
+#                 'otp': 'Invalid OTP.'
+#             })
+
+#         # Password confirmation
+#         if new_password != confirm_password:
+#             raise serializers.ValidationError({
+#                 'confirm_password':
+#                     'New password and confirm password do not match.'
+#             })
+
+#         return attrs
+
 class ResetPasswordSerializer(serializers.Serializer):
 
     email = serializers.CharField()
 
-    otp = serializers.CharField()
+    otp = serializers.CharField(
+        min_length=6,
+        max_length=6
+    )
 
     new_password = serializers.CharField(
         write_only=True,
@@ -169,60 +247,61 @@ class ResetPasswordSerializer(serializers.Serializer):
 
     def validate_email(self, value):
 
-        value = value.strip()
+        phone = value.strip()
 
-        if not value.isdigit():
+        if not phone:
             raise serializers.ValidationError(
-                'Phone number must contain only numbers.'
+                "Phone number is required."
             )
 
-        if len(value) != 11:
+        if not phone.isdigit():
             raise serializers.ValidationError(
-                'Phone number must contain 11 digits.'
+                "Phone number must contain only numbers."
             )
 
-        try:
-            CustomUser.objects.get(
-                email=value,
-                is_active=True
-            )
-        except CustomUser.DoesNotExist:
-
+        if len(phone) != 11:
             raise serializers.ValidationError(
-                'No active account found with this phone number.'
+                "Phone number must contain exactly 11 digits."
             )
 
-        return value
+        user_exists = CustomUser.objects.filter(
+            email=phone,
+            is_active=True
+        ).exists()
+
+        if not user_exists:
+            raise serializers.ValidationError(
+                "No active account found with this phone number."
+            )
+
+        return phone
+
 
     def validate(self, attrs):
 
-        email = attrs.get('email')
-        otp = attrs.get('otp')
-        new_password = attrs.get('new_password')
-        confirm_password = attrs.get(
-            'confirm_password'
-        )
+        phone = attrs.get("email")
+        otp = attrs.get("otp")
+        new_password = attrs.get("new_password")
+        confirm_password = attrs.get("confirm_password")
 
-        # OTP validation
         from .utils import get_otp
 
-        saved_otp = get_otp(email)
+        saved_otp = get_otp(phone)
 
         if not saved_otp:
             raise serializers.ValidationError({
-                'otp': 'OTP has expired. Please request a new OTP.'
+                "otp": "OTP has expired. Please request a new OTP."
             })
 
         if str(otp) != str(saved_otp):
             raise serializers.ValidationError({
-                'otp': 'Invalid OTP.'
+                "otp": "Invalid OTP."
             })
 
-        # Password confirmation
         if new_password != confirm_password:
             raise serializers.ValidationError({
-                'confirm_password':
-                    'New password and confirm password do not match.'
+                "confirm_password":
+                "New password and confirm password do not match."
             })
 
         return attrs
