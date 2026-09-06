@@ -33,6 +33,8 @@ import AccountDashboard from "./pages/Accounts/AccountDashboard";
 import { useApiContext } from "./context/ApiContext";
 import UpdateProfile from "./pages/Accounts/UpdateProfile";
 import ForgotPassword from "./pages/Accounts/ForgotPassword";
+import ResetPassword from "./pages/Accounts/ResetPassword";
+import ChangesPassword from "./pages/Accounts/ChangesPassword";
 
 function App() {
   const { c_user } = useApiContext();
@@ -154,23 +156,15 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/registration" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password" element={<ResetPassword />} />
+            <Route path="/change-password" element={<ChangesPassword />} />
+
 
             {/* ===== ACCOUNT NESTED ROUTES ===== */}
             <Route path="/accounts" element={<Accounts />}>
-              {/* Dashboard */}
               <Route index element={<AccountDashboard />} />
-
-              {/* Profile */}
               <Route path="profile" element={<Profile c_user={c_user} />} />
-
-              {/* Orders */}
               <Route path="order-view" element={<OrderView />} />
-
-              {/* Address */}
-              <Route path="address" element={<div>Address Page</div>} />
-
-              {/* Account Details */}
-              <Route path="edit" element={<div>Account Details Page</div>} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

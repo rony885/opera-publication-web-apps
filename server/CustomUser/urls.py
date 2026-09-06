@@ -9,7 +9,11 @@ from .views import (
     UserLoginAPIView,
     UserLogoutAPIView,
     CurrentUserAPIView,
-    StaffAndSuperuserLoginAPIView
+    StaffAndSuperuserLoginAPIView,
+    
+    ChangePasswordAPIView,
+    SendResetOTPAPIView,
+    ResetPasswordAPIView,
 )
 
 from rest_framework import routers
@@ -27,6 +31,25 @@ urlpatterns = [
     path('current_user/', CurrentUserAPIView.as_view(), name='current-user'),
     path('staff_and_superuser_login/', StaffAndSuperuserLoginAPIView.as_view(),
          name='staff-and-superuser-login'),
+    
+
+    path(
+        'change_password/',
+        ChangePasswordAPIView.as_view(),
+        name='change-password'
+    ),
+
+    path(
+        'send_reset_otp/',
+        SendResetOTPAPIView.as_view(),
+        name='send-reset-otp'
+    ),
+
+    path(
+        'reset_password/',
+        ResetPasswordAPIView.as_view(),
+        name='reset-password'
+    ),
 ]
 
 # +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

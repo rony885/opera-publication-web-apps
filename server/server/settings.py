@@ -61,17 +61,19 @@ INSTALLED_APPS = [
     'Contact.apps.ContactConfig',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    
+     # pip
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # pip
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -199,6 +201,33 @@ SIMPLE_JWT = {
     # 'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "opera-publication-otp",
+    }
+}
+
+OTP_EXPIRY_SECONDS = 300 # 5 minutes
+
+SMS_API_URL = os.environ.get(
+    "SMS_API_URL",
+    ""
+)
+
+SMS_API_KEY = os.environ.get(
+    "SMS_API_KEY",
+    ""
+)
+
+SMS_SENDER_ID = os.environ.get(
+    "SMS_SENDER_ID",
+    ""
+)
+
+SMS_API_URL = "YOUR_SMS_PROVIDER_API_URL"
+SMS_API_KEY = "YOUR_API_KEY"
+SMS_SENDER_ID = "YOUR_SENDER_ID"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

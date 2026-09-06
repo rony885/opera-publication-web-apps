@@ -162,6 +162,13 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                           <i className="fa-solid fa-id-card"></i>
                           <span>Profile</span>
                         </Link>
+                          <Link
+                          to="/change-password"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-gear"></i>
+                          <span>Change Password</span>
+                        </Link>
 
                         <Link
                           to="/orders"
@@ -186,13 +193,7 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                           <i className="fa-solid fa-gear"></i>
                           <span>Registration</span>
                         </Link>
-                        <Link
-                          to="/accounts"
-                          onClick={() => setIsUserMenuOpen(false)}
-                        >
-                          <i className="fa-solid fa-gear"></i>
-                          <span>Accounts</span>
-                        </Link>
+                      
 
                         <button
                           type="button"

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import * as yup from "yup";
 import axios from "axios";
@@ -10,53 +11,82 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 const initialValues = {
   email: "",
+  otp: "",
+  new_password: "",
+  confirm_password: "",
 };
 
 const schema = yup.object().shape({
-  email: yup.string().required("Phone number is a required field!"),
+  email: yup.string().required("Phone is a required field!"),
+  otp: yup.string().required("OTP is a required field!"),
+  new_password: yup.string().required("New Password is a required field!"),
+  confirm_password: yup
+    .string()
+    .required("Confirm Password is a required field!"),
 });
 
 const validate = (values) => {
   let errors = {};
 
   if (!values.email) {
-    errors.email = "Phone or Username is required!";
+    errors.email = "Phone is required!";
   } else if (/^[0-9\b]+$/.test(values.email) === false) {
     errors.email = "Only number!";
   } else if (values.email.length !== 11) {
     errors.email = "Mobile Number contains 11 digit!";
   }
 
+  if (!values.new_password) {
+    errors.new_password = "Password is required!";
+  } else if (values.new_password.length < 4) {
+    errors.new_password = "Password is too short!";
+  }
+
+  if (!values.confirm_password) {
+    errors.confirm_password = "Confirm password is required!";
+  } else if (values.confirm_password.length < 4) {
+    errors.confirm_password = "Confirm password is too short!";
+  }
+
   return errors;
 };
 
-const ForgotPassword = () => {
-  const navigate = useNavigate();
-  const [message, setMessage] = useState();
+const ResetPassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
 
-  const AddForgotFunc = async (values) => {
+  const [message, setMessage] = useState();
+  const navigate = useNavigate();
+
+  // add
+  const AddResetFunc = async (values) => {
     let formfield = new FormData();
 
-    // Append individual fields
     formfield.append("email", values.email);
+    formfield.append("otp", values.otp);
+    formfield.append("new_password", values.new_password);
+    formfield.append("confirm_password", values.confirm_password);
 
     await axios({
       method: "POST",
-      url: `${process.env.REACT_APP_BASE_URL}/custom_user/send_reset_otp/`,
+      url: `${process.env.REACT_APP_BASE_URL}/custom_user/reset_password/`,
       headers: {
         "Content-Type": "application/json; charset=UTF-8; text/plain",
       },
       data: formfield,
     })
       .then((response) => {
-        navigate("/reset-password");
+        setMessage(response.success, "User is successfuly created...");
+        navigate("/");
         window.location.reload(false);
       })
       .catch((error) => {
         console.log(error);
-
         setMessage(
           error.response.data.email ||
+            error.response.data.otp ||
+            error.response.data.new_password ||
+            error.response.data.confirm_password ||
             error.response.data.non_field_errors ||
             error.message,
           "Error",
@@ -64,13 +94,13 @@ const ForgotPassword = () => {
       });
   };
 
-  const submitForgotForm = async (
+  const submitResetForm = async (
     values,
     { setErrors, setSubmitting, resetForm },
   ) => {
     try {
       setSubmitting(true); // Disable button during submission
-      await AddForgotFunc(values); // Ensure this function returns a promise
+      await AddResetFunc(values); // Ensure this function returns a promise
       setSubmitting(false); // Re-enable button if necessary after submission
       // resetForm(); // Uncomment if you want to reset the form after submission
     } catch (error) {
@@ -113,7 +143,7 @@ const ForgotPassword = () => {
         <div className="container">
           <div className="registration-wrapper">
             <div className="form-container">
-              <h2>Forgot Password</h2>
+              <h2>Generate New Password</h2>
 
               <p
                 style={{
@@ -124,15 +154,14 @@ const ForgotPassword = () => {
                   textAlign: "justify",
                 }}
               >
-                Forgot your password? No problem! Simply provide your{" "}
-                <span className="fw-bold">Phone Number</span> and press the
-                "Send OTP" button. We'll send you an OTP to help you set a new
-                password.
+                We received your password reset request. Please enter the{" "}
+                <span className="fw-bold">One-Time Password (OTP)</span> sent to
+                your registered email to proceed.
               </p>
               <Formik
                 initialValues={initialValues}
                 validationSchema={schema}
-                onSubmit={submitForgotForm}
+                onSubmit={submitResetForm}
                 validate={validate}
               >
                 {({
@@ -145,9 +174,10 @@ const ForgotPassword = () => {
                   setFieldValue,
                 }) => (
                   <FormikForm noValidate onSubmit={(e) => handleSubmit(e)}>
-                    <Form.Group className="form-group mb-3 ">
+                    <Form.Group className="form-group  mb-3">
                       <Form.Label className="mb-0">
-                        Enter Phone Number<span className="text-danger">*</span>
+                        Enter Phone Number
+                        <span className="text-danger">*</span>
                       </Form.Label>
                       <InputGroup hasValidation>
                         <Form.Control
@@ -158,10 +188,108 @@ const ForgotPassword = () => {
                           onChange={handleChange}
                           isInvalid={!!touched.email && !!errors.email}
                           isValid={touched.email && !errors.email}
-                          className="form-control my-0"
+                          className="form-control"
                         />
                         <Form.Control.Feedback type="invalid">
                           {errors.email}
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="form-group mb-3">
+                      <Form.Label className="mb-0">
+                        OTP
+                        <span className="text-danger">*</span>
+                      </Form.Label>
+                      <InputGroup hasValidation>
+                        <Form.Control
+                          type="text"
+                          name="otp"
+                          id="otp"
+                          value={values.otp}
+                          onChange={handleChange}
+                          isInvalid={!!touched.otp && !!errors.otp}
+                          isValid={touched.otp && !errors.otp}
+                          className="form-control"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.otp}
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="form-group mb-3">
+                      <Form.Label className="mb-0">
+                        New Password<span className="text-danger">*</span>
+                      </Form.Label>
+
+                      <InputGroup
+                        hasValidation
+                        className="password-input-group"
+                      >
+                        <Form.Control
+                          type={showPassword ? "text" : "password"}
+                          name="new_password"
+                          id="new_password"
+                          value={values.new_password}
+                          onChange={handleChange}
+                          isInvalid={
+                            !!touched.new_password && !!errors.new_password
+                          }
+                          isValid={touched.new_password && !errors.new_password}
+                          className="form-control my-0"
+                          autoComplete="on"
+                        />
+
+                        <span
+                          className="password-eye-icon"
+                          onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+
+                        <Form.Control.Feedback type="invalid">
+                          {errors.new_password}
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="form-group mb-3">
+                      <Form.Label className="mb-0">
+                        Confirm New Password
+                        <span className="text-danger">*</span>
+                      </Form.Label>
+
+                      <InputGroup
+                        hasValidation
+                        className="password-input-group"
+                      >
+                        <Form.Control
+                          type={showPassword1 ? "text" : "password"}
+                          name="confirm_password"
+                          id="confirm_password"
+                          value={values.confirm_password}
+                          onChange={handleChange}
+                          isInvalid={
+                            !!touched.confirm_password &&
+                            !!errors.confirm_password
+                          }
+                          isValid={
+                            touched.confirm_password && !errors.confirm_password
+                          }
+                          className="form-control my-0"
+                          autoComplete="on"
+                        />
+
+                        <span
+                          className="password-eye-icon"
+                          onClick={() => setShowPassword1((prev) => !prev)}
+                        >
+                          {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+
+                        <Form.Control.Feedback type="invalid">
+                          {errors.confirm_password}
                         </Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
@@ -178,12 +306,11 @@ const ForgotPassword = () => {
                       type="submit"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Sending..." : "Send"}
+                      {isSubmitting ? "Reseting..." : "Reset Password"}
                     </button>
                   </FormikForm>
                 )}
               </Formik>
-
               <div className="footer-text">
                 <Link to="/login">Back to Login</Link>
               </div>
@@ -301,6 +428,29 @@ const Wrapper = styled.section`
       font-size: 24px;
     }
   }
+
+  /* ===== Password icon ===== */
+  .password-input-group {
+    position: relative;
+  }
+  .password-input-group .form-control {
+    padding-right: 42px;
+  }
+  .password-eye-icon {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+    color: #777;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .password-eye-icon:hover {
+    color: #ff0000;
+  }
 `;
 
-export default ForgotPassword;
+export default ResetPassword;

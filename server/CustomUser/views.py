@@ -7,8 +7,24 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from django.contrib.auth import logout as django_logout
-from .serializers import UserSerializer, UserRegisterSerializer, UserLoginSerializer
+# from .serializers import UserSerializer, UserRegisterSerializer, UserLoginSerializer
+# from .models import CustomUser
+from .serializers import (
+    UserSerializer,
+    UserRegisterSerializer,
+    UserLoginSerializer,
+    ChangePasswordSerializer,
+    SendResetOTPSerializer,
+    ResetPasswordSerializer,
+)
+
 from .models import CustomUser
+
+from .utils import (
+    generate_otp,
+    save_otp,
+    delete_otp,
+)
 
 from django.db import transaction
 from django.http import JsonResponse
@@ -115,3 +131,150 @@ class StaffAndSuperuserLoginAPIView(APIView):
             })
         else:
             return Response({'error': 'Invalid credentials or not authorized'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+# ==== Change Password API ====
+class ChangePasswordAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+
+        serializer = ChangePasswordSerializer(
+            data=request.data,
+            context={
+                'request': request
+            }
+        )
+
+        if not serializer.is_valid():
+
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        user = request.user
+
+        new_password = serializer.validated_data[
+            'new_password'
+        ]
+
+        user.set_password(new_password)
+        user.save(
+            update_fields=[
+                'password',
+                'updated_at'
+            ]
+        )
+
+        return Response(
+            {
+                'success': True,
+                'message':
+                    'Password changed successfully.'
+            },
+            status=status.HTTP_200_OK
+        )
+
+# ==== Forgot Password — Send OTP ====
+class SendResetOTPAPIView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+
+        serializer = SendResetOTPSerializer(
+            data=request.data
+        )
+
+        if not serializer.is_valid():
+
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        email = serializer.validated_data['email']
+
+        user = CustomUser.objects.get(
+            email=email,
+            is_active=True
+        )
+
+        # Generate OTP
+        otp = generate_otp()
+
+        # Save OTP for 5 minutes
+        save_otp(
+            email,
+            otp
+        )
+
+        # ==================================================
+        # DEVELOPMENT
+        # ==================================================
+
+        print(
+            f"Password reset OTP for {email}: {otp}"
+        )
+
+        return Response(
+            {
+                'success': True,
+                'message':
+                    'OTP sent successfully.',
+            },
+            status=status.HTTP_200_OK
+        )
+
+# ==== Reset Password API ====
+class ResetPasswordAPIView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+
+        serializer = ResetPasswordSerializer(
+            data=request.data
+        )
+
+        if not serializer.is_valid():
+
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        email = serializer.validated_data['email']
+
+        new_password = serializer.validated_data[
+            'new_password'
+        ]
+
+        user = CustomUser.objects.get(
+            email=email,
+            is_active=True
+        )
+
+        # Set new password
+        user.set_password(new_password)
+
+        user.save(
+            update_fields=[
+                'password',
+                'updated_at'
+            ]
+        )
+
+        # OTP can no longer be reused
+        delete_otp(email)
+
+        return Response(
+            {
+                'success': True,
+                'message':
+                    'Password reset successfully.'
+            },
+            status=status.HTTP_200_OK
+        )
