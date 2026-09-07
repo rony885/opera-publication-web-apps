@@ -179,56 +179,6 @@ class ChangePasswordAPIView(APIView):
         )
 
 # ==== Forgot Password — Send OTP ====
-# class SendResetOTPAPIView(APIView):
-
-#     permission_classes = [AllowAny]
-
-#     def post(self, request):
-
-#         serializer = SendResetOTPSerializer(
-#             data=request.data
-#         )
-
-#         if not serializer.is_valid():
-
-#             return Response(
-#                 serializer.errors,
-#                 status=status.HTTP_400_BAD_REQUEST
-#             )
-
-#         email = serializer.validated_data['email']
-
-#         user = CustomUser.objects.get(
-#             email=email,
-#             is_active=True
-#         )
-
-#         # Generate OTP
-#         otp = generate_otp()
-
-#         # Save OTP for 5 minutes
-#         save_otp(
-#             email,
-#             otp
-#         )
-
-#         # ==================================================
-#         # DEVELOPMENT
-#         # ==================================================
-
-#         print(
-#             f"Password reset OTP for {email}: {otp}"
-#         )
-
-#         return Response(
-#             {
-#                 'success': True,
-#                 'message':
-#                     'OTP sent successfully.',
-#             },
-#             status=status.HTTP_200_OK
-#         )
-
 class SendResetOTPAPIView(APIView):
 
     permission_classes = [AllowAny]
@@ -275,56 +225,6 @@ class SendResetOTPAPIView(APIView):
         )
 
 # ==== Reset Password API ====
-# class ResetPasswordAPIView(APIView):
-
-#     permission_classes = [AllowAny]
-
-#     def post(self, request):
-
-#         serializer = ResetPasswordSerializer(
-#             data=request.data
-#         )
-
-#         if not serializer.is_valid():
-
-#             return Response(
-#                 serializer.errors,
-#                 status=status.HTTP_400_BAD_REQUEST
-#             )
-
-#         email = serializer.validated_data['email']
-
-#         new_password = serializer.validated_data[
-#             'new_password'
-#         ]
-
-#         user = CustomUser.objects.get(
-#             email=email,
-#             is_active=True
-#         )
-
-#         # Set new password
-#         user.set_password(new_password)
-
-#         user.save(
-#             update_fields=[
-#                 'password',
-#                 'updated_at'
-#             ]
-#         )
-
-#         # OTP can no longer be reused
-#         delete_otp(email)
-
-#         return Response(
-#             {
-#                 'success': True,
-#                 'message':
-#                     'Password reset successfully.'
-#             },
-#             status=status.HTTP_200_OK
-#         )
-
 class ResetPasswordAPIView(APIView):
 
     permission_classes = [AllowAny]
