@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+
 import categoriesArray from "../../DataJS/categories.js";
 import { useCartContext } from "../../context/CartContext.jsx";
 import convertToBanglaNumber from "../banglaConvert/convertToBanglaNumber.jsx";
@@ -8,9 +9,9 @@ import convertToBanglaNumber from "../banglaConvert/convertToBanglaNumber.jsx";
 const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
   const {
     cart,
+    removeCart,
     total_item,
     total_price,
-    removeCart,
     setIncrement,
     setDecrement,
     wishlist,
@@ -120,12 +121,6 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                       <i className="fab fa-youtube"></i>
                     </Link>
                   </div>
-
-                  {/* <div className="user-login">
-                    <Link to="#">
-                      <i className="fa-solid fa-user"></i>
-                    </Link>
-                  </div> */}
                   {aT ? (
                     <div className="user-login" ref={userMenuRef}>
                       <button
@@ -133,49 +128,45 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                         className="user-login-btn"
                         onClick={() => setIsUserMenuOpen((prev) => !prev)}
                         aria-label="User menu"
+                        aria-expanded={isUserMenuOpen}
                       >
                         <i className="fa-solid fa-user"></i>
                       </button>
 
+                      {/* USER DROPDOWN */}
                       <div
                         className={`user-dropdown ${
                           isUserMenuOpen ? "user-dropdown-active" : ""
                         }`}
                       >
-                        <Link>
-                          <i className="fa-solid fa-user-circle"></i>
-                          <span>Welcome {c_user && c_user}</span>
-                        </Link>
-
                         <Link
+                          className=""
                           to="/account"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
                           <i className="fa-solid fa-user-circle"></i>
-                          <span>Account Info</span>
+                          {/* <span className="spann">Account Info</span> */}
+                          <span className="spann">
+                            Welcome {c_user && c_user}
+                          </span>
                         </Link>
 
                         <Link
+                          className=""
                           to="/profile"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
                           <i className="fa-solid fa-id-card"></i>
-                          <span>Profile</span>
-                        </Link>
-                          <Link
-                          to="/change-password"
-                          onClick={() => setIsUserMenuOpen(false)}
-                        >
-                          <i className="fa-solid fa-gear"></i>
-                          <span>Change Password</span>
+                          <span className="spann">Profile</span>
                         </Link>
 
                         <Link
-                          to="/orders"
+                          to="/change-password"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
-                          <i className="fa-solid fa-box"></i>
-                          <span>Order</span>
+                          <i className="fa-solid fa-key"></i>
+                          {/* <i className="fa-solid fa-box"></i> Order icon */}
+                          <span className="spann">Change Password</span>
                         </Link>
 
                         <Link
@@ -183,18 +174,26 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                           onClick={() => setIsUserMenuOpen(false)}
                         >
                           <i className="fa-solid fa-gear"></i>
-                          <span>Settings</span>
+                          <span className="spann">Settings</span>
                         </Link>
 
                         <Link
                           to="/registration"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
-                          <i className="fa-solid fa-gear"></i>
-                          <span>Registration</span>
+                          <i className="fa-solid fa-user-plus"></i>
+                          <span className="spann">Registration</span>
                         </Link>
-                      
 
+                        <Link
+                          to="/accounts"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <i className="fa-solid fa-users"></i>
+                          <span className="spann">Accounts</span>
+                        </Link>
+
+                        {/* LOGOUT */}
                         <button
                           type="button"
                           className="user-dropdown-logout"
@@ -216,7 +215,7 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                           }}
                         >
                           <i className="fa-solid fa-right-from-bracket"></i>
-                          <span>Logout</span>
+                          <span className="spann">Logout</span>
                         </button>
                       </div>
                     </div>
@@ -393,22 +392,25 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                             )}
                           </ul>
                           <p
-                            className="total"
+                            className="total subtotall"
                             style={{ fontFamily: "sans-serif" }}
                           >
-                            <strong>Subtotal:</strong>
+                            <strong className="subtotall">Subtotal:</strong>
                             <span className="amount fw-normal fs-6">
                               {/* ৳২৫৯.০০ */}৳
                               {convertToBanglaNumber(Number(total_price) || 0)}
                             </span>
                           </p>
-                          <p className="buttons d-flex gap-1">
-                            <Link to="/cart" className="vs-btn fw-normal py-2">
+                          <p className="buttons d-flex gap-1 view_cart">
+                            <Link
+                              to="/cart"
+                              className="vs-btn fw-normal py-2 fontS"
+                            >
                               View cart
                             </Link>
                             <Link
                               to="/checkout"
-                              className="vs-btn checkout fw-normal py-2"
+                              className="vs-btn checkout fw-normal py-2 fontS"
                             >
                               Checkout
                             </Link>
@@ -810,11 +812,9 @@ const Wrapper = styled.section`
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
     }
   }
-
-  /* ============================= */
-  /* USER LOGIN DROPDOWN */
-  /* ============================= */
-
+  /* ================================= */
+  /*  USER LOGIN DROPDOWN  */
+  /* ================================= */
   .user-login {
     position: relative;
     display: flex;
@@ -825,90 +825,173 @@ const Wrapper = styled.section`
     width: 42px;
     height: 42px;
     padding: 0;
+    margin: 0;
     border: none;
+    border-radius: 5px;
     background: #f8ebe5;
-    color: inherit;
+    color: #ff3333;
     display: flex;
     align-items: center;
     justify-content: center;
+
     cursor: pointer;
     font-size: 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease;
   }
 
   .user-login-btn:hover {
-    color: #ff3333;
+    background: #ff3333;
+    color: #ffffff;
+    transform: translateY(-1px);
   }
 
   .user-dropdown {
     position: absolute;
     top: calc(100% - 2px);
     right: 0;
-    width: 180px;
-    padding: 2px 0; /* Very small top-bottom padding */
+    width: 230px;
+    /* Small overall dropdown padding */
+    padding: 6px 0;
+    margin: 0;
     background: #f8ebe5;
-    border-radius: 5px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     border: 1px solid #ff3333;
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
     z-index: 99999;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-5px);
-    transition: all 0.25s ease;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease,
+      transform 0.25s ease;
+  }
+  .spann {
+    font-size: 13px;
   }
 
   .user-dropdown-active {
     opacity: 1;
     visibility: visible;
+
     transform: translateY(0);
   }
 
+  /* ===== DROPDOWN LINKS + LOGOUT ===== */
+  /* Dropdown items */
   .user-dropdown a,
   .user-dropdown-logout {
+    font-family: Arial, sans-serif;
     width: 100%;
-    height: 32px; /* Fixed small height */
-    min-height: 28px;
-    padding: 0 10px; /* No top-bottom padding */
+    min-height: 42px;
+    padding: 8px 16px !important;
+    margin: 0 !important;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     border: none;
-    background: transparent !important;
+    background: #f8ebe5 !important;
     text-decoration: none;
-    color: #ff3333;
-    font-size: 13px;
+    color: #ff3333 !important;
+    font-size: 15px;
     font-weight: 500;
+    line-height: 1.2;
+
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      padding-left 0.2s ease;
   }
 
   .user-dropdown a i,
   .user-dropdown-logout i {
-    width: 16px;
+    width: 22px;
+    margin: 0 !important;
+    padding: 0 !important;
     text-align: center;
-    font-size: 13px;
-    color: #ff3333;
+    font-size: 16px;
+    color: #ff3333 !important;
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .user-dropdown a span,
   .user-dropdown-logout span {
     flex: 1;
+    margin: 0 !important;
+    padding: 0 !important;
     text-align: left;
+    line-height: 1.2;
   }
-
-  /* Hover */
 
   .user-dropdown a:hover,
   .user-dropdown-logout:hover {
-    background: #ffffff !important;
-    color: #ff3333;
+    background: #ff3333 !important;
+    color: #ffffff !important;
+    padding-left: 21px !important;
   }
 
+  .user-dropdown a:hover i,
+  .user-dropdown-logout:hover i {
+    color: #ffffff !important;
+    transform: translateX(2px);
+  }
+
+  /* ===== LOGOUT ===== */
   .user-dropdown-logout {
-    border-top: 1px solid rgba(255, 51, 51, 0.2);
-    margin-top: 1px;
+    margin-top: 4px !important;
+
+    border-top: 1px solid rgba(255, 51, 51, 0.25);
+
+    padding-top: 6px !important;
+  }
+
+  .user-dropdown-logout:hover {
+    background: #ff3333 !important;
+    color: #ffffff !important;
+  }
+
+  .user-dropdown-logout:hover i {
+    color: #ffffff !important;
+  }
+
+  .user-dropdown a:focus-visible,
+  .user-dropdown-logout:focus-visible {
+    outline: 2px solid #ff3333;
+    outline-offset: -2px;
+  }
+
+  @media (max-width: 575px) {
+    .user-dropdown {
+      width: 210px;
+      right: -5px;
+    }
+
+    .user-dropdown a,
+    .user-dropdown-logout {
+      min-height: 38px;
+      padding: 6px 14px !important;
+      font-size: 14px;
+    }
+
+    .user-dropdown a:hover,
+    .user-dropdown-logout:hover {
+      padding-left: 19px !important;
+    }
+    .subtotall {
+      margin-left: 45px !important;
+    }
+    .view_cart {
+      margin-left: 90px !important;
+    }
+    .fontS {
+      font-size: 12px !important;
+    }
   }
 `;
 

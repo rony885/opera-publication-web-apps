@@ -33,8 +33,10 @@ const OrderView = () => {
         </div>
       </div>
 
+      {/* ==== Main Content ==== */}
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
+          {/* ==== 1. Order Info ==== */}
           <div className="card">
             <div className="d-flex justify-content-between align-items-start">
               {/* Left Side */}
@@ -51,9 +53,7 @@ const OrderView = () => {
             </div>
           </div>
 
-          {/* =========================
-              2. Customer & Payment
-          ========================= */}
+          {/* ==== 2. Customer & Payment ==== */}
           <div className="two-column-row">
             {/* Customer Info */}
             <div className="card column-card">
@@ -74,15 +74,13 @@ const OrderView = () => {
               <div className="payment-line">
                 <strong>Invoice Number:</strong> OI-260800015
               </div>
-              <div>
+              <div className="payment-line">
                 <strong>Payment Method:</strong> Cash On Delivery
               </div>
             </div>
           </div>
 
-          {/* =========================
-              3. Product + Total
-          ========================= */}
+          {/* ==== 3. Product + Total ==== */}
           <div className="product-total-row">
             {/* Product Items */}
             <div className="card product-card">
@@ -93,15 +91,18 @@ const OrderView = () => {
                   <thead>
                     <tr>
                       <th style={{ width: "40px" }}></th>
-                      <th className="text-center" style={{ width: "50%" }}>
+                      <th
+                        className="text-center fontSize"
+                        style={{ width: "50%" }}
+                      >
                         Product
                       </th>
 
-                      <th className="text-center">Item Price</th>
-                      <th className="text-center">Quantity</th>
+                      <th className="text-center fontSize">Item Price</th>
+                      <th className="text-center fontSize">Quantity</th>
                       {/* <th className="text-center">Size</th> */}
                       {/* <th className="text-center">Color</th> */}
-                      <th className="text-right">Amount</th>
+                      <th className="text-right fontSize">Amount</th>
                     </tr>
                   </thead>
 
@@ -117,15 +118,20 @@ const OrderView = () => {
                       </td>
 
                       <td className="text-center">
-                        <div className="text-bold">প্রম্পট ইঞ্জিনিয়ারিং</div>
-                        <div className="product-code">#PROD-00009</div>
+                        <div className="text-bold mb-0 fontSize">
+                          প্রম্পট ইঞ্জিনিয়ারিং
+                        </div>
+                        <p className="product-code mb-0">
+                          Author: এনামুল হক (প্রযুক্তি বিষয়ক)
+                        </p>
+                        <p className="product-code">#PROD-00009</p>
                       </td>
-                      <td className="text-center">৳550.00</td>
-                      <td className="text-center">1</td>
+                      <td className="text-center fontSize">৳550.00</td>
+                      <td className="text-center fontSize">1</td>
                       {/* <td className="text-center">-</td> */}
                       {/* <td className="text-center">-</td> */}
 
-                      <td className="text-right text-bold">৳550.00</td>
+                      <td className="text-right text-bold fontSize">৳550.00</td>
                     </tr>
 
                     <tr>
@@ -139,14 +145,19 @@ const OrderView = () => {
                       </td>
 
                       <td className="text-center">
-                        <div className="text-bold">
-                          HAVIT MS76GT plus 2.4G WIRELESS OPTICAL MOUSE
+                        <div className="text-bold mb-0 fontSize">
+                          A Beginner's Guide To Data Science
                         </div>
-                        <div className="product-code">#PROD-00010</div>
+                        <p className="product-code mb-0">
+                          Author: Enamul Haque
+                        </p>
+                        <p className="product-code">#PROD-00010</p>
                       </td>
-                      <td className="text-center">৳630.00</td>
-                      <td className="text-center">2</td>
-                      <td className="text-right text-bold">৳1,260.00</td>
+                      <td className="text-center fontSize">৳630.00</td>
+                      <td className="text-center fontSize">2</td>
+                      <td className="text-right text-bold fontSize">
+                        ৳1,260.00
+                      </td>
                     </tr>
 
                     <tr>
@@ -160,109 +171,116 @@ const OrderView = () => {
                       </td>
 
                       <td className="text-center">
-                        <div className="text-bold">
-                          Philips TAS1009 Mini Bluetooth Speaker
+                        <div className="text-bold mb-0 fontSize">
+                          মাইন্ড ম্যাপিং
                         </div>
-                        <div className="product-code">#PROD-00004</div>
+                        <p className="product-code mb-0">
+                          Author: সাইফুল লানজু
+                        </p>
+                        <p className="product-code">#PROD-00004</p>
                       </td>
-                      <td className="text-center">৳1,190.00</td>
-                      <td className="text-center">1</td>
-                      <td className="text-right text-bold">৳1,190.00</td>
+                      <td className="text-center fontSize">৳1,190.00</td>
+                      <td className="text-center fontSize">1</td>
+                      <td className="text-right text-bold fontSize">
+                        ৳1,190.00
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-              {/* Order Statistics */}
+              {/* ==== Order Statistics ==== */}
               <div className="stats-grid">
                 <div className="stat-box">
-                  <div className="stat-label">Order Date</div>
-                  <div className="stat-value">2026-08-18</div>
+                  <div className="stat-label fontSize">Order Date</div>
+                  <div className="stat-value fontSize">2026-08-18</div>
                 </div>
                 <div className="stat-box">
-                  <div className="stat-label">Order Time</div>
-                  <div className="stat-value">02:11 PM</div>
+                  <div className="stat-label fontSize">Order Time</div>
+                  <div className="stat-value fontSize">02:11 PM</div>
                 </div>
 
                 <div className="stat-box">
-                  <div className="stat-label">Order Status</div>
+                  <div className="stat-label fontSize">Order Status</div>
                   <div className="stat-value">
-                    <span className="badge-new">New</span>
+                    <span className="badge-new fontSize">New</span>
                   </div>
                 </div>
 
                 <div className="stat-box">
-                  <div className="stat-label">Delivery Type</div>
-                  <div className="stat-value">Inside Dhaka</div>
+                  <div className="stat-label fontSize">Delivery Type</div>
+                  <div className="stat-value fontSize">Inside Dhaka</div>
                 </div>
               </div>
             </div>
 
-            {/* Total Amount */}
+            {/* ==== Total Amount ==== */}
             <div className="card total-card">
-              <div className="card-title">Total Order Amount</div>
+              <div className="card-title fontSize">Total Order Amount</div>
 
               <table className="summary-table">
                 <tbody>
                   <tr>
                     <td>
-                      <strong>Sub Total :</strong>
+                      <strong className="fontSize">
+                        Sub Total (4 items ) :
+                      </strong>
                     </td>
 
-                    <td className="text-right text-bold">৳3,000.00</td>
+                    <td className="text-right text-bold fontSize">৳3,000.00</td>
                   </tr>
 
                   <tr>
                     <td>
-                      <strong>Discount :</strong>
+                      <strong className="fontSize">Discount :</strong>
                     </td>
 
-                    <td className="text-right">(-) ৳400.00</td>
+                    <td className="text-right fontSize">(-) ৳400.00</td>
                   </tr>
 
                   <tr>
                     <td>
-                      <strong>Delivery Charge :</strong>
+                      <strong className="fontSize">Delivery Charge :</strong>
                     </td>
 
-                    <td className="text-right">(+) ৳90.00</td>
+                    <td className="text-right fontSize">(+) ৳90.00</td>
                   </tr>
 
                   <tr className="border-top">
                     <td>
-                      <strong>Payable Amount :</strong>
+                      <strong className="fontSize">Payable Amount :</strong>
                     </td>
 
-                    <td className="text-right text-bold">৳2,690.00</td>
+                    <td className="text-right text-bold fontSize">৳2,690.00</td>
                   </tr>
 
                   <tr>
                     <td>
-                      <strong>Paid Amount :</strong>
+                      <strong className="fontSize">Paid Amount :</strong>
                     </td>
 
-                    <td className="text-right">৳0.00</td>
+                    <td className="text-right fontSize">৳0.00</td>
                   </tr>
 
                   <tr>
                     <td>
-                      <strong>Due Amount :</strong>
+                      <strong className="fontSize">Due Amount :</strong>
                     </td>
 
-                    <td className="text-right text-bold">৳2,690.00</td>
+                    <td className="text-right text-bold fontSize">৳2,690.00</td>
                   </tr>
 
                   <tr className="border-top">
                     <td>
-                      <strong>Total (BDT) :</strong>
+                      <strong className="fontSize">Total (BDT) :</strong>
                     </td>
 
-                    <td className="text-right text-bold">৳2,690.00</td>
+                    <td className="text-right text-bold fontSize">৳2,690.00</td>
                   </tr>
                 </tbody>
               </table>
 
-              {/* Barcode */}
+              {/* ==== Barcode ==== */}
               <div className="barcode-area">
                 <div className="barcode-header">
                   <span className="text-muted">Scan barcode to track</span>
@@ -277,24 +295,22 @@ const OrderView = () => {
             </div>
           </div>
 
-          {/* =========================
-              4. Order Status
-          ========================= */}
+          {/* ==== 4. Order Status ====  */}
           <div className="card order-status-card">
-            <div className="card-title">Order Status</div>
+            <div className="card-title fontSize">Order Status</div>
 
             <div className="status-pipeline">
-              <div className="status-step active">New</div>
+              <div className="status-step active fontSize">New</div>
 
-              <div className="status-step">Pending</div>
+              <div className="status-step fontSize">Pending</div>
 
-              <div className="status-step">Approved</div>
+              <div className="status-step fontSize">Approved</div>
 
-              <div className="status-step">Packaging</div>
+              <div className="status-step fontSize">Packaging</div>
 
-              <div className="status-step">Shipment</div>
+              <div className="status-step fontSize">Shipment</div>
 
-              <div className="status-step">Delivered</div>
+              <div className="status-step fontSize">Delivered</div>
             </div>
           </div>
         </div>
@@ -304,16 +320,9 @@ const OrderView = () => {
 };
 
 const Wrapper = styled.section`
-  /* =====================================
-     MAIN FONT
-  ===================================== */
-
   /* font-family: Arial, sans-serif; */
 
-  /* =====================================
-     COMMON
-  ===================================== */
-
+  /* ======== COMMON ======== */
   .card {
     width: 100%;
     box-sizing: border-box;
@@ -344,14 +353,15 @@ const Wrapper = styled.section`
     text-align: right;
   }
 
+  .fontSize {
+    font-size: 14px !important;
+  }
+
   .text-center {
     text-align: center;
   }
 
-  /* =====================================
-     1. ORDER INFO
-  ===================================== */
-
+  /* ==== 1. ORDER INFO ==== */
   .order-number-box {
     min-width: 180px;
   }
@@ -361,10 +371,7 @@ const Wrapper = styled.section`
     line-height: 1.4;
   }
 
-  /* =====================================
-     2. CUSTOMER + PAYMENT
-  ===================================== */
-
+  /* ==== 2. CUSTOMER + PAYMENT ==== */
   .two-column-row {
     width: 100%;
     display: flex;
@@ -379,12 +386,10 @@ const Wrapper = styled.section`
 
   .payment-line {
     margin-bottom: 2px;
+    font-size: 14px;
   }
 
-  /* =====================================
-     3. PRODUCT + TOTAL
-  ===================================== */
-
+  /* ==== 3. PRODUCT + TOTAL ==== */
   .product-total-row {
     width: 100%;
     display: flex;
@@ -402,10 +407,7 @@ const Wrapper = styled.section`
     min-width: 250px;
   }
 
-  /* =====================================
-     PRODUCT TABLE
-  ===================================== */
-
+  /* ==== PRODUCT TABLE ==== */
   .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -454,14 +456,11 @@ const Wrapper = styled.section`
 
   .product-code {
     color: #777777;
-    font-size: 10px;
-    margin-top: 3px;
+    font-size: 12px;
+    /* margin-top: 3px; */
   }
 
-  /* =====================================
-     ORDER STATS
-  ===================================== */
-
+  /* ==== ORDER STATS ==== */
   .stats-grid {
     width: 100%;
     display: flex;
@@ -498,10 +497,7 @@ const Wrapper = styled.section`
     font-size: 10px;
   }
 
-  /* =====================================
-     SUMMARY
-  ===================================== */
-
+  /* ==== SUMMARY ==== */
   .summary-table {
     width: 100%;
     border-collapse: collapse;
@@ -517,10 +513,7 @@ const Wrapper = styled.section`
     padding-top: 7px;
   }
 
-  /* =====================================
-     BARCODE
-  ===================================== */
-
+  /* ==== BARCODE ==== */
   .barcode-area {
     margin-top: 25px;
     border-top: 1px solid #eeeeee;
@@ -549,10 +542,7 @@ const Wrapper = styled.section`
     margin-top: 5px;
   }
 
-  /* =====================================
-     4. ORDER STATUS
-  ===================================== */
-
+  /* ==== 4. ORDER STATUS ==== */
   .order-status-card {
     width: 100%;
     margin-bottom: 0;
@@ -585,10 +575,6 @@ const Wrapper = styled.section`
     color: #ffffff;
   }
 
-  /* =====================================
-     TABLET
-  ===================================== */
-
   @media (max-width: 991px) {
     .product-total-row {
       flex-direction: column;
@@ -599,10 +585,6 @@ const Wrapper = styled.section`
       width: 100%;
     }
   }
-
-  /* =====================================
-     MOBILE
-  ===================================== */
 
   @media (max-width: 767px) {
     .two-column-row {
@@ -636,10 +618,6 @@ const Wrapper = styled.section`
       flex: 0 0 100px;
     }
   }
-
-  /* =====================================
-     SMALL MOBILE
-  ===================================== */
 
   @media (max-width: 480px) {
     .stats-grid {

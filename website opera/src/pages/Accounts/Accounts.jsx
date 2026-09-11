@@ -5,7 +5,6 @@
 // const Accounts = () => {
 //   return (
 //     <Wrapper>
-
 //       <div
 //         className="breadcumb-wrapper"
 //         style={{
@@ -34,9 +33,6 @@
 //         </div>
 //       </div>
 
-//       {/* ============================= */}
-//       {/* ACCOUNT SECTION */}
-//       {/* ============================= */}
 //       <section className="vs-blog-wrapper space-top space-extra-bottom">
 //         <div className="container">
 //           <div className="row">
@@ -289,10 +285,6 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 const Accounts = () => {
   return (
     <Wrapper>
-      {/* ============================= */}
-      {/* BREADCRUMB */}
-      {/* ============================= */}
-
       <div
         className="breadcumb-wrapper"
         style={{
@@ -324,10 +316,7 @@ const Accounts = () => {
       <section className="vs-blog-wrapper space-top space-extra-bottom">
         <div className="container">
           <div className="row">
-            {/* ============================= */}
-            {/* SIDEBAR - NEVER CHANGES */}
-            {/* ============================= */}
-
+            {/* ======== SIDEBAR - NEVER CHANGES ======== */}
             <div className="col-lg-3">
               <div className="wrap-sidebar-account">
                 <ul className="my-account-nav">
@@ -368,42 +357,6 @@ const Accounts = () => {
                     </NavLink>
                   </li>
 
-                  {/* Address */}
-                  <li>
-                    <NavLink
-                      to="/account/address"
-                      className={({ isActive }) =>
-                        `my-account-nav-item ${isActive ? "active" : ""}`
-                      }
-                    >
-                      Address
-                    </NavLink>
-                  </li>
-
-                  {/* Account Details */}
-                  <li>
-                    <NavLink
-                      to="/account/edit"
-                      className={({ isActive }) =>
-                        `my-account-nav-item ${isActive ? "active" : ""}`
-                      }
-                    >
-                      Account Details
-                    </NavLink>
-                  </li>
-
-                  {/* Wishlist */}
-                  <li>
-                    <NavLink
-                      to="/wishlist"
-                      className={({ isActive }) =>
-                        `my-account-nav-item ${isActive ? "active" : ""}`
-                      }
-                    >
-                      Wishlist
-                    </NavLink>
-                  </li>
-
                   {/* Logout */}
                   <li>
                     <Link to="/login" className="my-account-nav-item">
@@ -414,10 +367,7 @@ const Accounts = () => {
               </div>
             </div>
 
-            {/* ============================= */}
-            {/* RIGHT CONTENT - CHANGES ONLY */}
-            {/* ============================= */}
-
+            {/* ======== RIGHT CONTENT - CHANGES ONLY ======== */}
             <div className="col-lg-9">
               <div className="my-account-content">
                 <Outlet />
@@ -431,10 +381,7 @@ const Accounts = () => {
 };
 
 const Wrapper = styled.section`
-  /* ============================= */
-  /* SIDEBAR */
-  /* ============================= */
-
+  /* ======== SIDEBAR ======== */
   .wrap-sidebar-account {
     border: 1px solid #e5e5e5;
     border-radius: 6px;
@@ -487,10 +434,7 @@ const Wrapper = styled.section`
     border-left: 3px solid #ff3333;
   }
 
-  /* ============================= */
-  /* CONTENT */
-  /* ============================= */
-
+  /* ======== CONTENT ======== */
   .my-account-content {
     border: 1px solid #e5e5e5;
     border-radius: 6px;
@@ -521,10 +465,6 @@ const Wrapper = styled.section`
     color: #222;
     text-decoration: underline;
   }
-
-  /* ============================= */
-  /* MOBILE */
-  /* ============================= */
 
   @media (max-width: 991px) {
     .wrap-sidebar-account {

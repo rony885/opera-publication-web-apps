@@ -1,0 +1,27 @@
+/* Iphone Font */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&display=swap');
+
+/* tiro-bangla-regular-italic */
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&family=Atma:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&family=Tiro+Bangla:ital@0;1&display=swap');
+
+/* atma-regular */
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&family=Atma:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&family=Tiro+Bangla:ital@0;1&display=swap');
+
+
+.iphone-bangla {
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans Bengali", sans-serif;
+    font-weight: 400;
+}
+
+/* .tiro-bangla-regular-italic {
+    font-family: "Tiro Bangla", serif;
+    font-weight: 400;
+    font-style: italic;
+} */
+
+/* .atma-regular {
+    font-family: "Atma", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: red;
+} */

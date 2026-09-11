@@ -10,6 +10,7 @@ const Cart = () => {
 
   const [shippingCost, setShippingCost] = useState(60);
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
 
   // For Modal
   const bookTotal = cart.reduce(
@@ -51,7 +52,10 @@ const Cart = () => {
         {/* <div className="container"> */}
         <div className="container-fluid">
           <div className="woocommerce-notices-wrapper">
-            <div className="woocommerce-message">Shipping costs updated.</div>
+            {/* <div className="woocommerce-message">Shipping costs updated.</div> */}
+            <div className="woocommerce-message text-center">
+              Checkout Summary
+            </div>
           </div>
 
           <div className="row">
@@ -248,7 +252,7 @@ const Cart = () => {
                         </Link>
 
                         <div className="shipping-calculator-form">
-                          {/* Name */}
+                          {/* Name + Phone */}
                           <div className="row">
                             <div className="col-md-12 mb-0">
                               <p className="form-row">
@@ -260,7 +264,6 @@ const Cart = () => {
                               </p>
                             </div>
 
-                            {/* Phone */}
                             <div className="col-md-12 mb-0">
                               <p className="form-row">
                                 <input
@@ -273,21 +276,21 @@ const Cart = () => {
                           </div>
 
                           {/* District + Upazila */}
-                          <div className="row mb-4">
+                          <div className="row mb-3">
                             <div className="col-md-6">
                               <p className="form-row">
                                 <select className="form-select">
-                                  <option value="">সিলেক্ট জেলা</option>
+                                  <option value="">জেলা সিলেক্ট করুন</option>
                                   <option value="dhaka">Dhaka</option>
                                   <option value="mymensingh">Mymensingh</option>
                                 </select>
                               </p>
                             </div>
-
+                            {/* সিলেক্ট */}
                             <div className="col-md-6">
                               <p className="form-row">
                                 <select className="form-select">
-                                  <option value="">সিলেক্ট উপজেলা</option>
+                                  <option value="">উপজেলা সিলেক্ট করুন</option>
                                   <option value="gulshan">Gulshan</option>
                                   <option value="gazipur">Gazipur</option>
                                   <option value="mymensingh-sadar">
@@ -297,12 +300,24 @@ const Cart = () => {
                               </p>
                             </div>
                           </div>
+
+                          <div className="row">
+                            <div className="col-md-12 mb-0">
+                              <p className="form-row">
+                                <textarea
+                                  className="form-control"
+                                  rows="1"
+                                  placeholder="আপনার সম্পূর্ণ ঠিকানা লিখুন"
+                                ></textarea>
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </form>
                     </td>
                   </tr>
                 </tbody>
-
+                {/* <h2 className="fs-5">Checkout Summary</h2> */}
                 <tfoot>
                   {/* Book Total */}
                   <tr className="order-total">
@@ -382,11 +397,12 @@ const Cart = () => {
               className="vs-btn fw-normal fs-5 border-0"
               onClick={() => setShowOrderModal(true)}
             >
-              চেকআউট
+              {/* চেকআউট */}
+              অর্ডার কনফার্ম করুন
             </button>
           </div>
 
-          {/* ================= ORDER SUMMARY MODAL ================= */}
+          {/* ===== ORDER SUMMARY MODAL ===== */}
           {showOrderModal && (
             <div
               className="order-modal-overlay"
@@ -405,23 +421,29 @@ const Cart = () => {
                   <i className="fas fa-check"></i>
                 </div>
 
-                <h2>Order Summary</h2>
+                {/* <h2>Order Summary</h2> */}
+
+                {/* <p className="order-success-message">
+                  Thank you for your order!
+                </p> */}
+                <h2 className="fs-4">আলহামদুলিল্লাহ আপনার অর্ডারটি</h2>
+                <h2 className="fs-5">সফলভাবে গ্রহণ করা হয়েছে</h2>
 
                 <p className="order-success-message">
-                  Thank you for your order!
+                  আমাদের উপর আস্থা রাখার জন্য আপনাকে অসংখ্য ধন্যবাদ। আমাদের
+                  প্রতিনিধি খুব শীঘ্রই কল করে আপনার অর্ডারটি কনফার্ম করবেন।
+                  অনুগ্রহ করে ফোনটি সাথে রাখুন।
                 </p>
 
                 {/* ================= BOOK LIST ================= */}
-                <div className="order-summary-list">
+                <div className="order-summary-list d-none">
                   {cart.length > 0 ? (
                     cart.map((item) => (
                       <div className="order-summary-item" key={item.id}>
-                        {/* Image */}
                         <div className="order-item-image">
                           <img src={item.image} alt={item.name} />
                         </div>
 
-                        {/* Book Info */}
                         <div className="order-item-info">
                           <h4>{item.name}</h4>
 
@@ -431,7 +453,6 @@ const Cart = () => {
                           </span>
                         </div>
 
-                        {/* Item Total */}
                         <div className="order-item-total">
                           ৳
                           {Number(
@@ -445,25 +466,187 @@ const Cart = () => {
                   )}
                 </div>
 
+                {/* ================= PAYMENT METHOD ================= */}
+                <div className="order-payment-method mt-3 text-start">
+                  <h4 className="mb-2 fs-6 fw-medium">Payment Method</h4>
+
+                  <div className="row g-2">
+                    {/* Cash on Delivery */}
+                    <div className="col-6">
+                      <label
+                        className={`payment-option d-flex align-items-center gap-2 p-2 border rounded ${
+                          paymentMethod === "Cash on Delivery" ? "active" : ""
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="Cash on Delivery"
+                          checked={paymentMethod === "Cash on Delivery"}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="d-none"
+                        />
+
+                        <i className="fas fa-money-bill-wave payment-icon"></i>
+
+                        <span>
+                          <strong className="d-block small fw-medium">
+                            Cash on Delivery
+                          </strong>
+                          <small className="text-muted d-block">
+                            পণ্য হাতে পেয়ে পেমেন্ট
+                          </small>
+                        </span>
+                      </label>
+                    </div>
+
+                    {/* bKash */}
+                    <div className="col-6">
+                      <label
+                        className={`payment-option d-flex align-items-center gap-2 p-2 border rounded ${
+                          paymentMethod === "bKash" ? "active" : ""
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="bKash"
+                          checked={paymentMethod === "bKash"}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="d-none"
+                        />
+
+                        <i className="fas fa-mobile-alt payment-icon"></i>
+
+                        <span>
+                          <strong className="d-block small fw-medium">
+                            bKash
+                          </strong>
+                          <small className="text-muted d-block">
+                            bKash দিয়ে পেমেন্ট
+                          </small>
+                        </span>
+                      </label>
+                    </div>
+
+                    {/* Nagad */}
+                    <div className="col-6">
+                      <label
+                        className={`payment-option d-flex align-items-center gap-2 p-2 border rounded ${
+                          paymentMethod === "Nagad" ? "active" : ""
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="Nagad"
+                          checked={paymentMethod === "Nagad"}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="d-none"
+                        />
+
+                        <i className="fas fa-wallet payment-icon"></i>
+
+                        <span>
+                          <strong className="d-block small fw-medium">
+                            Nagad
+                          </strong>
+                          <small className="text-muted d-block">
+                            Nagad দিয়ে পেমেন্ট
+                          </small>
+                        </span>
+                      </label>
+                    </div>
+
+                    {/* Rocket */}
+                    <div className="col-6">
+                      <label
+                        className={`payment-option d-flex align-items-center gap-2 p-2 border rounded ${
+                          paymentMethod === "Rocket" ? "active" : ""
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="Rocket"
+                          checked={paymentMethod === "Rocket"}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="d-none"
+                        />
+
+                        <i className="fas fa-paper-plane payment-icon"></i>
+
+                        <span>
+                          <strong className="d-block small fw-medium">
+                            Rocket
+                          </strong>
+                          <small className="text-muted d-block">
+                            Rocket দিয়ে পেমেন্ট
+                          </small>
+                        </span>
+                      </label>
+                    </div>
+
+                    {/* Card */}
+                    <div className="col-6">
+                      <label
+                        className={`payment-option d-flex align-items-center gap-2 p-2 border rounded ${
+                          paymentMethod === "Card" ? "active" : ""
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="Card"
+                          checked={paymentMethod === "Card"}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="d-none"
+                        />
+
+                        <i className="fas fa-credit-card payment-icon"></i>
+
+                        <span>
+                          <strong className="d-block small fw-medium">
+                            Card
+                          </strong>
+                          <small className="text-muted d-block">
+                            Debit / Credit Card
+                          </small>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
                 {/* ================= TOTALS ================= */}
                 <div className="order-summary-totals">
                   {/* Book Total */}
                   <div className="summary-row">
-                    <span>বইয়ের মোট মূল্য</span>
+                    {/* <span>বইয়ের মোট মূল্য</span> */}
+                    <span>Sub Total</span>
 
                     <strong>৳{bookTotal.toLocaleString("bn-BD")}</strong>
                   </div>
 
                   {/* Delivery */}
                   <div className="summary-row">
-                    <span>ডেলিভারি চার্জ</span>
+                    {/* <span>ডেলিভারি চার্জ</span> */}
+                    <span>Delivery Charge</span>
 
                     <strong>৳{shippingCost.toLocaleString("bn-BD")}</strong>
                   </div>
 
                   {/* Order Total */}
                   <div className="summary-row summary-grand-total">
-                    <span>অর্ডার টোটাল</span>
+                    {/* <span>অর্ডার টোটাল</span> */}
+                    <span>Total Amount</span>
+
+                    <strong>৳{orderTotal.toLocaleString("bn-BD")}</strong>
+                  </div>
+                  {/* Payable Total */}
+                  <div className="summary-row summary-grand-total">
+                    {/* <span>পেঅ্যা্বেল টোটাল</span> */}
+                    <span>Payable Amount</span>
 
                     <strong>৳{orderTotal.toLocaleString("bn-BD")}</strong>
                   </div>
@@ -552,83 +735,50 @@ const Wrapper = styled.section`
     background-color: #f8ebe5 !important;
   }
 
-  /* =========================================
-   ORDER SUMMARY MODAL
-========================================= */
-
+  /* ===== ORDER SUMMARY MODAL ===== */
   .order-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100vw;
     height: 100vh;
-
     background: rgba(0, 0, 0, 0.65);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 20px;
-
     z-index: 999999;
-
     overflow-y: auto;
   }
 
-  /* =========================================
-   MODAL
-========================================= */
-
+  /* ===== MODAL ===== */
   .order-modal {
     position: relative;
-
     width: 520px;
     max-width: 100%;
-
     max-height: 90vh;
-
     background: #ffffff;
-
     border-radius: 15px;
-
     padding: 35px;
-
     text-align: center;
-
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-
     overflow-y: auto;
-
     animation: orderModalShow 0.3s ease;
   }
 
-  /* =========================================
-   CLOSE BUTTON
-========================================= */
-
+  /* ===== CLOSE BUTTON ===== */
   .order-modal-close {
     position: absolute;
-
     top: 12px;
     right: 15px;
-
     width: 35px;
     height: 35px;
-
     border: none;
-
     background: transparent;
-
     color: #555;
-
     font-size: 30px;
-
     line-height: 30px;
-
     cursor: pointer;
-
     transition: 0.3s;
   }
 
@@ -638,88 +788,54 @@ const Wrapper = styled.section`
     transform: rotate(90deg);
   }
 
-  /* =========================================
-   SUCCESS ICON
-========================================= */
-
+  /* ===== SUCCESS ICON ===== */
   .order-modal-icon {
     width: 65px;
     height: 65px;
-
     margin: 0 auto 15px;
-
     border-radius: 50%;
-
     background: #ff3333;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
   }
 
   .order-modal-icon i {
     font-size: 28px;
-
     color: #ffffff;
   }
 
-  /* =========================================
-   TITLE
-========================================= */
-
+  /* ===== TITLE ===== */
   .order-modal h2 {
     margin: 0;
-
     margin-bottom: 5px;
-
     font-size: 27px;
-
     font-weight: 500;
-
     color: #222;
   }
 
   .order-success-message {
     margin: 0 0 20px;
-
     color: #777;
-
     font-size: 16px;
   }
 
-  /* =========================================
-   BOOK LIST
-========================================= */
-
+  /* ===== BOOK LIST ===== */
   .order-summary-list {
     width: 100%;
-
     margin-top: 15px;
-
     border: 1px solid #eeeeee;
-
     border-radius: 8px;
-
     overflow: hidden;
-
     text-align: left;
   }
 
-  /* =========================================
-   SINGLE BOOK
-========================================= */
-
+  /* ===== SINGLE BOOK ===== */
   .order-summary-item {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
     padding: 12px;
-
     border-bottom: 1px solid #eeeeee;
   }
 
@@ -727,162 +843,104 @@ const Wrapper = styled.section`
     border-bottom: none;
   }
 
-  /* =========================================
-   BOOK IMAGE
-========================================= */
-
+  /* ===== BOOK IMAGE ===== */
   .order-item-image {
     width: 55px;
     min-width: 55px;
-
     height: 65px;
-
     overflow: hidden;
-
     border-radius: 5px;
   }
 
   .order-item-image img {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
   }
 
-  /* =========================================
-   BOOK INFO
-========================================= */
-
+  /* ===== BOOK INFO ===== */
   .order-item-info {
     flex: 1;
-
     min-width: 0;
   }
 
   .order-item-info h4 {
     margin: 0 0 5px;
-
     font-size: 15px;
-
     font-weight: 500;
-
     color: #222;
-
     white-space: nowrap;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
   }
 
   .order-item-info span {
     font-size: 14px;
-
     color: #777;
   }
 
-  /* =========================================
-   ITEM TOTAL
-========================================= */
-
+  /* ===== ITEM TOTAL ===== */
   .order-item-total {
     font-size: 15px;
-
     font-weight: 500;
-
     color: #ff3333;
-
     white-space: nowrap;
   }
 
-  /* =========================================
-   TOTAL SECTION
-========================================= */
-
+  /* ===== TOTAL SECTION ===== */
   .order-summary-totals {
+    font-family: Arial, sans-serif;
     margin-top: 20px;
-
     border-top: 1px solid #eeeeee;
-
     padding-top: 10px;
   }
 
-  /* =========================================
-   SUMMARY ROW
-========================================= */
-
+  /* ===== SUMMARY ROW ===== */
   .summary-row {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     padding: 8px 0;
-
-    font-size: 15px;
-
+    font-size: 12px;
     color: #555;
   }
 
   .summary-row strong {
     color: #ff3333;
-
     font-weight: 500;
   }
 
-  /* =========================================
-   GRAND TOTAL
-========================================= */
-
+  /* ===== GRAND TOTAL ===== */
   .summary-grand-total {
     margin-top: 5px;
-
     padding-top: 12px;
-
     border-top: 1px dashed #dddddd;
-
-    font-size: 18px;
-
+    font-size: 14px;
     color: #222;
   }
 
   .summary-grand-total strong {
-    font-size: 20px;
-
+    font-size: 15px;
     color: #ff3333;
   }
 
-  /* =========================================
-   OKAY BUTTON
-========================================= */
-
+  /* ===== OKAY BUTTON ===== */
   .order-ok-button {
     margin-top: 20px;
-
     min-width: 120px;
-
     border-radius: 5px;
-
     background: #ff3333;
-
     color: #ffffff;
-
     padding: 10px 25px;
-
     transition: all 0.3s ease;
   }
 
   .order-ok-button:hover {
     background: #222;
-
     color: #ffffff;
   }
 
-  /* =========================================
-   ANIMATION
-========================================= */
-
+  /* ===== ANIMATION ===== */
   @keyframes orderModalShow {
     from {
       opacity: 0;
@@ -897,10 +955,12 @@ const Wrapper = styled.section`
     }
   }
 
-  /* =========================================
-   MOBILE
-========================================= */
+  .shipping-calculator-form textarea.form-control {
+    height: 75px !important;
+    min-height: 75px !important;
+  }
 
+  /* ===== MOBILE ===== */
   @media (max-width: 576px) {
     .order-modal-overlay {
       padding: 12px;
@@ -908,9 +968,7 @@ const Wrapper = styled.section`
 
     .order-modal {
       width: 100%;
-
       max-height: 92vh;
-
       padding: 30px 18px 25px;
     }
 
@@ -929,14 +987,12 @@ const Wrapper = styled.section`
 
     .order-summary-item {
       gap: 8px;
-
       padding: 10px;
     }
 
     .order-item-image {
       width: 48px;
       min-width: 48px;
-
       height: 58px;
     }
 
@@ -951,6 +1007,39 @@ const Wrapper = styled.section`
     .order-item-total {
       font-size: 13px;
     }
+  }
+
+  /* Payment Method */
+
+  .payment-option {
+    cursor: pointer;
+    background: #fff;
+    border-color: #e5e5e5 !important;
+    transition: all 0.2s ease;
+  }
+
+  .payment-option:hover,
+  .payment-option.active {
+    border-color: #ff3333 !important;
+    background: #fff7f7;
+  }
+
+  .payment-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background: #f5f5f5;
+    color: #555;
+    font-size: 14px;
+  }
+
+  .payment-option.active .payment-icon {
+    background: #ff3333;
+    color: #fff;
   }
 `;
 

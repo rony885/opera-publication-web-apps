@@ -111,7 +111,6 @@ const Profile = ({ c_user }) => {
             <div className="profile-avatar">
               <img
                 // src="https://i.pravatar.cc/150?img=12"
-                // src={c_user && c_user.image}
                 src={
                   c_user.image &&
                   `${process.env.REACT_APP_BASE_URL}${c_user.image.replace(
@@ -237,10 +236,6 @@ const Wrapper = styled.section`
     background-color: #cc0000;
   }
 
-  /* ================================
-     Order History
-  ================================= */
-
   .section-title {
     font-size: 20px;
     font-weight: 400;
@@ -261,7 +256,8 @@ const Wrapper = styled.section`
   }
 
   .order-table td {
-    padding: 14px 8px;
+    /* padding: 14px 8px; */
+    padding: 6px 8px;
     border-bottom: 1px solid #e9e9e9;
     font-size: 14px;
     color: #555555;
@@ -272,26 +268,22 @@ const Wrapper = styled.section`
     border-bottom: 1px solid #e9e9e9;
   }
 
-  /* Order ID */
   .col-id {
     width: 35%;
     text-align: left;
   }
 
-  /* Date */
   .col-date {
     width: 25%;
     text-align: center;
   }
 
-  /* Price */
   .col-price {
     width: 30%;
     text-align: right;
     padding-right: 15px !important;
   }
 
-  /* Action */
   .col-action {
     width: 10%;
     text-align: center;
@@ -310,10 +302,6 @@ const Wrapper = styled.section`
   .view-btn:hover {
     color: #cc0033;
   }
-
-  /* ================================
-     Responsive
-  ================================= */
 
   @media (max-width: 575px) {
     .profile-section {

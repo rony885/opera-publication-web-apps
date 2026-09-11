@@ -1,0 +1,60 @@
+/* 🇧🇩 Bangla Font */
+@font-face {
+  font-family: "Chayalipi";
+  src: url("/public/assets/fonts/Chayalipi.ttf") format("truetype");
+  unicode-range: U+0980-09FF;
+}
+
+/* 🇺🇸 English Font (Berlin Sans FB Demi) */
+@font-face {
+  font-family: "HARLOWSI_1";
+  src: url("/public/assets/fonts/HARLOWSI_1.TTF") format("truetype");
+  unicode-range: U+0000-007F;
+}
+
+/* Global Apply */
+body {
+  font-family: "HARLOWSI_1", "Chayalipi", sans-serif;
+
+}
+
+
+
+
+/* Bangla Font */
+/* @font-face {
+  font-family: "Chayalipi";
+  src: url("/public/assets/fonts/Chayalipi.ttf") format("truetype");
+  unicode-range: U+0980-09FF;
+} */
+
+/* Default English Font */
+/* body {
+  font-family: "Times New Roman", serif;
+} */
+
+/* Auto Bangla detection */
+/* :lang(bn) {
+  font-family: "Chayalipi";
+} */
+
+
+/* Full page font */
+/* .author-details-page {
+  font-family: "Chayalipi" !important;
+} */
+
+/* everything uses Chayalipi */
+/* .author-details-page * {
+  font-family: "Chayalipi" !important;
+} */
+
+/* ENGLISH TEXT STYLE (ASCII range) */
+/* .author-details-page * {
+  font-weight: normal;
+} */
+
+/* Bold English (A-Z, a-z detection trick) */
+/* .author-details-page *:not(:lang(bn)) {
+  font-weight: bold;
+} */

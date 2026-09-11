@@ -1,9 +1,223 @@
+// import React, { useEffect, useState } from "react";
+// import styled from "styled-components";
+// import { Link } from "react-router-dom";
+// import Slider from "react-slick";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+
+// import blogArray from "../../../src/DataJS/blog.js";
+
+// const Blog = () => {
+//   const [blogs, setBlogs] = useState([]);
+
+//   useEffect(() => {
+//     setBlogs(blogArray);
+//   }, []);
+
+//   const NextArrow = ({ onClick }) => {
+//     return (
+//       <div className="custom-arrow next-arrow" onClick={onClick}>
+//         <i className="fa-solid fa-angle-right"></i>
+//       </div>
+//     );
+//   };
+
+//   const PrevArrow = ({ onClick }) => {
+//     return (
+//       <div className="custom-arrow prev-arrow" onClick={onClick}>
+//         <i className="fa-solid fa-angle-left"></i>
+//       </div>
+//     );
+//   };
+
+//   const settings = {
+//     dots: false,
+//     infinite: true,
+//     speed: 600,
+//     slidesToShow: 3,
+//     slidesToScroll: 1,
+//     autoplay: true,
+//     autoplaySpeed: 3500,
+//     nextArrow: <NextArrow />,
+//     prevArrow: <PrevArrow />,
+//     responsive: [
+//       {
+//         breakpoint: 1200,
+//         settings: {
+//           slidesToShow: 2,
+//         },
+//       },
+//       {
+//         breakpoint: 768,
+//         settings: {
+//           slidesToShow: 1,
+//           arrows: false,
+//         },
+//       },
+//     ],
+//   };
+
+//   return (
+//     <Wrapper>
+//       <section className="space">
+//         <div className="container">
+//           <div className="title-area2 text-center mb-4">
+//             {/* <h2 className="sec-title fw-normal">Blog And News</h2> */}
+//             <h2 className="sec-title fw-normal fs-1">ব্লগ ও নিউজ</h2>
+//             <Link className="vs-btn fw-normal py-2 fs-5" to="/blog">
+//               {/* View More */}
+//               আরও দেখুন
+//             </Link>
+//           </div>
+
+//           <Slider {...settings}>
+//             {blogs.map((blog) => (
+//               <div key={blog.id} className="px-3">
+//                 <div className="vs-blog blog-style1">
+//                   <div className="blog-img position-relative">
+//                     <Link to={`/blog-details/${blog.id}`}>
+//                       <img
+//                         className="blog-img__img img-fluid"
+//                         src={blog.img}
+//                         alt={blog.title}
+//                       />
+//                     </Link>
+//                     <div
+//                       className="blog-date position-absolute"
+//                       style={{ fontSize: "12px" }}
+//                     >
+//                       <span className="day fw-normal">{blog.date}</span>
+//                     </div>
+//                   </div>
+
+//                   <div className="blog-content">
+//                     <div className="blog-meta mb-2 fw-normal">
+//                       <Link to="/blog">
+//                         <i className="fa-solid fa-user"></i> By {blog.author}
+//                       </Link>
+//                       <Link to="/blog" className="ms-3 fw-normal">
+//                         <i className="fa-solid fa-comments"></i> {blog.comments}{" "}
+//                         Comments
+//                       </Link>
+//                     </div>
+
+//                     <h2 className="blog-title mb-3 fw-normal">
+//                       <Link to={`/blog/blog-details/${blog.id}`}>
+//                         {blog.title}
+//                       </Link>
+//                     </h2>
+
+//                     <div className="btn-area d-flex justify-content-between align-items-center">
+//                       <Link
+//                         className="vs-btn fw-normal"
+//                         to={`/blog/blog-details/${blog.id}`}
+//                       >
+//                         আরও দেখুন <i className="fa-regular fa-arrow-right"></i>
+//                       </Link>
+
+//                       <div className="social-media d-flex gap-2">
+//                         <Link to="#">
+//                           <i className="fab fa-facebook-f"></i>
+//                         </Link>
+//                         <Link to="#">
+//                           <i className="fab fa-x-twitter"></i>
+//                         </Link>
+//                         <Link to="#">
+//                           <i className="fab fa-instagram"></i>
+//                         </Link>
+//                         <Link to="#">
+//                           <i className="fab fa-behance"></i>
+//                         </Link>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))}
+//           </Slider>
+//         </div>
+//       </section>
+//     </Wrapper>
+//   );
+// };
+
+// const Wrapper = styled.section`
+//   .custom-arrow {
+//     width: 45px;
+//     height: 45px;
+//     border: 1px solid #ff3333;
+//     color: #ff3333;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     border-radius: 50%;
+//     position: absolute;
+//     top: 40%;
+//     z-index: 10;
+//     cursor: pointer;
+//     transition: 0.3s ease;
+//   }
+//   .custom-arrow:hover {
+//     background: #ff3333;
+//     color: #fff;
+//   }
+
+//   .next-arrow {
+//     right: -20px;
+//   }
+
+//   .prev-arrow {
+//     left: -20px;
+//   }
+
+//   /* When whole blog item is hovered */
+//   .vs-blog:hover .vs-btn {
+//     background-color: #ffffff !important;
+//     color: #ff3333 !important;
+//     /* border: 1px solid #ff3333; */
+//   }
+
+//   /* Icon color change */
+//   .vs-blog:hover .vs-btn i {
+//     color: #ff3333 !important;
+//   }
+
+//   /* Social icons color */
+//   .social-media a i {
+//     color: #2e4a5b !important;
+//   }
+
+//   /* Optional hover (if you want effect) */
+//   /* .social-media a:hover i {
+//     color: #FFFFFF !important;
+//   } */
+
+//   /* When blog card is hovered (overlay active) */
+//   .vs-blog:hover .social-media a i {
+//     color: #ffffff !important;
+//   }
+
+//   .vs-blog .blog-date {
+//     color: #cc0033 !important;
+//     border: 5px solid #cc0033 !important;
+//   }
+//   .vs-blog .blog-date:hover {
+//     background-color: #cc0033 !important;
+//     /* border: 5px solid #ff3333 !important; */
+//   }
+// `;
+
+// export default Blog;
+
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
 
 import blogArray from "../../../src/DataJS/blog.js";
 
@@ -14,127 +228,146 @@ const Blog = () => {
     setBlogs(blogArray);
   }, []);
 
-  const NextArrow = ({ onClick }) => {
-    return (
-      <div className="custom-arrow next-arrow" onClick={onClick}>
-        <i className="fa-solid fa-angle-right"></i>
-      </div>
-    );
-  };
-
-  const PrevArrow = ({ onClick }) => {
-    return (
-      <div className="custom-arrow prev-arrow" onClick={onClick}>
-        <i className="fa-solid fa-angle-left"></i>
-      </div>
-    );
-  };
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 600,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3500,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          arrows: false,
-        },
-      },
-    ],
-  };
-
   return (
     <Wrapper>
       <section className="space">
         <div className="container">
           <div className="title-area2 text-center mb-4">
-            {/* <h2 className="sec-title fw-normal">Blog And News</h2> */}
             <h2 className="sec-title fw-normal fs-1">ব্লগ ও নিউজ</h2>
+
             <Link className="vs-btn fw-normal py-2 fs-5" to="/blog">
-              {/* View More */}
               আরও দেখুন
             </Link>
           </div>
 
-          <Slider {...settings}>
-            {blogs.map((blog) => (
-              <div key={blog.id} className="px-3">
-                <div className="vs-blog blog-style1">
-                  <div className="blog-img position-relative">
-                    <Link to={`/blog-details/${blog.id}`}>
-                      <img
-                        className="blog-img__img img-fluid"
-                        src={blog.img}
-                        alt={blog.title}
-                      />
-                    </Link>
-                    <div
-                      className="blog-date position-absolute"
-                      style={{ fontSize: "12px" }}
-                    >
-                      <span className="day fw-normal">{blog.date}</span>
-                    </div>
-                  </div>
+          <div className="blog-slider-wrapper">
+            <Swiper
+              modules={[Autoplay, Navigation]}
+              spaceBetween={0}
+              slidesPerView={3}
+              slidesPerGroup={1}
+              loop={true}
+              speed={600}
+              autoplay={{
+                delay: 3500,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }}
+              navigation={{
+                nextEl: ".blog-next-arrow",
+                prevEl: ".blog-prev-arrow",
+              }}
+              breakpoints={{
+                // Small mobile
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 0,
+                },
 
-                  <div className="blog-content">
-                    <div className="blog-meta mb-2 fw-normal">
-                      <Link to="/blog">
-                        <i className="fa-solid fa-user"></i> By {blog.author}
-                      </Link>
-                      <Link to="/blog" className="ms-3 fw-normal">
-                        <i className="fa-solid fa-comments"></i> {blog.comments}{" "}
-                        Comments
-                      </Link>
-                    </div>
+                // Medium / tablet
+                768: {
+                  slidesPerView: 1,
+                  spaceBetween: 0,
+                },
 
-                    <h2 className="blog-title mb-3 fw-normal">
-                      <Link to={`/blog/blog-details/${blog.id}`}>
-                        {blog.title}
-                      </Link>
-                    </h2>
+                // Large desktop
+                1200: {
+                  slidesPerView: 3,
+                  spaceBetween: 0,
+                },
+              }}
+              className="blog-swiper"
+            >
+              {blogs.map((blog) => (
+                <SwiperSlide key={blog.id}>
+                  <div className="blog-slide-item px-3">
+                    <div className="vs-blog blog-style1">
+                      <div className="blog-img position-relative">
+                        <Link to={`/blog-details/${blog.id}`}>
+                          <img
+                            className="blog-img__img img-fluid"
+                            src={blog.img}
+                            alt={blog.title}
+                          />
+                        </Link>
 
-                    <div className="btn-area d-flex justify-content-between align-items-center">
-                      <Link
-                        className="vs-btn fw-normal"
-                        to={`/blog/blog-details/${blog.id}`}
-                      >
-                        আরও দেখুন <i className="fa-regular fa-arrow-right"></i>
-                      </Link>
+                        <div
+                          className="blog-date position-absolute"
+                          style={{ fontSize: "12px" }}
+                        >
+                          <span className="day fw-normal">{blog.date}</span>
+                        </div>
+                      </div>
 
-                      <div className="social-media d-flex gap-2">
-                        <Link to="#">
-                          <i className="fab fa-facebook-f"></i>
-                        </Link>
-                        <Link to="#">
-                          <i className="fab fa-x-twitter"></i>
-                        </Link>
-                        <Link to="#">
-                          <i className="fab fa-instagram"></i>
-                        </Link>
-                        <Link to="#">
-                          <i className="fab fa-behance"></i>
-                        </Link>
+                      <div className="blog-content">
+                        <div className="blog-meta mb-2 fw-normal">
+                          <Link to="/blog">
+                            <i className="fa-solid fa-user"></i> By{" "}
+                            {blog.author}
+                          </Link>
+
+                          <Link to="/blog" className="ms-3 fw-normal">
+                            <i className="fa-solid fa-comments"></i>{" "}
+                            {blog.comments} Comments
+                          </Link>
+                        </div>
+
+                        <h2 className="blog-title mb-3 fw-normal">
+                          <Link to={`/blog/blog-details/${blog.id}`}>
+                            {blog.title}
+                          </Link>
+                        </h2>
+
+                        <div className="btn-area d-flex justify-content-between align-items-center">
+                          <Link
+                            className="vs-btn fw-normal"
+                            to={`/blog/blog-details/${blog.id}`}
+                          >
+                            আরও দেখুন{" "}
+                            <i className="fa-regular fa-arrow-right"></i>
+                          </Link>
+
+                          <div className="social-media d-flex gap-2">
+                            <Link to="#">
+                              <i className="fab fa-facebook-f"></i>
+                            </Link>
+
+                            <Link to="#">
+                              <i className="fab fa-x-twitter"></i>
+                            </Link>
+
+                            <Link to="#">
+                              <i className="fab fa-instagram"></i>
+                            </Link>
+
+                            <Link to="#">
+                              <i className="fab fa-behance"></i>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </Slider>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            <button
+              type="button"
+              className="custom-arrow blog-prev-arrow"
+              aria-label="Previous blog"
+            >
+              <i className="fa-solid fa-angle-left"></i>
+            </button>
+
+            <button
+              type="button"
+              className="custom-arrow blog-next-arrow"
+              aria-label="Next blog"
+            >
+              <i className="fa-solid fa-angle-right"></i>
+            </button>
+          </div>
         </div>
       </section>
     </Wrapper>
@@ -142,10 +375,26 @@ const Blog = () => {
 };
 
 const Wrapper = styled.section`
+  .blog-slider-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .blog-swiper {
+    width: 100%;
+    overflow: hidden;
+  }
+  .blog-swiper .swiper-slide {
+    height: auto;
+  }
+  .blog-slide-item {
+    width: 100%;
+  }
+
   .custom-arrow {
     width: 45px;
     height: 45px;
     border: 1px solid #ff3333;
+    background: #ffffff;
     color: #ff3333;
     display: flex;
     justify-content: center;
@@ -153,46 +402,45 @@ const Wrapper = styled.section`
     border-radius: 50%;
     position: absolute;
     top: 40%;
-    z-index: 10;
+    transform: translateY(-50%);
+    z-index: 20;
     cursor: pointer;
-    transition: 0.3s ease;
-  }
-  .custom-arrow:hover {
-    background: #ff3333;
-    color: #fff;
+    transition: all 0.3s ease;
+    padding: 0;
   }
 
-  .next-arrow {
+  .custom-arrow:hover {
+    background: #ff3333;
+    color: #ffffff;
+  }
+
+  .custom-arrow i {
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .blog-next-arrow {
     right: -20px;
   }
 
-  .prev-arrow {
+  .blog-prev-arrow {
     left: -20px;
   }
 
-  /* When whole blog item is hovered */
   .vs-blog:hover .vs-btn {
     background-color: #ffffff !important;
     color: #ff3333 !important;
-    /* border: 1px solid #ff3333; */
   }
 
-  /* Icon color change */
   .vs-blog:hover .vs-btn i {
     color: #ff3333 !important;
   }
 
-  /* Social icons color */
   .social-media a i {
     color: #2e4a5b !important;
+    transition: all 0.3s ease;
   }
 
-  /* Optional hover (if you want effect) */
-  /* .social-media a:hover i {
-    color: #FFFFFF !important;
-  } */
-
-  /* When blog card is hovered (overlay active) */
   .vs-blog:hover .social-media a i {
     color: #ffffff !important;
   }
@@ -201,9 +449,59 @@ const Wrapper = styled.section`
     color: #cc0033 !important;
     border: 5px solid #cc0033 !important;
   }
+
   .vs-blog .blog-date:hover {
     background-color: #cc0033 !important;
-    /* border: 5px solid #ff3333 !important; */
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .blog-slide-item {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+    .custom-arrow {
+      width: 42px;
+      height: 42px;
+    }
+    .blog-prev-arrow {
+      left: -10px;
+    }
+    .blog-next-arrow {
+      right: -10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .blog-slide-item {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+    .custom-arrow {
+      display: none !important;
+    }
+    .blog-swiper {
+      overflow: hidden;
+    }
+    .vs-blog {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .blog-slide-item {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+    .blog-content {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .blog-meta {
+      font-size: 13px;
+    }
+    .blog-title {
+      font-size: 20px;
+    }
   }
 `;
 

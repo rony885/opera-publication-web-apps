@@ -1,0 +1,170 @@
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import authorArray from "../../../src/DataJS/authors.js";
+
+const Authors = () => {
+  const [authors, setAuthors] = useState([]);
+
+  useEffect(() => {
+    setAuthors(authorArray);
+  }, []);
+
+  return (
+    <Wrapper>
+      <div
+        className="breadcumb-wrapper"
+        style={{
+          backgroundImage: `url("/assets/img/bg/breadcumb-bg.png")`,
+          padding: "30px 0",
+        }}
+      >
+        <div className="container z-index-common">
+          <div className="breadcumb-content">
+            <h1 className="breadcumb-title fs-4 fw-normal">লেখক</h1>
+            <div className="breadcumb-menu-wrap">
+              <div className="breadcumb-menu">
+                <span>
+                  <Link className="fw-normal" to="/">
+                    হোম
+                  </Link>
+                </span>
+                <span className="fw-normal" style={{ color: "#FF3333" }}>
+                  লেখক
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section className="vs-blog-wrapper space-top space-extra-bottom">
+        <div className="container">
+          {/* <div className="vs-sort-bar">
+            <div className="row gap-4 align-items-center">
+              <div className="col-md-auto flex-grow-1">
+                <p className="woocommerce-result-count">
+                  Showing <span>1-9 of 40</span> results
+                </p>
+              </div>
+              <div className="col-md-auto">
+                <form className="woocommerce-ordering" method="get">
+                  <select
+                    name="orderby"
+                    className="orderby"
+                    aria-label="Shop order"
+                  >
+                    <option defaultValue="recent_product">
+                      Short By Latest
+                    </option>
+                    <option defaultValue="popularity">
+                      Sort by popularity
+                    </option>
+                    <option defaultValue="rating">
+                      Sort by average rating
+                    </option>
+                    <option defaultValue="date">Sort by latest</option>
+                    <option defaultValue="price">
+                      Sort by price: low to high
+                    </option>
+                    <option defaultValue="price-desc">
+                      Sort by price: high to low
+                    </option>
+                  </select>
+                </form>
+              </div>
+            </div>
+          </div> */}
+
+          <div className="row g-4">
+            {authors.map((author) => {
+              return (
+                <div
+                  key={author.id}
+                  className="col-xl-2 col-lg-3 col-md-4 col-6 wow animate__fadeInUp"
+                  data-wow-delay="0.20s"
+                >
+                  <div className="feature-style2">
+                    <span className="feature-img">
+                      <img
+                        src={author.img}
+                        alt="feature imagee"
+                        style={{ height: "195px", width: "195px" }}
+                      />
+                    </span>
+                    <h2 className="feature-title fw-normal fs-5">
+                      <Link to={`/authors/author-details/${author.id}`}>
+                        {author.name}
+                      </Link>
+                    </h2>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div
+            className="row justify-content-center wow animate__fadeInUp"
+            data-wow-delay="0.95s"
+          >
+            <div className="col-auto">
+              <div className="vs-pagination mt-55">
+                <Link to="#" className="pagi-btn">
+                  <i className="fa-solid fa-arrow-left"></i>
+                </Link>
+                <ul>
+                  <li>
+                    <Link to="#" className="active">
+                      1
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="#">2</Link>
+                  </li>
+                  <li>
+                    <Link to="#">3</Link>
+                  </li>
+                  <li>
+                    <Link to="#">...</Link>
+                  </li>
+                  <li>
+                    <Link to="#">16</Link>
+                  </li>
+                </ul>
+                <Link to="#" className="pagi-btn active">
+                  <i className="fa-solid fa-arrow-right"></i>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.section`
+  .feature-title a:hover {
+    color: #ff3333 !important;
+  }
+
+  /* .vs-pagination .pagi-btn {
+    color: #ff3333 !important;
+  }
+  .vs-pagination .pagi-btn:hover {
+    color: #ffffff !important;
+  } */
+  .vs-pagination span.active,
+  .vs-pagination span:hover,
+  .vs-pagination a.active,
+  .vs-pagination a:hover {
+    background-color: #ff3333 !important;
+  }
+
+  .vs-pagination span,
+  .vs-pagination a {
+    border: 1px solid #ff3333 !important;
+  }
+`;
+
+export default Authors;

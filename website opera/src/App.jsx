@@ -23,18 +23,17 @@ import Contact from "./pages/contact/Contact";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
-import Profile from "./pages//Accounts/Profile";
+import Profile from "./pages/Accounts/Profile";
 import OrderView from "./pages/Accounts/OrderView";
 import SignUp from "./pages/Accounts/SignUp";
 import Login from "./pages/Accounts/Login";
 import Accounts from "./pages/Accounts/Accounts";
 import AccountDashboard from "./pages/Accounts/AccountDashboard";
-
-import { useApiContext } from "./context/ApiContext";
 import UpdateProfile from "./pages/Accounts/UpdateProfile";
+import { useApiContext } from "./context/ApiContext";
+import ChangesPassword from "./pages/Accounts/ChangesPassword";
 import ForgotPassword from "./pages/Accounts/ForgotPassword";
 import ResetPassword from "./pages/Accounts/ResetPassword";
-import ChangesPassword from "./pages/Accounts/ChangesPassword";
 
 function App() {
   const { c_user } = useApiContext();
@@ -43,28 +42,6 @@ function App() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  // const handleLogout = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.REACT_APP_BASE_URL}/custom_user/logout/`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${aT}`,
-  //         },
-  //         body: JSON.stringify({
-  //           refresh_token: rT,
-  //         }),
-  //       },
-  //     );
-  //     const data = await response.json();
-  //     console.log("Logout response:", data);
-  //   } catch (error) {
-  //     console.error("Error logging out:", error);
-  //   }
-  // };
 
   const handleLogout = async () => {
     try {
@@ -134,18 +111,16 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/book" element={<Product />} />
             <Route path="/book/book-details/:id" element={<ProductDetails />} />
-
             <Route path="/authors" element={<Authors />} />
             <Route
               path="/authors/author-details/:id"
               element={<AuthorDetails />}
             />
-
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/blog-details/:id" element={<BlogDetails />} />
-
             <Route path="/opera" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
@@ -153,17 +128,18 @@ function App() {
             <Route path="/profile" element={<Profile c_user={c_user} />} />
             <Route path="/update-profile/:id" element={<UpdateProfile />} />
             <Route path="/order-view" element={<OrderView />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/registration" element={<SignUp />} />
+            <Route path="/accounts" element={<Accounts />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/change-password" element={<ChangesPassword />} />
 
-
-            {/* ===== ACCOUNT NESTED ROUTES ===== */}
+            {/* ======== ACCOUNT NESTED ROUTES ======== */}
             <Route path="/accounts" element={<Accounts />}>
               <Route index element={<AccountDashboard />} />
-              <Route path="profile" element={<Profile c_user={c_user} />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="order-view" element={<OrderView />} />
             </Route>
 
