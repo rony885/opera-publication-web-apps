@@ -23,17 +23,20 @@ import Contact from "./pages/contact/Contact";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
-import Profile from "./pages/Accounts/Profile";
-import OrderView from "./pages/Accounts/OrderView";
-import SignUp from "./pages/Accounts/SignUp";
-import Login from "./pages/Accounts/Login";
+
 import Accounts from "./pages/Accounts/Accounts";
 import AccountDashboard from "./pages/Accounts/AccountDashboard";
+import Profile from "./pages/Accounts/Profile";
 import UpdateProfile from "./pages/Accounts/UpdateProfile";
-import { useApiContext } from "./context/ApiContext";
+import OrderView from "./pages/Accounts/OrderView";
+
+import SignUp from "./pages/Accounts/SignUp";
+import Login from "./pages/Accounts/Login";
 import ChangesPassword from "./pages/Accounts/ChangesPassword";
 import ForgotPassword from "./pages/Accounts/ForgotPassword";
 import ResetPassword from "./pages/Accounts/ResetPassword";
+
+import { useApiContext } from "./context/ApiContext";
 
 function App() {
   const { c_user } = useApiContext();
@@ -139,7 +142,7 @@ function App() {
             {/* ======== ACCOUNT NESTED ROUTES ======== */}
             <Route path="/accounts" element={<Accounts />}>
               <Route index element={<AccountDashboard />} />
-              <Route path="profile" element={<Profile />} />
+              <Route path="profile" element={<Profile c_user={c_user} />} />
               <Route path="order-view" element={<OrderView />} />
             </Route>
 

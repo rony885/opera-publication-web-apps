@@ -40,7 +40,7 @@ const AccountDashboard = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="my-account-content account-dashboard">
-                <div className="mb_60">
+                <div className="mb_60 m-2">
                   <h5 className="fw-5 mb_20">Hello Customer</h5>
                   <p>
                     From your account dashboard you can view your{" "}
