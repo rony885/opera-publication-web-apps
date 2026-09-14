@@ -92,6 +92,22 @@ const ApiReducer = (state, action) => {
       };
 
     // Settings Module
+    case "SET_API_DELIVERY_TYPE":
+      return {
+        ...state,
+        isLoading: false,
+        delivery_type: action.payload,
+        isError: false,
+      };
+
+    case "SET_API_UNPAGINATE_DELIVERY_TYPE":
+      return {
+        ...state,
+        isLoading: false,
+        unpaginate_delivery_type: action.payload,
+        isError: false,
+      };
+
     case "SET_API_CLIENT":
       return {
         ...state,

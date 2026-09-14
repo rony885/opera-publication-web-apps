@@ -3,10 +3,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import GeneralSettingsUnpaginateView, GeneralSettingsView
+from .views import DeliveryTypeView,  GeneralSettingsView
+from .views import DeliveryTypeUnpaginateView, GeneralSettingsUnpaginateView, GeneralSettingsUnpaginateView, GeneralSettingsView
 
 from rest_framework import routers
 route = routers.DefaultRouter()
+
+route.register("deliveryType", DeliveryTypeView,
+               basename='deliveryType_view')
+route.register("unpaginate_deliveryType", DeliveryTypeUnpaginateView,
+               basename='unpaginate_deliveryType_view')
+
 
 route.register("general_settings", GeneralSettingsView,
                basename='general_settings_view')

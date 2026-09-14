@@ -1,5 +1,16 @@
 from django.contrib import admin
-from .models import GeneralSettings
+from .models import DeliveryType, GeneralSettings
+
+@admin.register(DeliveryType)
+class DeliveryTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'status', 'name', 'amount',
+                    'duration',  'created_at', 'updated_at']
+
+    readonly_fields = []
+
+    search_fields = ['id', 'name', 'created_at']
+    list_per_page = 10
+    list_filter = ['created_at']
 
 
 @admin.register(GeneralSettings)

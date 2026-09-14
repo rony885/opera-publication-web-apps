@@ -25,8 +25,23 @@
 
 
 from rest_framework import serializers
-from .models import GeneralSettings
+from .models import DeliveryType, GeneralSettings
 
+
+class DeliveryTypeSerializer(serializers.ModelSerializer):
+    status = serializers.BooleanField(default=True)
+
+    class Meta:
+        model = DeliveryType
+        fields = '__all__'
+
+
+class UnpaginateDeliveryTypeSerializer(serializers.ModelSerializer):
+    status = serializers.BooleanField(default=True)
+
+    class Meta:
+        model = DeliveryType
+        fields = '__all__'
 
 class GeneralSettingsSerializer(serializers.ModelSerializer):
 

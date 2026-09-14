@@ -37,6 +37,9 @@ const initialState = {
   unpaginate_contact: [],
 
   // Settings Module
+  delivery_type: [],
+  unpaginate_delivery_type: [],
+
   client: [],
   unpaginate_client: [],
 
@@ -73,6 +76,9 @@ const ApiContext = ({ children }) => {
     unpaginateContact: `${process.env.REACT_APP_BASE_URL}/contact_api/unpaginate_contact/`,
 
     // Settings module
+    deliveryType: `${process.env.REACT_APP_BASE_URL}/settings_api/deliveryType/`,
+    unpaginateDeliveryType: `${process.env.REACT_APP_BASE_URL}/settings_api/unpaginate_deliveryType/`,
+
     client: `${process.env.REACT_APP_BASE_URL}/settings_api/client/`,
     unpaginateClient: `${process.env.REACT_APP_BASE_URL}/settings_api/unpaginate_client/`,
 
@@ -171,6 +177,20 @@ const ApiContext = ({ children }) => {
   );
 
   // Settings Module
+  const fetchDeliveryType = useCallback(
+    () => fetchData(urls.deliveryType, "SET_API_DELIVERY_TYPE"),
+    [fetchData, urls.deliveryType],
+  );
+
+  const fetchUnpaginateDeliveryType = useCallback(
+    () =>
+      fetchData(
+        urls.unpaginateDeliveryType,
+        "SET_API_UNPAGINATE_DELIVERY_TYPE",
+      ),
+    [fetchData, urls.unpaginateDeliveryType],
+  );
+
   const fetchClient = useCallback(
     () => fetchData(urls.client, "SET_API_CLIENT"),
     [fetchData, urls.client],
@@ -236,6 +256,8 @@ const ApiContext = ({ children }) => {
         fetchBook,
         fetchUnpaginateBook,
 
+        fetchDeliveryType,
+        fetchUnpaginateDeliveryType,
         fetchClient,
         fetchUnpaginateClient,
         fetchGeneralSettings,
