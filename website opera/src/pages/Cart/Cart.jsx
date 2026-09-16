@@ -5,8 +5,14 @@ import { useCartContext } from "../../context/CartContext";
 import convertToBanglaNumber from "../../components/banglaConvert/convertToBanglaNumber";
 
 const Cart = () => {
-  const { cart, removeCart, clearCart, setIncrement, setDecrement } =
-    useCartContext();
+  const {
+    cart,
+    removeCart,
+    clearCart,
+    setIncrement,
+    setDecrement,
+    total_item,
+  } = useCartContext();
 
   const [shippingCost, setShippingCost] = useState(60);
   const [showOrderModal, setShowOrderModal] = useState(false);
@@ -319,6 +325,21 @@ const Cart = () => {
                 </tbody>
                 {/* <h2 className="fs-5">Checkout Summary</h2> */}
                 <tfoot>
+                  {/* Total Item */}
+                  <tr className="order-total">
+                    <td className="fw-normal">মোট আইটেম </td>
+
+                    <td data-title="Total">
+                      <strong>
+                        <span className="amount fw-normal">
+                          <bdi style={{ color: "#FF3333" }}>
+                            (&nbsp;{convertToBanglaNumber(total_item)}&nbsp;)
+                          </bdi>
+                        </span>
+                      </strong>
+                    </td>
+                  </tr>
+
                   {/* Book Total */}
                   <tr className="order-total">
                     <td className="fw-normal">বইয়ের মোট মূল্য</td>
@@ -706,6 +727,12 @@ const Wrapper = styled.section`
     font-size: 16px;
     color: var(--title-color); */
   }
+  .cart_totals th,
+  .cart_totals td {
+    /* padding: 20px 20px; */
+    padding: 10px 10px !important;
+  }
+
   .shipping-calculator-form .form-select {
     border: 1px solid #ff3333 !important;
     box-shadow: none !important;
