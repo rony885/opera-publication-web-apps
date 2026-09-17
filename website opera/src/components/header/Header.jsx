@@ -121,6 +121,7 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                       <i className="fab fa-youtube"></i>
                     </Link>
                   </div>
+
                   {aT ? (
                     <div className="user-login" ref={userMenuRef}>
                       <button
@@ -209,6 +210,7 @@ const Header = ({ aT, c_user, handleLogout, toggleMenu, closeMenu }) => {
                           //   window.location.reload(false);
                           // }}
                           // onClick={logoutUser}
+
                           onClick={() => {
                             handleLogout();
                             navigate("/");
