@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'Opera.apps.OperaConfig',
     'Settings.apps.SettingsConfig',
     'Contact.apps.ContactConfig',
+    
+    'Order.apps.OrderConfig',
 ]
 
 
