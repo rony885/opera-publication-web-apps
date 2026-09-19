@@ -259,7 +259,7 @@ const Cart = () => {
 
                         <div className="shipping-calculator-form">
                           {/* Name + Phone */}
-                          <div className="row">
+                          <div className="row mb-0">
                             <div className="col-md-12 mb-0">
                               <p className="form-row">
                                 <input
@@ -282,7 +282,7 @@ const Cart = () => {
                           </div>
 
                           {/* District + Upazila */}
-                          <div className="row mb-3">
+                          <div className="row mb-0">
                             <div className="col-md-6">
                               <p className="form-row">
                                 <select className="form-select">
@@ -307,7 +307,7 @@ const Cart = () => {
                             </div>
                           </div>
 
-                          <div className="row">
+                          <div className="row mb-0">
                             <div className="col-md-12 mb-0">
                               <p className="form-row">
                                 <textarea
@@ -315,6 +315,18 @@ const Cart = () => {
                                   rows="1"
                                   placeholder="আপনার সম্পূর্ণ ঠিকানা লিখুন"
                                 ></textarea>
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="row mb-3">
+                            <div className="col-md-12">
+                              <p className="form-row">
+                                <input
+                                  type="password"
+                                  className="form-control"
+                                  placeholder="পাসওয়ার্ড"
+                                />
                               </p>
                             </div>
                           </div>
@@ -762,6 +774,10 @@ const Wrapper = styled.section`
     background-color: #f8ebe5 !important;
   }
 
+  .shipping-calculator-form .form-control {
+    margin-bottom: 0px !important;
+  }
+
   /* ===== ORDER SUMMARY MODAL ===== */
   .order-modal-overlay {
     position: fixed;
@@ -811,7 +827,6 @@ const Wrapper = styled.section`
 
   .order-modal-close:hover {
     color: #ff3333;
-
     transform: rotate(90deg);
   }
 
@@ -971,7 +986,6 @@ const Wrapper = styled.section`
   @keyframes orderModalShow {
     from {
       opacity: 0;
-
       transform: translateY(-20px) scale(0.95);
     }
 
@@ -983,8 +997,11 @@ const Wrapper = styled.section`
   }
 
   .shipping-calculator-form textarea.form-control {
-    height: 75px !important;
-    min-height: 75px !important;
+    /* height: 75px !important;
+    min-height: 75px !important; */
+
+    height: 60px !important;
+    min-height: 60px !important;
   }
 
   /* ===== MOBILE ===== */
