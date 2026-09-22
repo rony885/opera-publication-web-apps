@@ -1,8 +1,4 @@
 from django.db import models
-
-# Create your models here.
-
-from django.db import models
 from django.utils.html import mark_safe
 from django.template.defaultfilters import truncatechars
 from Product.models import Product
