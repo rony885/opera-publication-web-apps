@@ -32,6 +32,7 @@ urlpatterns = [
     path('', include('Opera.urls')),
     path('', include('Contact.urls')),
     path('', include('Settings.urls')),
+    path('', include('Order.urls')),
 ]
 
 # +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

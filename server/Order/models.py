@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils.html import mark_safe
 from django.template.defaultfilters import truncatechars
-from Books.models import Books
-from Settings.models import Courier, DeliveryType
+from Books.models import Book
+# from Settings.models import Courier, DeliveryType
+from Settings.models import DeliveryType
 from CustomUser.models import CustomUser
 import datetime
 from django.utils import timezone
@@ -68,8 +69,8 @@ class Order(models.Model):
     order_no = models.CharField(max_length=25, default=generate_order_no)
     invoice_no = models.CharField(max_length=25, default=generate_invoice_no)
 
-    courier = models.ForeignKey(
-        Courier, on_delete=models.DO_NOTHING, blank=True, null=True)
+    # courier = models.ForeignKey(
+    #     Courier, on_delete=models.DO_NOTHING, blank=True, null=True)
     customer = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
     delivery_type = models.ForeignKey(
         DeliveryType, on_delete=models.DO_NOTHING)
@@ -102,7 +103,7 @@ class Order(models.Model):
 class OrderDetail(models.Model):
     order = models.ForeignKey(
         Order, related_name='order_details', on_delete=models.DO_NOTHING)
-    product = models.ForeignKey(Books, on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
     bdtRate = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     linePrice = models.DecimalField(max_digits=10, decimal_places=2)

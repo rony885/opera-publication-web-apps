@@ -5,7 +5,8 @@ from .models import Order, OrderDetail
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'order_no', 'invoice_no',
-                    'courier', 'customer', 'delivery_type',
+                    # 'courier', 'customer', 'delivery_type',
+                     'customer', 'delivery_type',
                     'order_date_time', 'order_date', 'delivery_status', 'payment_method', 'note',
                     'total_item', 'total_amount',  'discount', 'payable_amount', 'paid_amount',
                     'due_amount', 'delivery_charge', 'grand_total_amount',
