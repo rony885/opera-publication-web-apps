@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.html import mark_safe
 from django.template.defaultfilters import truncatechars
-from Product.models import Product
+from Books.models import Books
 from Settings.models import Courier, DeliveryType
 from CustomUser.models import CustomUser
 import datetime
@@ -102,7 +102,7 @@ class Order(models.Model):
 class OrderDetail(models.Model):
     order = models.ForeignKey(
         Order, related_name='order_details', on_delete=models.DO_NOTHING)
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(Books, on_delete=models.DO_NOTHING)
     bdtRate = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     linePrice = models.DecimalField(max_digits=10, decimal_places=2)

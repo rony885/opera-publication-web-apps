@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from .models import Order, OrderDetail
-from Product.serializers import ProductSerializer
+from Books.serializers import BooksSerializer
 from Settings.serializers import CourierSerializer, DeliveryTypeSerializer
 from CustomUser.serializers import UserSerializer
-from Product.models import Product
+from Books.models import Books
 
 
 # order detail
@@ -24,7 +24,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 
 
 class UnpaginateOrderDetailSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
+    product = BooksSerializer()
     order = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
@@ -69,11 +69,11 @@ class OrderSerializer(serializers.ModelSerializer):
             OrderDetail.objects.create(order=order, **order_detail_data)
 
             # order stock  update in product table
-            currProd = Product.objects.get(
+            currProd = Books.objects.get(
                 id=order_detail_data['product'].id)
 
             # stock
-            Product.objects.filter(id=order_detail_data['product'].id).update(
+            Books.objects.filter(id=order_detail_data['product'].id).update(
                 initial_stock=currProd.initial_stock - order_detail_data['quantity'])
 
         return order
